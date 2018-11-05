@@ -1,10 +1,7 @@
 package com.springmvc.controller;
 
 import com.springmvc.entity.Admin;
-import com.springmvc.entity.User;
-import com.springmvc.service.AdminService;
-import com.springmvc.service.StuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.springmvc.service.impl.AdminServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +19,7 @@ import javax.annotation.Resource;
 @Controller
 public class main {
     @Resource
-    AdminService adminService;
+    AdminServiceImpl adminService;
 
     @RequestMapping(value = "/admin",method = RequestMethod.POST)
     @ResponseBody

@@ -1,7 +1,8 @@
-package com.springmvc.service;
+package com.springmvc.service.impl;
 
 import com.springmvc.dao.AdminMapper;
 import com.springmvc.entity.Admin;
+import com.springmvc.service.interf.IAdminService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +15,7 @@ import javax.annotation.Resource;
  */
 
 @Service("AdminService")
-public class AdminService {
+public class AdminServiceImpl implements IAdminService{
     @Resource
     private AdminMapper adminMapper;
 
@@ -28,4 +29,6 @@ public class AdminService {
     public  int insertAdmin(Admin admin){
         return this.adminMapper.insert(admin);
     }
+
+
 }

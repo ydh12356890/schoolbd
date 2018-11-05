@@ -11,6 +11,9 @@ public interface AdminMapper {
 
     Admin selectByPrimaryKey(Integer id);
 
+    //登陆查询，参数是用户名和密码；
+    int loginSelect(String name,String password);
+
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);

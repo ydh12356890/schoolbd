@@ -15,6 +15,10 @@
     from admin
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="loginSelect" parameterType="com.springmvc.entity.Admin">
+    SELECT id FROM admin WHERE name = #{name,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR}
+
+  </select>>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from admin
     where id = #{id,jdbcType=INTEGER}

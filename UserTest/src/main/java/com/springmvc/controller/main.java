@@ -1,14 +1,13 @@
 package com.springmvc.controller;
 
-import com.springmvc.entity.Admin;
-import com.springmvc.service.impl.AdminServiceImpl;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
+import javax.annotation.Resource;git
 
 /**
  * @Author: ydh
@@ -18,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Controller
 public class main {
-    @Resource
+   /* @Resource
     AdminServiceImpl adminService;
 
     @RequestMapping(value = "/admin",method = RequestMethod.POST)
@@ -32,7 +31,7 @@ public class main {
     @ResponseBody
     public Admin getUser(@PathVariable Integer id){
         return adminService.getAdmin(id);
-    }
+    }*/
 
 
 }

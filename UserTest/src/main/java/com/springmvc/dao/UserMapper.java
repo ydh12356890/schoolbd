@@ -14,4 +14,9 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+
+
+    User selectUserByUsername(String userName); //登录
+    void insertNewUser(String userName,String userPassword); //注册
 }

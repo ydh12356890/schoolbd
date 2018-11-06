@@ -1,7 +1,10 @@
 package com.springmvc.controller;
 
 
+import com.springmvc.entity.User;
+import com.springmvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,22 +19,32 @@ import javax.annotation.Resource;
  * @todo
  */
 @Controller
+@RequestMapping("/user")
 public class main {
-   /* @Resource
-    AdminServiceImpl adminService;
+    @Resource
+    UserServiceImpl userService;
 
-    @RequestMapping(value = "/admin",method = RequestMethod.POST)
-    @ResponseBody
-    public int insertUser(Admin admin){
+    @RequestMapping("/login")
+    public String Login(User user) {
+        user = userService.CheckUserExist(user.getUserName(), user.getUserPassword());
+        if (user != null) {
+            return "views/success";
+        } else
+            return "views/fail";
 
-        return adminService.insertAdmin(admin);
     }
 
-    @RequestMapping(value = "/admin/{id}",method = RequestMethod.GET)
-    @ResponseBody
-    public Admin getUser(@PathVariable Integer id){
-        return adminService.getAdmin(id);
-    }*/
+    @RequestMapping("/register")
+    public String Register(User user) {
+        int a = userService.RegisterNewUser(user.getUserName(), user.getUserPassword());
+        if (a == 0) {
+            System.out.println("注册成功！！！");
+            return "index";
+        } else
+            System.out.println("注册失败，用户名已存在！！！");
+            return null;
+
+    }
 
 
 }

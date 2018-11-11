@@ -74,6 +74,7 @@
     </bean>
 
     <!--  配置静态资源，防止被springmvc过滤 -->
+    <mvc:annotation-driven/>
     <mvc:resources location="/assets" mapping="/**/*.html"/>
     <mvc:resources location="/assets" mapping="/**/*.js"/>
     <mvc:resources location="/assets" mapping="/**/*.css"/>

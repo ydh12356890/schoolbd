@@ -1,6 +1,7 @@
 package com.springmvc.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.springmvc.entity.User;
 import com.springmvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @Author: ydh
@@ -25,12 +30,21 @@ public class main {
     UserServiceImpl userService;
 
     @RequestMapping("/login")
-    public String Login(User user) {
-        user = userService.CheckUserExist(user.getUserName(), user.getUserPassword());
+    public void Login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        PrintWriter out = response.getWriter();
+        String username = request.getParameter("userName");
+        String password = request.getParameter("userPassword");
+        JSONObject json = new JSONObject();
+        User user = userService.CheckUserExist(username, password);
         if (user != null) {
-            return "views/success";
-        } else
-            return "views/fail";
+            json.put("result","success");
+        }
+        else {
+            json.put("result","error");
+        }
+        out.println(json);
+
+
 
     }
 

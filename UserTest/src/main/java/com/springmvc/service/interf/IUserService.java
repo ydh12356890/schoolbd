@@ -2,6 +2,8 @@ package com.springmvc.service.interf;
 
 import com.springmvc.entity.User;
 
+import java.util.List;
+
 /**
  * @Author: ydh
  * @Date: 2018/11/5 17:48
@@ -11,5 +13,8 @@ import com.springmvc.entity.User;
 public interface IUserService {
      User CheckUserExist(String userName,String userPassword);
      int RegisterNewUser(String userName,String usePassword);
+
+     List<User> getAllUser();
+
 
 }

@@ -1,21 +1,23 @@
 package com.springmvc.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.springmvc.entity.Msg;
 import com.springmvc.entity.User;
 import com.springmvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @Author: ydh
@@ -24,31 +26,30 @@ import java.io.PrintWriter;
  * @todo
  */
 @Controller
-@RequestMapping("/user")
+
 public class main {
     @Resource
     UserServiceImpl userService;
 
-    @RequestMapping("/login")
-    public void Login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter out = response.getWriter();
-        String username = request.getParameter("userName");
-        String password = request.getParameter("userPassword");
-        JSONObject json = new JSONObject();
-        User user = userService.CheckUserExist(username, password);
-        if (user != null) {
-            json.put("result","success");
-        }
-        else {
-            json.put("result","error");
-        }
-        out.println(json);
+    @RequestMapping("/user/login")
+    @ResponseBody
+    public String Login(String username,String password) {
 
+        User user = userService.CheckUserExist(username, password);
+
+        if (user != null) {
+            return "success";
+        }
+        else
+            return null;
 
 
     }
 
-    @RequestMapping("/register")
+
+    /*
+
+    @RequestMapping("/user/register")
     public String Register(User user) {
         int a = userService.RegisterNewUser(user.getUserName(), user.getUserPassword());
         if (a == 0) {
@@ -58,7 +59,16 @@ public class main {
             System.out.println("注册失败，用户名已存在！！！");
             return null;
 
+    }*/
+  /*  @RequestMapping(value = "/user/getalluser" , method = RequestMethod.GET)
+    @ResponseBody
+    public List<User> getUserList () {
+        List<User> userList = userService.getAllUser();
+        return  userList;
+
+
     }
+*/
 
 
 }

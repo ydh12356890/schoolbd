@@ -77,5 +77,8 @@
     INSERT  INTO  user (user_name,user_password)
     VALUES (#{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR})
   </insert>
+  <select id="getAllUser" resultMap="BaseResultMap" >
+    SELECT * FROM  user
+  </select>
 
 </mapper>

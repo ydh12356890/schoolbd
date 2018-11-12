@@ -6,6 +6,7 @@ import com.springmvc.service.interf.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: ydh
@@ -17,9 +18,10 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements IUserService {
     @Resource
     UserMapper userMapper;
-    public User CheckUserExist(String userName,String userPassword){
+
+    public User CheckUserExist(String userName, String userPassword) {
         User user = userMapper.selectUserByUsername(userName);
-        if(user!=null && user.getUserPassword().equals(userPassword)){
+        if (user != null && user.getUserPassword().equals(userPassword)) {
             return user;
         }
         return null;
@@ -28,12 +30,17 @@ public class UserServiceImpl implements IUserService {
     @Override
     public int RegisterNewUser(String userName, String usePassword) {
         User user2 = userMapper.selectUserByUsername(userName);
-        if(user2!=null){
+        if (user2 != null) {
             return 1;
-        }
-        else
-            userMapper.insertNewUser(userName,usePassword);
-            return 0;
+        } else
+            userMapper.insertNewUser(userName, usePassword);
+        return 0;
+
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userMapper.getAllUser();
 
     }
 }

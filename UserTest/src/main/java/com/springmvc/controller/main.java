@@ -1,17 +1,23 @@
 package com.springmvc.controller;
 
-import com.springmvc.entity.Admin;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.springmvc.entity.Msg;
 import com.springmvc.entity.User;
-import com.springmvc.service.AdminService;
-import com.springmvc.service.StuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.springmvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @Author: ydh
@@ -20,22 +26,49 @@ import javax.annotation.Resource;
  * @todo
  */
 @Controller
+
 public class main {
     @Resource
-    AdminService adminService;
+    UserServiceImpl userService;
 
-    @RequestMapping(value = "/admin",method = RequestMethod.POST)
+    @RequestMapping("/user/login")
     @ResponseBody
-    public int insertUser(Admin admin){
+    public String Login(String username,String password) {
 
-        return adminService.insertAdmin(admin);
+        User user = userService.CheckUserExist(username, password);
+
+        if (user != null) {
+            return "success";
+        }
+        else
+            return null;
+
+
     }
 
-    @RequestMapping(value = "/admin/{id}",method = RequestMethod.GET)
+
+    /*
+
+    @RequestMapping("/user/register")
+    public String Register(User user) {
+        int a = userService.RegisterNewUser(user.getUserName(), user.getUserPassword());
+        if (a == 0) {
+            System.out.println("注册成功！！！");
+            return "index";
+        } else
+            System.out.println("注册失败，用户名已存在！！！");
+            return null;
+
+    }*/
+  /*  @RequestMapping(value = "/user/getalluser" , method = RequestMethod.GET)
     @ResponseBody
-    public Admin getUser(@PathVariable Integer id){
-        return adminService.getAdmin(id);
+    public List<User> getUserList () {
+        List<User> userList = userService.getAllUser();
+        return  userList;
+
+
     }
+*/
 
 
 }

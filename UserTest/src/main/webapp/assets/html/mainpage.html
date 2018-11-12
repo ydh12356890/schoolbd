@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="../icon/bd.jpg">
+
+    <title>Project BD</title>
+
+    <!-- Custom styles for this template -->
+    <link href="../css/dashboard.css" rel="stylesheet">
+
+</head>
+<style>
+    #personPicture{
+        border-width: 1px;
+        border-style: solid;
+        border-color: #66512c;
+        padding: 50px;
+        width: 40%;
+        height: 300px;
+        vertical-align: middle;
+        display: table-cell;
+        text-align: center;
+        float: left;
+
+    }
+    #personInfo{
+        border-color: #c12e2a;
+        border-style: solid;
+        border-width: 1px;
+        padding: 50px;
+        width: 60%;
+        height: 300px;
+        float: left;
+
+    }
+    #historyScore{
+        border-width: 1px;
+        border-style: solid;
+        border-color: #2b542c;
+
+        width: 60%;
+        height: 300px;
+        float: left;
+        clear: left;
+
+    }
+    #currentCourse{
+        border-width: 1px;
+        border-style: solid;
+        padding: 10px;
+        border-color: #2aabd2;
+        width: 40%;
+        height: 300px;
+
+        float: left;
+
+    }
+    .stuinput{
+        background-color: white;
+    }
+
+</style>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            Project name</button>
+            <a class="navbar-brand">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar" >
+                <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">个人信息</a></li>
+                <li><a href="#">群体信息</a></li>
+                    <ul class="nav-sidebar-list">
+                        <li>
+                            <a href="#" class="bqa">学院</a>
+                        </li>
+                        <li>
+                            <a href="#" class="bqa">班级</a>
+
+                        </li>
+                        <li>
+                            <a href="#"class="bqa">其他</a>
+                        </li>
+                    </ul>
+
+                <li><a href="#">扩展1</a></li>
+            </ul>
+           <!-- <ul class="nav nav-sidebar">
+                <li><a href="">Nav item</a></li>
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+                <li><a href="">More navigation</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+            </ul>-->
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div id="div-header">
+            <h2 class="sub-header">Student Profile</h2>
+            <div style="margin: 5px">
+            <input type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号..." required autofocus>
+            <button class="btn-primary" id = "checkdata" type="button" onclick="check()">查询</button>
+            </div>
+            </div>
+            <div id="fourdiv">
+            <div id="personPicture">
+                <img src="../icon/person.jpg"/>
+            </div>
+
+            <div id="personInfo">
+                <div >
+                <form style="border-style: solid;border-width: 3px;margin: 5px;padding: 10px;border-color: #2b542c">
+                    <lable>学号：</lable>
+                    <input  id="numberId" type="text" value="" disabled class="stuinput">
+                    <lable>姓名：</lable>
+                    <input  id="nameId" type="text" value="" disabled class="stuinput"><br>
+
+                    <label>性别：</label>
+                    <input id="sexId" type="text" value="" disabled class="stuinput">
+                    <lable>年龄：</lable>
+                    <input  id="ageId" type="text" value="" disabled class="stuinput"><br>
+
+                    <label>民族：</label>
+                    <input id="nationId" type="text" value="" disabled class="stuinput">
+
+                    <label>政治面貌：</label>
+                    <input id="politicsId" type="text" value="" disabled class="stuinput"<br>
+
+                    <label>学院：</label>
+                    <input id="schoolId" type="text" value="" disabled class="stuinput">
+
+                    <label>专业：</label>
+                    <input id="majorId" type="text" value="" disabled class="stuinput"><br>
+                </form>
+                </div>
+
+            </div>
+
+            <div id ="historyScore">
+
+            </div>
+
+            <div class="table-responsive" id="currentCourse">
+                <table class = "table table-striped" id = "tableuserlist">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>username</th>
+                        <th>password</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+<script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script>
+    function check() {
+        var stuNum = $("#inputStuNum").val();
+        console.log(stuNum);
+        $.ajax({
+            type:"post",
+            url:"/student/getstuinfo",
+            dataType: "json",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify({stuNumber:stuNum}),
+            success:function(data){
+                console.log(data);
+                document.getElementById("numberId").value = data["stuNumber"];
+                document.getElementById("nameId").value = data["stuName"];
+                document.getElementById("ageId").value = data["stuAge"];
+                document.getElementById("sexId").value = data["stuSex"];
+                document.getElementById("nationId").value = data["stuNation"];
+                document.getElementById("politicsId").value = data["stuPolitics"];
+                document.getElementById("schoolId").value = data["stuSchool"];
+                document.getElementById("majorId").value = data["stuMajor"];
+            },
+            error:function(){
+                alert("该学号不存在，请重新输入！");
+            }
+
+        })
+        
+    }
+
+    /*function check() {
+        $.ajax({
+            type : "GET",
+            url : "/user/getalluser",
+            dataType : "json",
+            success:function(data){
+                var obj = eval(data);
+                var tbody = $('<tbody></tbody>');
+                $(obj).each(function (index) {
+                    var val = obj[index];
+                    var tr = $('<tr></tr>');
+                    tr.append('<td>'+ val.userId + '</td>' + '<td>'+val.userName + '</td>' + '<td>' + val.userPassword + '</td>');
+                    tbody.append(tr);
+                });
+                $('#tableuserlist tbody').replaceWith(tbody);
+            }
+
+        });
+
+    }*/
+</script>
+
+</body>
+</html>

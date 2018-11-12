@@ -1,43 +1,33 @@
 package com.springmvc.entity;
 
 public class User {
-    private Integer stuId;
+    private Integer userId;
 
-    private String stuName;
+    private String userName;
 
-    private Integer stuAge;
+    private String userPassword;
 
-    private String stuScore;
-
-    public Integer getStuId() {
-        return stuId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setStuId(Integer stuId) {
-        this.stuId = stuId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getStuName() {
-        return stuName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setStuName(String stuName) {
-        this.stuName = stuName == null ? null : stuName.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
-    public Integer getStuAge() {
-        return stuAge;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setStuAge(Integer stuAge) {
-        this.stuAge = stuAge;
-    }
-
-    public String getStuScore() {
-        return stuScore;
-    }
-
-    public void setStuScore(String stuScore) {
-        this.stuScore = stuScore == null ? null : stuScore.trim();
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 }

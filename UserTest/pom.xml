@@ -281,9 +281,6 @@
             <verbose>true</verbose>
             <overwrite>true</overwrite>
           </configuration>
-          <dependencies>
-
-          </dependencies>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

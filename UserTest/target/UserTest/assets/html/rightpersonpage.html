@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>rightpersonpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="div-header">
+    <h2 class="sub-header">Student Profile</h2>
+    <div style="margin: 5px">
+        <input type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号..." required autofocus>
+        <button class="btn-primary" id="checkdata" type="button" onclick="check()">查询</button>
+    </div>
+</div>
+<div id="fourdiv">
+    <div id="personPicture">
+        <img src="../icon/person.jpg"/>
+    </div>
+
+    <div id="personInfo">
+        <div>
+            <form style="border-style: solid;border-width: 3px;margin: 5px;padding: 10px;border-color: #2b542c">
+                <lable>学号：</lable>
+                <input id="numberId" type="text" value="" disabled class="stuinput">
+                <lable>姓名：</lable>
+                <input id="nameId" type="text" value="" disabled class="stuinput"><br>
+
+                <label>性别：</label>
+                <input id="sexId" type="text" value="" disabled class="stuinput">
+                <lable>年龄：</lable>
+                <input id="ageId" type="text" value="" disabled class="stuinput"><br>
+
+                <label>民族：</label>
+                <input id="nationId" type="text" value="" disabled class="stuinput">
+
+                <label>政治面貌：</label>
+                <input id="politicsId" type="text" value="" disabled class="stuinput"<br>
+
+                <label>学院：</label>
+                <input id="schoolId" type="text" value="" disabled class="stuinput">
+
+                <label>专业：</label>
+                <input id="majorId" type="text" value="" disabled class="stuinput"><br>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="historyScore">
+
+    </div>
+
+    <div class="table-responsive" id="currentCourse">
+        <table class="table table-striped" id="tableuserlist">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>password</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -65,6 +65,40 @@
     .stuinput{
         background-color: white;
     }
+    ul.nav-sidebar-list{
+        list-style-type: none;
+
+
+    }
+    /*ul.nav-sidebar-list>li{
+        margin-top: 3px;
+        margin-bottom: 3px;
+
+    }*/
+    ul.nav-sidebar-list > li > a:link,a:visited{
+        text-decoration: none;
+        padding: 5px 140px 5px 10px;
+        margin: 3px;
+        text-align: center;
+        display: inline-block;
+
+    }
+    ul.nav-sidebar-list > li > a:hover,a:active{
+        background-color: #9acfea;
+    }
+    ul.nav-sidebar > li{
+        border-bottom-style: solid;
+        border-bottom-color: #9acfea;
+        border-bottom-width: 0.5px;
+        border-top-style: solid;
+        border-top-color: #9acfea;
+        border-top-width: 0.5px;
+
+    }
+
+
+
+
 
 </style>
 
@@ -79,13 +113,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             Project name</button>
-            <a class="navbar-brand">Project name</a>
+            <a class="navbar-brand" style="color: white">Project name</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="#" style="color: white">Settings</a></li>
+                <li><a href="#" style="color: white">Profile</a></li>
+                <li><a href="#" style="color: white">Help</a></li>
             </ul>
         </div>
     </div>
@@ -95,23 +129,30 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar" >
-                <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">个人信息</a></li>
-                <li><a href="#">群体信息</a></li>
-                    <ul class="nav-sidebar-list">
+                <li class="clickable" >
+                    <a href="#" onclick="showAtRight('rightmainpage.html')">首页 <!--<span class="sr-only">(current)</span>--></a>
+                </li>
+                <li class="clickable"><a href="#"  onclick="showAtRight('rightpersonpage.html')">个人信息</a></li>
+               <!-- <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">群体信息
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="nav-sidebar-list dropdown-menu" >
                         <li>
-                            <a href="#" class="bqa">学院</a>
+                            <a href="#" onclick="showAtRight('rightgrouppage.html')">学院</a>
                         </li>
-                        <li>
-                            <a href="#" class="bqa">班级</a>
-
-                        </li>
-                        <li>
-                            <a href="#"class="bqa">其他</a>
-                        </li>
+                        <li><a href="#" >班级</a></li>
+                        <li><a href="#" >其他</a></li>
                     </ul>
-
-                <li><a href="#">扩展1</a></li>
+                </li>-->
+                <li class="clickable"><a href="#" >群体信息</a>
+                    <ul class="nav-sidebar-list" >
+                        <li class="group"><a href="#"  onclick="showAtRight('rightgrouppage.html')">学院</a></li>
+                        <li class="group"><a href="#"  >班级</a></li>
+                        <li class="group"><a href="#"  >其他</a></li>
+                    </ul>
+                </li>
+                <li class="clickable"><a href="#" > 扩展1</a></li>
             </ul>
            <!-- <ul class="nav nav-sidebar">
                 <li><a href="">Nav item</a></li>
@@ -126,65 +167,10 @@
                 <li><a href="">Another nav item</a></li>
             </ul>-->
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id="div-header">
-            <h2 class="sub-header">Student Profile</h2>
-            <div style="margin: 5px">
-            <input type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号..." required autofocus>
-            <button class="btn-primary" id = "checkdata" type="button" onclick="check()">查询</button>
-            </div>
-            </div>
-            <div id="fourdiv">
-            <div id="personPicture">
-                <img src="../icon/person.jpg"/>
-            </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="rightpage">
 
-            <div id="personInfo">
-                <div >
-                <form style="border-style: solid;border-width: 3px;margin: 5px;padding: 10px;border-color: #2b542c">
-                    <lable>学号：</lable>
-                    <input  id="numberId" type="text" value="" disabled class="stuinput">
-                    <lable>姓名：</lable>
-                    <input  id="nameId" type="text" value="" disabled class="stuinput"><br>
+            <div id="rightdiv">
 
-                    <label>性别：</label>
-                    <input id="sexId" type="text" value="" disabled class="stuinput">
-                    <lable>年龄：</lable>
-                    <input  id="ageId" type="text" value="" disabled class="stuinput"><br>
-
-                    <label>民族：</label>
-                    <input id="nationId" type="text" value="" disabled class="stuinput">
-
-                    <label>政治面貌：</label>
-                    <input id="politicsId" type="text" value="" disabled class="stuinput"<br>
-
-                    <label>学院：</label>
-                    <input id="schoolId" type="text" value="" disabled class="stuinput">
-
-                    <label>专业：</label>
-                    <input id="majorId" type="text" value="" disabled class="stuinput"><br>
-                </form>
-                </div>
-
-            </div>
-
-            <div id ="historyScore">
-
-            </div>
-
-            <div class="table-responsive" id="currentCourse">
-                <table class = "table table-striped" id = "tableuserlist">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>username</th>
-                        <th>password</th>
-                    </tr>
-                    </thead>
-                    <tbody >
-                    </tbody>
-                </table>
-            </div>
             </div>
         </div>
     </div>
@@ -192,7 +178,57 @@
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $('ul.nav >li.clickable').click(function (e) {
+            $('ul.nav>li.clickable').removeClass('active');
+            $(this).addClass('active');
+
+        });
+    });
+
+    function showAtRight(url) {
+        var xmlHttp;
+
+        if(window.XMLHttpRequest){
+            //code for IE7+,firefox,chrome,opera,safari
+            xmlHttp = new XMLHttpRequest();   //创建XMLHttpRequest对象
+        }
+        else {
+            //code for IE5 IE6
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlHttp.onreadystatechange = function () {
+            //onreadystatechange  当readystate变化时调用后面的方法
+
+            if(xmlHttp.readyState == 4){
+                //xmlHttp.readyState == 4  finished downloading response
+                if(xmlHttp.status == 200){
+                    //服务器反馈正常
+                    document.getElementById("rightdiv").innerHTML = xmlHttp.responseText;//重置div中的内容
+                }
+                else if(xmlHttp.status ==404){
+                    alert("出错了，404 Not Found");
+                    return;
+                }
+                else if(xmlHttp.status==403){
+                    alert("出错了，403 Forbidden");
+                    return;
+                }
+                else {
+                    alert("出错了");
+                    return;
+                }
+            }
+            
+        }
+        //把请求发送到服务器上的指定文件（URL指定的文件）进行处理
+        xmlHttp.open("GET",url,true);
+        xmlHttp.send();
+        
+    }
     function check() {
+
         var stuNum = $("#inputStuNum").val();
         console.log(stuNum);
         $.ajax({
@@ -213,12 +249,59 @@
                 document.getElementById("majorId").value = data["stuMajor"];
             },
             error:function(){
+                document.getElementById("numberId").value = null;
+                document.getElementById("nameId").value = null;
+                document.getElementById("ageId").value = null;
+                document.getElementById("sexId").value = null;
+                document.getElementById("nationId").value = null;
+                document.getElementById("politicsId").value = null;
+                document.getElementById("schoolId").value = null;
+                document.getElementById("majorId").value = null;
                 alert("该学号不存在，请重新输入！");
             }
 
         })
-        
+
     }
+
+
+
+
+   /* function turnpage(url) {
+        var url0 = document.URL;
+        console.log(url0);
+
+        var num = url0.indexOf('?');
+         console.log(num);
+
+        var oldurl;
+
+        if(num==-1){
+            oldurl = url0;
+        }
+        else {
+            oldurl = url0.slice(0,num);
+        }
+        var newurl = oldurl+'?'+url;
+
+        console.log(newurl);
+
+        history.pushState(null,null,newurl);
+        var ajaxurl = newurl + '.html';
+
+        $.ajax({
+            type:"get",
+            url:ajaxurl,
+            success: function (html) {
+                $('.rightdiv').html(html);
+                
+            }
+        });
+
+
+        
+    }*/
+
 
     /*function check() {
         $.ajax({

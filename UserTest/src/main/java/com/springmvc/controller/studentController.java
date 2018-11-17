@@ -1,14 +1,20 @@
 package com.springmvc.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.springmvc.entity.ScorePredict;
+import com.springmvc.entity.StudentScore;
 import com.springmvc.entity.Student;
 import com.springmvc.service.impl.StudentServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: ydh
@@ -38,6 +44,74 @@ public class studentController {
 
 
     }*/
+
+    /*@RequestMapping("/getPie")
+    @ResponseBody
+    public List<StudentScore> getStuScoreController(@RequestBody Student student){
+        Student studentChoosed = studentService.getStudentInfo(student.getStuNumber());
+        List<StudentScore> results = new ArrayList<StudentScore>();
+
+        BigDecimal stuscore1 =  studentChoosed.getStuScore1();
+        BigDecimal stuscore2 =  studentChoosed.getStuScore2();
+        BigDecimal stuscore3 =  studentChoosed.getStuScore3();
+        BigDecimal stuscore4 =  studentChoosed.getStuScore4();
+        BigDecimal stuscore5 =  studentChoosed.getStuScore5();
+
+        String stusubject1 = studentChoosed.getStuSubject1();
+        String stusubject2 = studentChoosed.getStuSubject2();
+        String stusubject3 = studentChoosed.getStuSubject3();
+        String stusubject4 = studentChoosed.getStuSubject4();
+        String stusubject5 = studentChoosed.getStuSubject5();
+
+        results.add(new StudentScore(stusubject1,stuscore1));
+        results.add(new StudentScore(stusubject2,stuscore2));
+        results.add(new StudentScore(stusubject3,stuscore3));
+        results.add(new StudentScore(stusubject4,stuscore4));
+        results.add(new StudentScore(stusubject5,stuscore5));
+
+        return results;
+
+
+
+
+
+
+        *//*List<StudentScore> results = new ArrayList<StudentScore>();
+
+        for(Student student : studentList){
+           String stuname = student.getStuName();
+            BigDecimal stuscore = student.getStuScore();
+            StudentScore result = new StudentScore(stuname,stuscore);
+            results.add(result);
+        }
+        System.out.println("json数据："+results);
+        return results;
+*//*
+
+    }
+*/
+    @RequestMapping("/getScoreDis")
+    @ResponseBody
+    public  StudentScore getStuScoreDisController(@RequestBody Student student){
+        StudentScore studentScore = studentService.getStuScoreDisService(student.getStuNumber());
+
+       /* int zeroFiftynine = studentScore.getZeroFiftynine();
+        int sixtySixtynine = studentScore.getSixtySixtynine();
+        int seventySeventynine = studentScore.getSeventySeventynine();
+        int eightyEightynine= studentScore.getEightyEightynine();
+        int ninetyHundred= studentScore.getNinetyHundred();*/
+
+        return studentScore;
+
+    }
+    @RequestMapping("/getScorePredict")
+    @ResponseBody
+    public List<ScorePredict> getScorePredictList (@RequestBody Student student) {
+        List<ScorePredict> scorePredictList = studentService.getScorePredictService(student.getStuNumber());
+        return scorePredictList;
+
+    }
+
 
 
 }

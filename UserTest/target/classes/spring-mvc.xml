@@ -83,5 +83,14 @@
     <mvc:resources location="/assets" mapping="/**/*.jpg"/>
     <mvc:resources location="/assets" mapping="/**/*.mp3"/>
     <mvc:resources location="/assets" mapping="/**/*.mp4"/>
-
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/student/getstuinfo"/>
+            <bean class="com.springmvc.Interceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/getalluser"/>
+            <bean class="com.springmvc.Interceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

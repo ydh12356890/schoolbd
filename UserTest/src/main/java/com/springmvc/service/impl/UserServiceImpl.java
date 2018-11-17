@@ -28,12 +28,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int RegisterNewUser(String userName, String usePassword) {
+    public int RegisterNewUser(String userName, String userPassword) {
         User user2 = userMapper.selectUserByUsername(userName);
         if (user2 != null) {
             return 1;
         } else
-            userMapper.insertNewUser(userName, usePassword);
+            userMapper.insertNewUser(userName, userPassword);
         return 0;
 
     }

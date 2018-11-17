@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,33 +34,40 @@ public class main {
 
     @RequestMapping("/user/login")
     @ResponseBody
-    public String Login(String username,String password) {
-
+    public String Login(HttpServletRequest request,HttpServletResponse response) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+       // String rememberme = request.getParameter("rememberme");
         User user = userService.CheckUserExist(username, password);
 
-        if (user != null) {
+        if (null ==user) {
+            return "false";
+        }
+        else {
+            request.getSession().setAttribute("user", user);
+//            request.getSession().setAttribute("password",user);
+
             return "success";
         }
-        else
-            return null;
+
+
 
 
     }
 
 
-    /*
-
     @RequestMapping("/user/register")
-    public String Register(User user) {
-        int a = userService.RegisterNewUser(user.getUserName(), user.getUserPassword());
+    @ResponseBody
+    public String Register(String username,String password) {
+        int a = userService.RegisterNewUser(username, password);
         if (a == 0) {
             System.out.println("注册成功！！！");
-            return "index";
+            return "register successful";
         } else
             System.out.println("注册失败，用户名已存在！！！");
             return null;
 
-    }*/
+    }
   /*  @RequestMapping(value = "/user/getalluser" , method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList () {
@@ -72,3 +80,4 @@ public class main {
 
 
 }
+

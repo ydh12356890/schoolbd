@@ -28,7 +28,7 @@
       </label>
     </div>
     <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
-    <a href="#">Sign Up for System</a>
+    <a href="./views/register.jsp">Sign Up for System</a>
   </form>
 
 </div> <!-- /container -->
@@ -42,21 +42,29 @@
    $("#loginid").click(function(){
      var username = $("#inputUserName").val();
      var password = $("#inputPassword").val();
+       if(username==""){
+           alert("用户名不能为空");
+       }else if (password ==""){
+           alert("密码不能为空");
+       }else{
+
      $.ajax({
          url:"/user/login",
          data:{"username":username,"password":password},
          type:"post",
          dataType:"text",
          success:function (data) {
+
              if(data=="success") {
-                 window.location.href = "./assets/html/mainpage.html";
+                 window.location.href = "./assets/html/mainpage.jsp";
              }
              else {
-                 alert("error");
+                 alert("用户名或密码错误！");
              }
          }
      })
- });
+ }});
+
 
 </script>
 

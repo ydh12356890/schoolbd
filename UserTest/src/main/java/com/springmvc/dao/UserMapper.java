@@ -1,6 +1,7 @@
 package com.springmvc.dao;
 
 import com.springmvc.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface UserMapper {
 
 
     User selectUserByUsername(String userName); //登录
-    void insertNewUser(String userName,String userPassword); //注册
+    void insertNewUser(@Param("userName") String userName, @Param("userPassword") String userPassword); //注册 insertNewUser
 
     /*查询所有用户*/
     List<User> getAllUser();

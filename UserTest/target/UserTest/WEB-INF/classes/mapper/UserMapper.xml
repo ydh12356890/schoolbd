@@ -73,10 +73,12 @@
   <select id="selectUserByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
     SELECT * FROM user WHERE user_name = #{userName,jdbcType=VARCHAR}
   </select>
+
   <insert id="insertNewUser" parameterType="java.lang.String">
     INSERT  INTO  user (user_name,user_password)
     VALUES (#{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR})
   </insert>
+
   <select id="getAllUser" resultMap="BaseResultMap" >
     SELECT * FROM  user
   </select>

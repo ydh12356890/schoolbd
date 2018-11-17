@@ -10,9 +10,22 @@
     <result column="stu_politics" property="stuPolitics" jdbcType="VARCHAR" />
     <result column="stu_school" property="stuSchool" jdbcType="VARCHAR" />
     <result column="stu_major" property="stuMajor" jdbcType="VARCHAR" />
+    <result column="stu_score1" property="stuScore1" jdbcType="DECIMAL" />
+    <result column="stu_subject1" property="stuSubject1" jdbcType="VARCHAR" />
+    <result column="stu_teacher" property="stuTeacher" jdbcType="VARCHAR" />
+    <result column="stu_subject2" property="stuSubject2" jdbcType="VARCHAR" />
+    <result column="stu_score2" property="stuScore2" jdbcType="DECIMAL" />
+    <result column="stu_subject3" property="stuSubject3" jdbcType="VARCHAR" />
+    <result column="stu_score3" property="stuScore3" jdbcType="DECIMAL" />
+    <result column="stu_subject4" property="stuSubject4" jdbcType="VARCHAR" />
+    <result column="stu_score4" property="stuScore4" jdbcType="DECIMAL" />
+    <result column="stu_subject5" property="stuSubject5" jdbcType="VARCHAR" />
+    <result column="stu_score5" property="stuScore5" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    stu_number, stu_name, stu_sex, stu_age, stu_nation, stu_politics, stu_school, stu_major
+    stu_number, stu_name, stu_sex, stu_age, stu_nation, stu_politics, stu_school, stu_major, 
+    stu_score1, stu_subject1, stu_teacher, stu_subject2, stu_score2, stu_subject3, stu_score3, 
+    stu_subject4, stu_score4, stu_subject5, stu_score5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -27,10 +40,18 @@
   <insert id="insert" parameterType="com.springmvc.entity.Student" >
     insert into stuinfo (stu_number, stu_name, stu_sex, 
       stu_age, stu_nation, stu_politics, 
-      stu_school, stu_major)
+      stu_school, stu_major, stu_score1, 
+      stu_subject1, stu_teacher, stu_subject2, 
+      stu_score2, stu_subject3, stu_score3, 
+      stu_subject4, stu_score4, stu_subject5, 
+      stu_score5)
     values (#{stuNumber,jdbcType=VARCHAR}, #{stuName,jdbcType=VARCHAR}, #{stuSex,jdbcType=VARCHAR}, 
       #{stuAge,jdbcType=INTEGER}, #{stuNation,jdbcType=VARCHAR}, #{stuPolitics,jdbcType=VARCHAR}, 
-      #{stuSchool,jdbcType=VARCHAR}, #{stuMajor,jdbcType=VARCHAR})
+      #{stuSchool,jdbcType=VARCHAR}, #{stuMajor,jdbcType=VARCHAR}, #{stuScore1,jdbcType=DECIMAL}, 
+      #{stuSubject1,jdbcType=VARCHAR}, #{stuTeacher,jdbcType=VARCHAR}, #{stuSubject2,jdbcType=VARCHAR}, 
+      #{stuScore2,jdbcType=DECIMAL}, #{stuSubject3,jdbcType=VARCHAR}, #{stuScore3,jdbcType=DECIMAL}, 
+      #{stuSubject4,jdbcType=VARCHAR}, #{stuScore4,jdbcType=DECIMAL}, #{stuSubject5,jdbcType=VARCHAR}, 
+      #{stuScore5,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.springmvc.entity.Student" >
     insert into stuinfo
@@ -59,6 +80,39 @@
       <if test="stuMajor != null" >
         stu_major,
       </if>
+      <if test="stuScore1 != null" >
+        stu_score1,
+      </if>
+      <if test="stuSubject1 != null" >
+        stu_subject1,
+      </if>
+      <if test="stuTeacher != null" >
+        stu_teacher,
+      </if>
+      <if test="stuSubject2 != null" >
+        stu_subject2,
+      </if>
+      <if test="stuScore2 != null" >
+        stu_score2,
+      </if>
+      <if test="stuSubject3 != null" >
+        stu_subject3,
+      </if>
+      <if test="stuScore3 != null" >
+        stu_score3,
+      </if>
+      <if test="stuSubject4 != null" >
+        stu_subject4,
+      </if>
+      <if test="stuScore4 != null" >
+        stu_score4,
+      </if>
+      <if test="stuSubject5 != null" >
+        stu_subject5,
+      </if>
+      <if test="stuScore5 != null" >
+        stu_score5,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="stuNumber != null" >
@@ -84,6 +138,39 @@
       </if>
       <if test="stuMajor != null" >
         #{stuMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore1 != null" >
+        #{stuScore1,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject1 != null" >
+        #{stuSubject1,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTeacher != null" >
+        #{stuTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSubject2 != null" >
+        #{stuSubject2,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore2 != null" >
+        #{stuScore2,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject3 != null" >
+        #{stuSubject3,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore3 != null" >
+        #{stuScore3,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject4 != null" >
+        #{stuSubject4,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore4 != null" >
+        #{stuScore4,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject5 != null" >
+        #{stuSubject5,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore5 != null" >
+        #{stuScore5,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -111,6 +198,39 @@
       <if test="stuMajor != null" >
         stu_major = #{stuMajor,jdbcType=VARCHAR},
       </if>
+      <if test="stuScore1 != null" >
+        stu_score1 = #{stuScore1,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject1 != null" >
+        stu_subject1 = #{stuSubject1,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTeacher != null" >
+        stu_teacher = #{stuTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSubject2 != null" >
+        stu_subject2 = #{stuSubject2,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore2 != null" >
+        stu_score2 = #{stuScore2,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject3 != null" >
+        stu_subject3 = #{stuSubject3,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore3 != null" >
+        stu_score3 = #{stuScore3,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject4 != null" >
+        stu_subject4 = #{stuSubject4,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore4 != null" >
+        stu_score4 = #{stuScore4,jdbcType=DECIMAL},
+      </if>
+      <if test="stuSubject5 != null" >
+        stu_subject5 = #{stuSubject5,jdbcType=VARCHAR},
+      </if>
+      <if test="stuScore5 != null" >
+        stu_score5 = #{stuScore5,jdbcType=DECIMAL},
+      </if>
     </set>
     where stu_number = #{stuNumber,jdbcType=VARCHAR}
   </update>
@@ -122,7 +242,20 @@
       stu_nation = #{stuNation,jdbcType=VARCHAR},
       stu_politics = #{stuPolitics,jdbcType=VARCHAR},
       stu_school = #{stuSchool,jdbcType=VARCHAR},
-      stu_major = #{stuMajor,jdbcType=VARCHAR}
+      stu_major = #{stuMajor,jdbcType=VARCHAR},
+      stu_score1 = #{stuScore1,jdbcType=DECIMAL},
+      stu_subject1 = #{stuSubject1,jdbcType=VARCHAR},
+      stu_teacher = #{stuTeacher,jdbcType=VARCHAR},
+      stu_subject2 = #{stuSubject2,jdbcType=VARCHAR},
+      stu_score2 = #{stuScore2,jdbcType=DECIMAL},
+      stu_subject3 = #{stuSubject3,jdbcType=VARCHAR},
+      stu_score3 = #{stuScore3,jdbcType=DECIMAL},
+      stu_subject4 = #{stuSubject4,jdbcType=VARCHAR},
+      stu_score4 = #{stuScore4,jdbcType=DECIMAL},
+      stu_subject5 = #{stuSubject5,jdbcType=VARCHAR},
+      stu_score5 = #{stuScore5,jdbcType=DECIMAL}
     where stu_number = #{stuNumber,jdbcType=VARCHAR}
   </update>
+
+
 </mapper>

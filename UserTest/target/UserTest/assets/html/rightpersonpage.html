@@ -36,7 +36,7 @@
                 <input id="nationId" type="text" value="" disabled class="stuinput">
 
                 <label>政治面貌：</label>
-                <input id="politicsId" type="text" value="" disabled class="stuinput"<br>
+                <input id="politicsId" type="text" value="" disabled class="stuinput"<br/>
 
                 <label>学院：</label>
                 <input id="schoolId" type="text" value="" disabled class="stuinput">
@@ -49,23 +49,39 @@
     </div>
 
     <div id="historyScore">
+        <div style="margin: 5px">
+            <!--<input type="text" id="historyStuNum" name="historystuNum" value="" disabled>-->
+            <button class="btn-primary" id="historycourse" type="button" onclick="checkHistoryScore()">查询历史成绩</button>
+        </div>
+        <div id="stuScore" style="width: 500px;height: 500px">
 
+        </div>
     </div>
 
-    <div class="table-responsive" id="currentCourse">
-        <table class="table table-striped" id="tableuserlist">
-            <thead>
-            <tr>
-                <th>id</th>
-                <th>username</th>
-                <th>password</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    <div id="currentCourse">
+        <div style="margin: 5px">
+            <!--<input type="text" id="historyStuNum" name="historystuNum" value="" disabled>-->
+            <button class="btn-primary" id="scorePredict" type="button" onclick="ScorePredict()">预测本学期成绩</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped" id="tableScorePredictlist">
+                <thead>
+                <tr>
+                    <th>课程号</th>
+                    <th>课程名</th>
+                    <th>成绩</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 </div>
+
 
 </body>
 </html>

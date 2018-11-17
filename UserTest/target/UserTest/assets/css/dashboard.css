@@ -83,6 +83,15 @@ body {
   margin-top: 0;
 }
 
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+.table-hover > tbody > tr>td:hover {
+  background-color: #f5f5f5
+}
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+  border: 2px groove #ddd
+}
 
 /*
  * Placeholder dashboard ideas

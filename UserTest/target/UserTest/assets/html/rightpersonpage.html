@@ -19,33 +19,67 @@
         <img src="../icon/person.jpg"/>
     </div>
 
-    <div id="personInfo">
-        <div>
-            <form style="border-style: solid;border-width: 3px;margin: 5px;padding: 10px;border-color: #2b542c">
-                <lable>学号：</lable>
-                <input id="numberId" type="text" value="" disabled class="stuinput">
-                <lable>姓名：</lable>
-                <input id="nameId" type="text" value="" disabled class="stuinput"><br>
-
-                <label>性别：</label>
-                <input id="sexId" type="text" value="" disabled class="stuinput">
-                <lable>年龄：</lable>
-                <input id="ageId" type="text" value="" disabled class="stuinput"><br>
-
-                <label>民族：</label>
-                <input id="nationId" type="text" value="" disabled class="stuinput">
-
-                <label>政治面貌：</label>
-                <input id="politicsId" type="text" value="" disabled class="stuinput"<br/>
-
-                <label>学院：</label>
-                <input id="schoolId" type="text" value="" disabled class="stuinput">
-
-                <label>专业：</label>
-                <input id="majorId" type="text" value="" disabled class="stuinput"><br>
-            </form>
-        </div>
-
+    <div id="personInfo" class="table-responsive">
+            <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                    <td>学号</td>
+                    <td id="numberId"></td>
+                    <td>姓名</td>
+                    <td id="nameId"></td>
+                </tr>
+                <tr>
+                    <td>性别</td>
+                    <td id="sexId"></td>
+                    <td>年龄</td>
+                    <td id="ageId"></td>
+                </tr>
+                <tr>
+                    <td>民族</td>
+                    <td id="nationId"></td>
+                    <td>政治面貌</td>
+                    <td id="politicsId"></td>
+                </tr>
+                <tr>
+                    <td>学院</td>
+                    <td id="schoolId"></td>
+                    <td>专业</td>
+                    <td id="majorId"></td>
+                </tr>
+            </table>
+            <!--<form class = "form-inline">
+                <div class="form-group">
+                    <lable for = "numberId">学号：</lable>
+                    <input id="numberId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <lable for="nameId">姓名：</lable>
+                    <input id="nameId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="sexId">性别：</label>
+                    <input id="sexId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <lable for="ageId">年龄：</lable>
+                    <input id="ageId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="nationId">民族：</label>
+                    <input id="nationId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="politicsId">政治面貌：</label>
+                    <input id="politicsId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="schoolId">学院：</label>
+                    <input id="schoolId" class="form-control" type="text" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="majorId">专业：</label>
+                    <input id="majorId" class="form-control" type="text" disabled>
+                </div>
+            </form>-->
     </div>
 
     <div id="historyScore">
@@ -65,7 +99,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-striped" id="tableScorePredictlist">
+            <table class="table table-striped table-bordered table-hover table-condensed" id="tableScorePredictlist">
                 <thead>
                 <tr>
                     <th>课程号</th>

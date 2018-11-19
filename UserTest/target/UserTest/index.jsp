@@ -16,7 +16,7 @@
 <body>
 
 <div class="container">
-  <form class="form-signin" id="form1" >
+  <%--<form class="form-signin" id="form1" >
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputUserName" class="sr-only">Username</label>
     <input type="text" id="inputUserName" name="userName" class="form-control">
@@ -29,7 +29,27 @@
     </div>
     <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
     <a href="./views/register.jsp">Sign Up for System</a>
-  </form>
+  </form>--%>
+    <form class="form-signin form-horizontal">
+      <div class="form-group">
+        <label for="inputUserName" class="col-md-4 control-label">用户名</label>
+        <div class="col-md-8">
+          <input type="text" name="userName" id="inputUserName" class="form-control" placeholder="请输入用户名...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword" class="col-md-4 control-label">密码</label>
+        <div class="col-md-8">
+          <input type="password" name="userPassword" id="inputPassword" class="form-control" placeholder="请输入密码...">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+          <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
+          <a href="./views/register.jsp">Sign Up for System</a>
+        </div>
+      </div>
+    </form>
 
 </div> <!-- /container -->
 

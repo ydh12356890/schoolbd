@@ -5,47 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>rightpersonpage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >-->
 </head>
 <body>
 <div id="div-header">
     <h2 class="sub-header">Student Profile</h2>
     <div style="margin: 5px">
-        <input type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号..." required autofocus>
-        <button class="btn-primary" id="checkdata" type="button" onclick="check()">查询</button>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="inputStuNum">输入学号</label>
+                <input class="form-control" type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号...">
+                <button class="btn btn-primary" id="checkdata" type="button" onclick="check()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+            </div>
+        </form>
     </div>
 </div>
 <div id="fourdiv">
     <div id="personPicture">
-        <img src="../icon/person.jpg"/>
+        <img class="img-responsive img-thumbnail" src="../icon/person.jpg"/>
     </div>
 
-    <div id="personInfo" class="table-responsive">
+    <div id="personInfo" >
+        <div class="table-responsive">
             <table class="table table-bordered table-hover table-condensed">
+                <caption style="text-align: center">学生基本信息</caption>
                 <tr>
-                    <td>学号</td>
+                    <td class="info">学号</td>
                     <td id="numberId"></td>
-                    <td>姓名</td>
+                    <td class="info">姓名</td>
                     <td id="nameId"></td>
                 </tr>
                 <tr>
-                    <td>性别</td>
+                    <td class="info">性别</td>
                     <td id="sexId"></td>
-                    <td>年龄</td>
+                    <td class="info">年龄</td>
                     <td id="ageId"></td>
                 </tr>
                 <tr>
-                    <td>民族</td>
+                    <td class="info">民族</td>
                     <td id="nationId"></td>
-                    <td>政治面貌</td>
+                    <td class="info">政治面貌</td>
                     <td id="politicsId"></td>
                 </tr>
                 <tr>
-                    <td>学院</td>
+                    <td class="info">学院</td>
                     <td id="schoolId"></td>
-                    <td>专业</td>
+                    <td class="info">专业</td>
                     <td id="majorId"></td>
                 </tr>
             </table>
+        </div>
             <!--<form class = "form-inline">
                 <div class="form-group">
                     <lable for = "numberId">学号：</lable>
@@ -84,21 +94,22 @@
 
     <div id="historyScore">
         <div style="margin: 5px">
-            <!--<input type="text" id="historyStuNum" name="historystuNum" value="" disabled>-->
-            <button class="btn-primary" id="historycourse" type="button" onclick="checkHistoryScore()">查询历史成绩</button>
+            <button class=" btn btn-primary" id="historycourse" type="button" onclick="checkHistoryScore()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询历史成绩
+            </button>
         </div>
-        <div id="stuScore" style="width: 500px;height: 500px">
+        <div id="stuScore" style="width: 500px;height: 500px;margin-left:auto;margin-right: auto ">
 
         </div>
     </div>
 
     <div id="currentCourse">
         <div style="margin: 5px">
-            <!--<input type="text" id="historyStuNum" name="historystuNum" value="" disabled>-->
-            <button class="btn-primary" id="scorePredict" type="button" onclick="ScorePredict()">预测本学期成绩</button>
+            <button class="btn btn-primary" id="scorePredict" type="button" onclick="ScorePredict()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 预测本学期成绩</button>
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive" style="padding: 3px">
             <table class="table table-striped table-bordered table-hover table-condensed" id="tableScorePredictlist">
                 <thead>
                 <tr>

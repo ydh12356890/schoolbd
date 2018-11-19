@@ -8,7 +8,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
     <link rel="icon" href="../icon/bd.jpg">
 
     <title>Project BD</title>
@@ -24,7 +26,7 @@
         border-color: #66512c;
         padding: 50px;
         width: 30%;
-        height: 300px;
+        height: auto;
         vertical-align: middle;
         display: table-cell;
         text-align: center;
@@ -37,7 +39,7 @@
         border-width: 1px;
         padding: 50px;
         width: 70%;
-        height: 300px;
+        height: auto;
         float: left;
 
     }
@@ -46,7 +48,7 @@
         border-style: solid;
         border-color: #2b542c;
         width: 60%;
-        height: 600px;
+        height: auto;
         float: left;
         clear: left;
 
@@ -54,11 +56,9 @@
     #currentCourse{
         border-width: 1px;
         border-style: solid;
-        padding: 10px;
         border-color: #2aabd2;
         width: 40%;
-        height: 600px;
-
+        height: auto;
         float: left;
 
     }
@@ -116,8 +116,8 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" style="color: white">${sessionScope.get("user").userName}</a></li>
-                <li><button class="btn-primary" type="button", id ='logout',onclick="Logout()">注销</button></li>
-
+                <li><button class="btn btn-primary" type="button", id ='logout',onclick="Logout()">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销</button></li>
             </ul>
         </div>
     </div>

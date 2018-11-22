@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -67,6 +68,13 @@ public class main {
             System.out.println("注册失败，用户名已存在！！！");
             return null;
 
+    }
+    @RequestMapping(value = "/user/logout")
+    @ResponseBody
+    public String logout(HttpSession session) throws Exception{
+        session.removeAttribute("user");
+        session.invalidate();
+        return "success";
     }
   /*  @RequestMapping(value = "/user/getalluser" , method = RequestMethod.GET)
     @ResponseBody

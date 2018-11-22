@@ -5,27 +5,123 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>rightpersonpage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >-->
+    <link href="../css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/echarts.css">
 </head>
 <body>
-<div id="div-header">
-    <h2 class="sub-header">Student Profile</h2>
-    <div style="margin: 5px">
-        <form class="form-inline">
-            <div class="form-group">
-                <label class="sr-only" for="inputStuNum">输入学号</label>
-                <input class="form-control" type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号...">
-                <button class="btn btn-primary" id="checkdata" type="button" onclick="check()">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+<div>
+    <div class="rightpersonpage">
+        <div id="div-header" style="padding: 3px;margin: 3px; border: 1px solid #D9DEE4">
+            <h2 class="sub-header">Student Profile</h2>
+            <div style="margin: 5px">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="inputStuNum">输入学号</label>
+                        <input class="form-control" type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号...">
+                        <button class="btn btn-primary" id="checkdata" type="button" onclick="check()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+        <div id="personPicture" style="padding: 3px; margin: 3px;border: 1px solid #D9DEE4">
+            <img class="img-responsive img-thumbnail" src="../icon/person.jpg"/>
+        </div>
+        <div id="personInfo" style="padding: 3px;margin: 3px  ; border: 1px solid #D9DEE4">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-condensed">
+                    <caption style="text-align: center">学生基本信息</caption>
+                    <tr>
+                        <td class="info">学号</td>
+                        <td id="numberId"></td>
+                        <td class="info">姓名</td>
+                        <td id="nameId"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">性别</td>
+                        <td id="sexId"></td>
+                        <td class="info">年龄</td>
+                        <td id="ageId"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">民族</td>
+                        <td id="nationId"></td>
+                        <td class="info">政治面貌</td>
+                        <td id="politicsId"></td>
+                    </tr>
+                    <tr>
+                        <td class="info">学院</td>
+                        <td id="schoolId"></td>
+                        <td class="info">专业</td>
+                        <td id="majorId"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div id="historyScore" style="padding: 3px; margin: 3px;border: 1px solid #D9DEE4">
+            <div style="margin: 5px">
+                <button class=" btn btn-primary" id="historycourse" type="button" onclick="checkHistoryScore()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询历史成绩
+                </button>
+            </div>
+            <div id="stuScore" style="width: 500px;height: 500px;margin-left:auto;margin-right: auto ">
+
+            </div>
+        </div>
+        <div id="currentCourse" style="padding: 3px; margin: 3px;border: 1px solid #D9DEE4">
+            <div style="margin: 5px">
+                <button class="btn btn-primary" id="scorePredict" type="button" onclick="ScorePredict()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 预测本学期成绩</button>
+            </div>
+
+            <div class="table-responsive" style="padding: 3px">
+                <table class="table table-striped table-bordered table-hover table-condensed" id="tableScorePredictlist">
+                    <thead>
+                    <tr>
+                        <th>课程号</th>
+                        <th>课程名</th>
+                        <th>成绩</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div id="cardconsumption" style="padding: 3px; margin: 3px;border: 1px solid #D9DEE4">
+            <div style="margin: 5px">
+                <button class=" btn btn-primary" id="cardcons" type="button" onclick="checkCardConsumption()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询一卡通消费信息
+                </button>
+            </div>
+            <div id="cardConsumptiondiv" style="width: 100%;height: 500px;margin-left:auto;margin-right: auto ">
+
+            </div>
+        </div>
+
     </div>
-</div>
-<div id="fourdiv">
+   <!-- <div id="div-header">
+        <h2 class="sub-header">Student Profile</h2>
+        <div style="margin: 5px">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="sr-only" for="inputStuNum">输入学号</label>
+                    <input class="form-control" type="text" id="inputStuNum" name="stuNum" placeholder="请输入学号...">
+                    <button class="btn btn-primary" id="checkdata" type="button" onclick="check()">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                </div>
+            </form>
+        </div>
+    </div>-->
+   <!-- <div class="col-md-6" >
     <div id="personPicture">
         <img class="img-responsive img-thumbnail" src="../icon/person.jpg"/>
     </div>
-
+    </div>
+    <div class="col-md-6" >
     <div id="personInfo" >
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-condensed">
@@ -56,43 +152,11 @@
                 </tr>
             </table>
         </div>
-            <!--<form class = "form-inline">
-                <div class="form-group">
-                    <lable for = "numberId">学号：</lable>
-                    <input id="numberId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <lable for="nameId">姓名：</lable>
-                    <input id="nameId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="sexId">性别：</label>
-                    <input id="sexId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <lable for="ageId">年龄：</lable>
-                    <input id="ageId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="nationId">民族：</label>
-                    <input id="nationId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="politicsId">政治面貌：</label>
-                    <input id="politicsId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="schoolId">学院：</label>
-                    <input id="schoolId" class="form-control" type="text" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="majorId">专业：</label>
-                    <input id="majorId" class="form-control" type="text" disabled>
-                </div>
-            </form>-->
-    </div>
 
-    <div id="historyScore">
+    </div>
+    </div>
+    <div class="col-md-6" >
+        <div id="historyScore">
         <div style="margin: 5px">
             <button class=" btn btn-primary" id="historycourse" type="button" onclick="checkHistoryScore()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询历史成绩
@@ -101,8 +165,9 @@
         <div id="stuScore" style="width: 500px;height: 500px;margin-left:auto;margin-right: auto ">
 
         </div>
+        </div>
     </div>
-
+    <div class="col-md-6" >
     <div id="currentCourse">
         <div style="margin: 5px">
             <button class="btn btn-primary" id="scorePredict" type="button" onclick="ScorePredict()">
@@ -125,6 +190,7 @@
 
         </div>
     </div>
+    </div>-->
 </div>
 
 

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,13 +19,12 @@
     <link href="../css/dashboard.css" rel="stylesheet">
 
 </head>
-<style>
+<%--<style>
     #personPicture{
-        border-width: 1px;
-        border-style: solid;
-        border-color: #66512c;
-        padding: 50px;
-        width: 30%;
+        background: #ffffff;
+        border: 1px solid #E6E9ED;
+        margin-bottom: 5px;
+        width: 100%;
         height: auto;
         vertical-align: middle;
         display: table-cell;
@@ -34,75 +33,90 @@
 
     }
     #personInfo{
-        border-color: #c12e2a;
-        border-style: solid;
-        border-width: 1px;
-        padding: 50px;
-        width: 70%;
+        border: 1px solid #E6E9ED;
+        background: #ffffff;
+        margin-bottom: 5px;
+        /*padding: 50px;*/
+        width: 100%;
         height: auto;
         float: left;
 
     }
     #historyScore{
-        border-width: 1px;
-        border-style: solid;
-        border-color: #2b542c;
-        width: 60%;
+        background: #ffffff;
+        border: 1px solid #E6E9ED;
+        margin-bottom: 5px;
+        width: 100%;
         height: auto;
         float: left;
         clear: left;
 
     }
     #currentCourse{
-        border-width: 1px;
-        border-style: solid;
-        border-color: #2aabd2;
-        width: 40%;
+        background: #ffffff;
+        border: 1px solid #E6E9ED;
+        margin-bottom: 5px;
+        width: 100%;
         height: auto;
         float: left;
 
     }
 
-    ul.nav-sidebar-list{
-        list-style-type: none;
-
-
-    }
-    /*ul.nav-sidebar-list>li{
-        margin-top: 3px;
-        margin-bottom: 3px;
-
-    }*/
-    ul.nav-sidebar-list > li > a:link,a:visited{
-        text-decoration: none;
-        padding: 5px 140px 5px 10px;
-        margin: 3px;
-        text-align: center;
-        display: inline-block;
-
-    }
-    ul.nav-sidebar-list > li > a:hover,a:active{
-        background-color: #9acfea;
-    }
-    ul.nav-sidebar > li{
-        border-bottom-style: solid;
-        border-bottom-color: #9acfea;
-        border-bottom-width: 0.5px;
-        border-top-style: solid;
-        border-top-color: #9acfea;
-        border-top-width: 0.5px;
-
-    }
-
-
-
-
-
-</style>
+</style>--%>
 
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <div class="leftheader">
+                <div class="project_title">
+                    <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
+                </div>
+                <div class="profile_pic">
+                        <img src="../icon/bd.jpg" class="profile-img"><span>welcome,yangdh</span>
+                </div>
+            </div>
+            <ul class="nav nav-sidebar" >
+                <li class="active"><a href="#" onclick="showAtRight('rightmainpage.html')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
+                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.html')">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 个人信息</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 群体-学院</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightclasspage.html')">
+                    <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> 群体-班级</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10 col-md-offset-2 main" id="rightpage">
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="../icon/bd.jpg" alt="">杨登辉
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;">个人信息修改</a></li>
+                                    <li><a href="javascript:;">帮助</a></li>
+                                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out  pull-right"></span> 退出登录</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div id="rightdiv" class="rightdiv"></div>
+            </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+        </div>
+    </div>
+</div>
+
+
+<%--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -116,45 +130,44 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" style="color: white">${sessionScope.get("user").userName}</a></li>
-                <li><button class="btn btn-primary" type="button", id ='logout',onclick="Logout()">
+                <li><button class="btn btn-primary" type="button", id ='logout'>
                     <span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销</button></li>
             </ul>
         </div>
     </div>
-</nav>
+</nav>--%>
 
-<div class="container-fluid">
+<%--<div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar" >
-                <li class="clickable"><a href="#" onclick="showAtRight('rightmainpage.html')">首页 </a></li>
-                <li class="clickable"><a href="#"  onclick="showAtRight('rightpersonpage.html')">个人信息</a></li>
-                <li class="clickable"><a href="#" onclick="showAtRight('rightgrouppage.html')">群体-学院</a></li>
-                <li class="clickable"><a href="#" onclick="showAtRight('rightclasspage.html')">群体-班级</a></li>
-                   <%-- <ul class="nav-sidebar-list" >
-                        <li class="group"><a href="#"  >学院</a></li>
-                        <li class="group"><a href="#"  >班级</a></li>
-                        <li class="group"><a href="#"  >其他</a></li>
-                    </ul>
-                </li>--%>
-                <li class="clickable"><a href="#" onclick="showAtRight('rightaddpage.html')"> 扩展功能</a></li>
+                <li class="active"><a href="#" onclick="showAtRight('rightmainpage.html')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
+                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.html')">
+                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 个人信息</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
+                   <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 群体-学院</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightclasspage.html')">
+                    <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> 群体-班级</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="rightpage">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="rightpage" style="background: #f7f7f7">
 
             <div id="rightdiv">
 
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src = "../js/echarts.common.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('ul.nav >li.clickable').click(function (e) {
-            $('ul.nav>li.clickable').removeClass('active');
+        $('ul.nav >li').click(function (e) {
+            $('ul.nav>li').removeClass('active');
             $(this).addClass('active');
 
         });
@@ -384,9 +397,23 @@
 
          })*/
     }
-    function Logout() {
+    $("#logout").click( function() {
+        console.log("注销");
+        $.ajax({
+            url:"/user/logout",
+            type:"post",
+            dataType:"text",
+            success:function (data) {
+                if(data=="success") {
+                    window.location.href = "/index.jsp";
+                }
+                else {
+                    //alert("用户名或密码错误！");
+                }
+            }
+        })
         
-    }
+    });
 
     /* function turnpage(url) {
          var url0 = document.URL;
@@ -464,6 +491,517 @@
                 $('#tableScorePredictlist tbody').replaceWith(tbody);
             }
 
+        });
+
+
+    }
+
+    var theme = {
+        color: [
+            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+        ],
+
+        title: {
+            itemGap: 8,
+            textStyle: {
+                fontWeight: 'normal',
+                color: '#408829'
+            }
+        },
+
+        dataRange: {
+            color: ['#1f610a', '#97b58d']
+        },
+
+        toolbox: {
+            color: ['#408829', '#408829', '#408829', '#408829']
+        },
+
+        tooltip: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            axisPointer: {
+                type: 'line',
+                lineStyle: {
+                    color: '#408829',
+                    type: 'dashed'
+                },
+                crossStyle: {
+                    color: '#408829'
+                },
+                shadowStyle: {
+                    color: 'rgba(200,200,200,0.3)'
+                }
+            }
+        },
+
+        dataZoom: {
+            dataBackgroundColor: '#eee',
+            fillerColor: 'rgba(64,136,41,0.2)',
+            handleColor: '#408829'
+        },
+        grid: {
+            borderWidth: 0
+        },
+
+        categoryAxis: {
+            axisLine: {
+                lineStyle: {
+                    color: '#408829'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: ['#eee']
+                }
+            }
+        },
+
+        valueAxis: {
+            axisLine: {
+                lineStyle: {
+                    color: '#408829'
+                }
+            },
+            splitArea: {
+                show: true,
+                areaStyle: {
+                    color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: ['#eee']
+                }
+            }
+        },
+        timeline: {
+            lineStyle: {
+                color: '#408829'
+            },
+            controlStyle: {
+                normal: {
+                    color: '#408829'
+                },
+                emphasis: {
+                    color: '#408829'
+                }
+            }
+        },
+
+        k: {
+            itemStyle: {
+                normal: {
+                    color: '#68a54a',
+                    color0: '#a9cba2',
+                    lineStyle: {
+                        width: 1,
+                        color: '#408829',
+                        color0: '#86b379'
+                    }
+                }
+            }
+        },
+        map: {
+            itemStyle: {
+                normal: {
+                    areaStyle: {
+                        color: '#ddd'
+                    },
+                    label: {
+                        textStyle: {
+                            color: '#c12e34'
+                        }
+                    }
+                },
+                emphasis: {
+                    areaStyle: {
+                        color: '#99d2dd'
+                    },
+                    label: {
+                        textStyle: {
+                            color: '#c12e34'
+                        }
+                    }
+                }
+            }
+        },
+        force: {
+            itemStyle: {
+                normal: {
+                    linkStyle: {
+                        strokeColor: '#408829'
+                    }
+                }
+            }
+        },
+        chord: {
+            padding: 4,
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        width: 1,
+                        color: 'rgba(128, 128, 128, 0.5)'
+                    },
+                    chordStyle: {
+                        lineStyle: {
+                            width: 1,
+                            color: 'rgba(128, 128, 128, 0.5)'
+                        }
+                    }
+                },
+                emphasis: {
+                    lineStyle: {
+                        width: 1,
+                        color: 'rgba(128, 128, 128, 0.5)'
+                    },
+                    chordStyle: {
+                        lineStyle: {
+                            width: 1,
+                            color: 'rgba(128, 128, 128, 0.5)'
+                        }
+                    }
+                }
+            }
+        },
+        gauge: {
+            startAngle: 225,
+            endAngle: -45,
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: [
+                        [0.2, '#86b379'],
+                        [0.8, '#68a54a'],
+                        [1, '#408829']
+                    ],
+                    width: 8
+                }
+            },
+            axisTick: {
+                splitNumber: 10,
+                length: 12,
+                lineStyle: {
+                    color: 'auto'
+                }
+            },
+            axisLabel: {
+                textStyle: {
+                    color: 'auto'
+                }
+            },
+            splitLine: {
+                length: 18,
+                lineStyle: {
+                    color: 'auto'
+                }
+            },
+            pointer: {
+                length: '90%',
+                color: 'auto'
+            },
+            title: {
+                textStyle: {
+                    color: '#333'
+                }
+            },
+            detail: {
+                textStyle: {
+                    color: 'auto'
+                }
+            }
+        },
+        textStyle: {
+            fontFamily: 'Arial, Verdana, sans-serif'
+        }
+    };
+   function checkBarGraph() {
+        console.log("click触发");
+        var echartBar = echarts.init(document.getElementById('bargraphdiv'),theme);
+        echartBar.setOption({
+            title: {
+                text: 'Graph title',
+                subtext: 'Graph Sub-text'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['sales', 'purchases']
+            },
+            toolbox: {
+                show: false
+            },
+            calculable: false,
+            xAxis: [{
+                type: 'category',
+                data: ['1?', '2?', '3?', '4?', '5?', '6?', '7?', '8?', '9?', '10?', '11?', '12?']
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [{
+                name: 'sales',
+                type: 'bar',
+                data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                markPoint: {
+                    data: [{
+                        type: 'max',
+                        name: '???'
+                    }, {
+                        type: 'min',
+                        name: '???'
+                    }]
+                },
+                markLine: {
+                    data: [{
+                        type: 'average',
+                        name: '???'
+                    }]
+                }
+            }, {
+                name: 'purchases',
+                type: 'bar',
+                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                markPoint: {
+                    data: [{
+                        name: 'sales',
+                        value: 182.2,
+                        xAxis: 7,
+                        yAxis: 183,
+                    }, {
+                        name: 'purchases',
+                        value: 2.3,
+                        xAxis: 11,
+                        yAxis: 3
+                    }]
+                },
+                markLine: {
+                    data: [{
+                        type: 'average',
+                        name: '???'
+                    }]
+                }
+            }]
+        });
+
+
+    }
+    var dataStyle = {
+        normal: {
+            label: {
+                show: false
+            },
+            labelLine: {
+                show: false
+            }
+        }
+    };
+
+    var placeHolderStyle = {
+        normal: {
+            color: 'rgba(0,0,0,0)',
+            label: {
+                show: false
+            },
+            labelLine: {
+                show: false
+            }
+        },
+        emphasis: {
+            color: 'rgba(0,0,0,0)'
+        }
+    };
+    function checkMiniPie() {
+       console.log("mini pie click");
+
+        var echartMiniPie = echarts.init(document.getElementById('minipiediv'), theme);
+        echartMiniPie.setOption({
+            title: {
+                text: 'Chart #2',
+                subtext: 'From ExcelHome',
+                sublink: 'http://e.weibo.com/1341556070/AhQXtjbqh',
+                x: 'center',
+                y: 'center',
+                itemGap: 20,
+                textStyle: {
+                    color: 'rgba(30,144,255,0.8)',
+                    fontFamily: '微软雅黑',
+                    fontSize: 35,
+                    fontWeight: 'bolder'
+                }
+            },
+            tooltip: {
+                show: true,
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 170,
+                y: 45,
+                itemGap: 12,
+                data: ['68%Something #1', '29%Something #2', '3%Something #3'],
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {
+                        show: true
+                    },
+                    dataView: {
+                        show: true,
+                        title: "Text View",
+                        lang: [
+                            "Text View",
+                            "Close",
+                            "Refresh",
+                        ],
+                        readOnly: false
+                    },
+                    restore: {
+                        show: true,
+                        title: "Restore"
+                    },
+                    saveAsImage: {
+                        show: true,
+                        title: "Save Image"
+                    }
+                }
+            },
+            series: [{
+                name: '1',
+                type: 'pie',
+                clockWise: false,
+                radius: [105, 130],
+                itemStyle: dataStyle,
+                data: [{
+                    value: 68,
+                    name: '68%Something #1'
+                }, {
+                    value: 32,
+                    name: 'invisible',
+                    itemStyle: placeHolderStyle
+                }]
+            }, {
+                name: '2',
+                type: 'pie',
+                clockWise: false,
+                radius: [80, 105],
+                itemStyle: dataStyle,
+                data: [{
+                    value: 29,
+                    name: '29%Something #2'
+                }, {
+                    value: 71,
+                    name: 'invisible',
+                    itemStyle: placeHolderStyle
+                }]
+            }, {
+                name: '3',
+                type: 'pie',
+                clockWise: false,
+                radius: [25, 80],
+                itemStyle: dataStyle,
+                data: [{
+                    value: 3,
+                    name: '3%Something #3'
+                }, {
+                    value: 97,
+                    name: 'invisible',
+                    itemStyle: placeHolderStyle
+                }]
+            }]
+        });
+
+
+
+    }
+    function checkLineGraph() {
+        var echartLine = echarts.init(document.getElementById('linegraphdiv'), theme);
+
+        echartLine.setOption({
+            title: {
+                text: 'Line Graph',
+                subtext: 'Subtitle'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                x: 220,
+                y: 40,
+                data: ['Intent', 'Pre-order', 'Deal']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    magicType: {
+                        show: true,
+                        title: {
+                            line: 'Line',
+                            bar: 'Bar',
+                            stack: 'Stack',
+                            tiled: 'Tiled'
+                        },
+                        type: ['line', 'bar', 'stack', 'tiled']
+                    },
+                    restore: {
+                        show: true,
+                        title: "Restore"
+                    },
+                    saveAsImage: {
+                        show: true,
+                        title: "Save Image"
+                    }
+                }
+            },
+            calculable: true,
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [{
+                name: 'Deal',
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    normal: {
+                        /*areaStyle: {
+                            type: 'default'
+                        }*/
+                    }
+                },
+                data: [10, 12, 21, 54, 260, 830, 710]},
+                {
+                    name: 'Pre-order',
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    normal: {
+                       /* areaStyle: {
+                            type: 'default'
+                        }*/
+                    }
+                },
+                data: [30, 182, 434, 791, 390, 30, 10]
+            },
+                {
+                name: 'Intent',
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    normal: {
+                        /*areaStyle: {
+                            type: 'default'
+                        }*/
+                    }
+                },
+                data: [1320, 1132, 601, 234, 120, 90, 20]
+            }]
         });
 
 

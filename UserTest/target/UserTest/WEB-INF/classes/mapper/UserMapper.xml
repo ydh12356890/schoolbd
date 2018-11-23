@@ -79,6 +79,11 @@
     VALUES (#{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR})
   </insert>
 
+  <update id="updatePasswordByUsername" parameterType="java.lang.String">
+    UPDATE user SET user_password = #{userPassword,jdbcType=VARCHAR}
+    WHERE user_name = #{userName,jdbcType=VARCHAR}
+  </update>
+
   <select id="getAllUser" resultMap="BaseResultMap" >
     SELECT * FROM  user
   </select>

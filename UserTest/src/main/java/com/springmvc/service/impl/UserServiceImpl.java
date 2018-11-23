@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Service("userservice")
 public class UserServiceImpl implements IUserService {
+
     @Resource
     UserMapper userMapper;
 
@@ -26,6 +27,14 @@ public class UserServiceImpl implements IUserService {
         }
         return null;
     }
+    @Override
+    public int updatepasswordService(String userName, String userPassword) {
+         return userMapper.updatePasswordByUsername(userName,userPassword);
+
+
+    }
+
+
 
     @Override
     public int RegisterNewUser(String userName, String userPassword) {

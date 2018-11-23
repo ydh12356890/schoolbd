@@ -54,13 +54,13 @@
                             selectByExampleQueryId="false">
 
     </table>-->
-     <!--   <table  schema="schoolbd"
+        <table  schema="schoolbd"
                 tableName="stuinfo" domainObjectName="Student"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
 
-        </table>-->
+        </table>
        <!-- <table  schema="schoolbd"
                 tableName="coursescoredis" domainObjectName="StudentScore"
                 enableCountByExample="false" enableUpdateByExample="false"
@@ -68,13 +68,13 @@
                 selectByExampleQueryId="false">
 
         </table>-->
-        <table  schema="schoolbd"
+        <!--<table  schema="schoolbd"
                 tableName="scorepredict" domainObjectName="ScorePredict"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
 
-        </table>
+        </table>-->
 
 
 

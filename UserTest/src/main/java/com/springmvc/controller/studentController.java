@@ -36,6 +36,14 @@ public class studentController {
 
         return student1;
     }
+    @RequestMapping("/getCardConsumption")
+    @ResponseBody
+    public Student getStuAllInfo(@RequestBody Student student){
+        String stuNum1 = student.getStuNumber();
+        Student student2 = studentService.getStudentInfo(stuNum1);
+        return  student2;
+    }
+
     /*public Student getStuInfo(@RequestBody Map<String,String> map){
 
         String stuNumber = map.get("stuNumber").toString();

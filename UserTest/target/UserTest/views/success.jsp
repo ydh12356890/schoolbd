@@ -12,9 +12,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="../assets/icon/bd.jpg">
-
-    <title>success</title>
+    <link rel="icon" href="../assets/icon/buptlogo.png">
+    <title>校园信息化</title>
 </head>
 <body>
 <h1>登陆成功！</h1>

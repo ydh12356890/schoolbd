@@ -23,6 +23,8 @@ public interface UserMapper {
     User selectUserByUsername(String userName); //登录
     void insertNewUser(@Param("userName") String userName, @Param("userPassword") String userPassword); //注册 insertNewUser
 
+    int updatePasswordByUsername(@Param("userName") String userName,@Param("userPassword") String userPassword); //修改密码
+
     /*查询所有用户*/
     List<User> getAllUser();
 }

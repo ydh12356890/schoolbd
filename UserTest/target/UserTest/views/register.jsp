@@ -15,8 +15,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../assets/icon/bd.jpg">
-    <title>User Register</title>
+    <link rel="icon" href="../assets/icon/buptlogo.png">
+    <title>校园信息化</title>
     <link href="../assets/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/signin.css" rel="stylesheet">
 </head>

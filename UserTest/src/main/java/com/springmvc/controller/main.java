@@ -55,6 +55,30 @@ public class main {
 
 
     }
+    @RequestMapping("/user/modifyPassword")
+    @ResponseBody
+    public String ModifyPassword(HttpServletRequest request,HttpServletResponse response){
+        String userName = request.getParameter("username");
+        String userOldPassword = request.getParameter("oldpassword");
+        String userNewPassword = request.getParameter("newpassword");
+        User user2 = userService.CheckUserExist(userName,userOldPassword);
+        if(user2!=null){
+            System.out.println("根据传入的两个参数：用户名和原密码查到用户");
+            //执行插入新密码，根据用户名update密码
+          int a = userService.updatepasswordService(userName,userNewPassword);
+          if(a==1){
+              return "update success";
+          }
+          else
+              return "update fail";
+
+        }
+        else {
+            System.out.println("原密码输入错误");
+            return "oldpass error";
+        }
+
+    }
 
 
     @RequestMapping("/user/register")

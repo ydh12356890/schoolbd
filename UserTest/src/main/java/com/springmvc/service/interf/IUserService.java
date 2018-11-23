@@ -14,6 +14,8 @@ public interface IUserService {
      User CheckUserExist(String userName,String userPassword);
      int RegisterNewUser(String userName,String usePassword);
 
+     int updatepasswordService(String userName,String userPassword);
+
      List<User> getAllUser();
 
 

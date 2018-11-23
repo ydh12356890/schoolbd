@@ -9,8 +9,8 @@
   <link href="assets/css/signin.css" rel="stylesheet">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="./assets/icon/bd.jpg">
-  <title>User Login</title>
+  <link rel="icon" href="./assets/icon/buptlogo.png">
+  <title>校园信息化</title>
 
 </head>
 <body>

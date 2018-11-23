@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
-    <link rel="icon" href="../icon/bd.jpg">
+    <link rel="icon" href="../icon/buptlogo.png">
 
-    <title>Project BD</title>
+    <title>校园信息化</title>
 
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
@@ -73,7 +73,7 @@
                     <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
                 </div>
                 <div class="profile_pic">
-                        <img src="../icon/bd.jpg" class="profile-img"><span>welcome,yangdh</span>
+                        <img src="../icon/bd.jpg" class="profile-img"><span>welcome,${sessionScope.get("user").userName}</span>
                 </div>
             </div>
             <ul class="nav nav-sidebar" >
@@ -96,13 +96,13 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="../icon/bd.jpg" alt="">杨登辉
+                                    <img src="../icon/bd.jpg" alt="">${sessionScope.get("user").userName}
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;">个人信息修改</a></li>
-                                    <li><a href="javascript:;">帮助</a></li>
-                                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out  pull-right"></span> 退出登录</a></li>
+                                    <%--<li><a href="javascript:;">修改密码</a></li>--%>
+                                    <li><a class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal" role="button">修改密码</a></li>
+                                    <li><a class="btn btn-default" href="#" role="button">退出登录</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -114,7 +114,55 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closebtn" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="modalInputUsername" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input type="text"  id="modalInputUsername" class="form-control" value="${sessionScope.get("user").userName}" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalOldUserpassword" class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10">
+                            <input type="password"  id="modalOldUserpassword" class="form-control" placeholder="请输入原密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalNewUserpassword1" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="password"  id="modalNewUserpassword1" class="form-control" placeholder="请输入新密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalNewUserpassword2" class="col-sm-2 control-label">确认新密码</label>
+                        <div class="col-sm-10">
+                            <input type="password"  id="modalNewUserpassword2" class="form-control" placeholder="请确认新密码">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearForm()">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitNewPassword()">保存</button>
 
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
 
 <%--<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -172,6 +220,57 @@
 
         });
     });
+    function clearForm() {
+       document.getElementById("modalOldUserpassword").value=null;
+        document.getElementById("modalNewUserpassword1").value=null;
+        document.getElementById("modalNewUserpassword2").value=null;
+        
+    }
+    $("#closebtn").click(function () {
+        document.getElementById("modalOldUserpassword").value=null;
+        document.getElementById("modalNewUserpassword1").value=null;
+        document.getElementById("modalNewUserpassword2").value=null;
+    });
+    function submitNewPassword() {
+        var userName = document.getElementById("modalInputUsername").value;
+        var userOldpass = document.getElementById("modalOldUserpassword").value;
+        var userNewPass1 = document.getElementById("modalNewUserpassword1").value;
+        var userNewPass2 = document.getElementById("modalNewUserpassword2").value;
+        console.log(userName,userOldpass,userNewPass1,userNewPass2);
+        if(userOldpass==""){
+            alert("原密码不能为空");
+        }else if(userNewPass1==""){
+            alert("新密码不能为空");
+        }else if(userNewPass2==""){
+            alert("确认密码不能为空");
+        }
+        else if(userNewPass1!=userNewPass2){
+            alert("两次输入的新密码不一致");
+        } else{
+            $.ajax({
+                type:"post",
+                url:"/user/modifyPassword",
+                data:{"username":userName,"oldpassword":userOldpass,"newpassword":userNewPass1} ,
+                dataType:"text",
+                success:function (data) {
+                    console.log(data);
+                    if(data==="update success") {
+                        document.getElementById("modalOldUserpassword").value="";
+                        document.getElementById("modalNewUserpassword1").value="";
+                        document.getElementById("modalNewUserpassword2").value="";
+                        alert("密码修改成功");
+                        //window.location.href = "./assets/html/mainpage.jsp";
+                    } else if(data==="update fail") {
+                        alert("密码修改失败");
+                    }
+                    else if(data==="oldpass error"){
+                        alert("原密码错误");
+                    }
+                }
+            })
+        }
+        
+    }
 
     function showAtRight(url) {
         var xmlHttp;
@@ -214,40 +313,44 @@
 
     }
     function check() {
-
         var stuNum = $("#inputStuNum").val();
-        console.log(stuNum);
-        $.ajax({
-            type:"post",
-            url:"/student/getstuinfo",
-            dataType: "json",
-            contentType:"application/json;charset=utf-8",
-            data:JSON.stringify({stuNumber:stuNum}),
-            success:function(data){
-                console.log(data);
-                document.getElementById("numberId").innerText = data["stuNumber"];
-                document.getElementById("nameId").innerText = data["stuName"];
-                document.getElementById("ageId").innerText = data["stuAge"];
-                document.getElementById("sexId").innerText = data["stuSex"];
-                document.getElementById("nationId").innerText = data["stuNation"];
-                document.getElementById("politicsId").innerText = data["stuPolitics"];
-                document.getElementById("schoolId").innerText = data["stuSchool"];
-                document.getElementById("majorId").innerText = data["stuMajor"];
-            },
-            error:function(){
-                document.getElementById("numberId").innerText = null;
-                document.getElementById("nameId").innerText = null;
-                document.getElementById("ageId").innerText = null;
-                document.getElementById("sexId").innerText = null;
-                document.getElementById("nationId").innerText = null;
-                document.getElementById("politicsId").innerText = null;
-                document.getElementById("schoolId").innerText = null;
-                document.getElementById("majorId").innerText = null;
-                document.getElementById("stuScore").innerText = null;
-                alert("该学号不存在，请重新输入！");
-            }
+        if(stuNum==""){
+            alert("学号不能为空，请重新输入");
+        }else {
+            console.log(stuNum);
+            $.ajax({
+                type: "post",
+                url: "/student/getstuinfo",
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({stuNumber: stuNum}),
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById("numberId").innerText = data["stuNumber"];
+                    document.getElementById("nameId").innerText = data["stuName"];
+                    document.getElementById("ageId").innerText = data["stuAge"];
+                    document.getElementById("sexId").innerText = data["stuSex"];
+                    document.getElementById("nationId").innerText = data["stuNation"];
+                    document.getElementById("politicsId").innerText = data["stuPolitics"];
+                    document.getElementById("schoolId").innerText = data["stuSchool"];
+                    document.getElementById("majorId").innerText = data["stuMajor"];
+                },
+                error: function () {
+                    document.getElementById("numberId").innerText = null;
+                    document.getElementById("nameId").innerText = null;
+                    document.getElementById("ageId").innerText = null;
+                    document.getElementById("sexId").innerText = null;
+                    document.getElementById("nationId").innerText = null;
+                    document.getElementById("politicsId").innerText = null;
+                    document.getElementById("schoolId").innerText = null;
+                    document.getElementById("majorId").innerText = null;
+                    document.getElementById("stuScore").innerText = null;
+                    alert("该学号不存在，请重新输入！");
+                }
 
-        })
+            })
+        }
+
 
     }
 
@@ -414,6 +517,7 @@
         })
         
     });
+
 
     /* function turnpage(url) {
          var url0 = document.URL;
@@ -916,7 +1020,7 @@
 
 
     }
-    function checkLineGraph() {
+    /*function checkLineGraph() {
         var echartLine = echarts.init(document.getElementById('linegraphdiv'), theme);
 
         echartLine.setOption({
@@ -970,9 +1074,9 @@
                 smooth: true,
                 itemStyle: {
                     normal: {
-                        /*areaStyle: {
+                        /!*areaStyle: {
                             type: 'default'
-                        }*/
+                        }*!/
                     }
                 },
                 data: [10, 12, 21, 54, 260, 830, 710]},
@@ -982,9 +1086,9 @@
                 smooth: true,
                 itemStyle: {
                     normal: {
-                       /* areaStyle: {
+                       /!* areaStyle: {
                             type: 'default'
-                        }*/
+                        }*!/
                     }
                 },
                 data: [30, 182, 434, 791, 390, 30, 10]
@@ -995,14 +1099,102 @@
                 smooth: true,
                 itemStyle: {
                     normal: {
-                        /*areaStyle: {
+                        /!*areaStyle: {
                             type: 'default'
-                        }*/
+                        }*!/
                     }
                 },
                 data: [1320, 1132, 601, 234, 120, 90, 20]
             }]
         });
+
+
+    }*/
+    function checkCardConsumption() {
+        var stuNum = $("#inputStuNum").val();
+        console.log(stuNum);
+        //初始化echart
+        var echartLine = echarts.init(document.getElementById('cardConsumptiondiv'), theme);
+        //页面加载数据
+            $.ajax({
+                type: "post",
+                async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url: "/getCardConsumption",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({stuNumber: stuNum}),
+                dataType: "json", //返回数据形式为json
+                success: function (data) {
+                    console.log(data);
+                    echartLine.setOption({
+                        title: {
+                            text: '一卡通消费信息',
+                            subtext: '全年52周'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            /*x: 220,
+                            y: 40,
+                            data: ['Intent', 'Pre-order', 'Deal']*/
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    title: {
+                                        line: 'Line',
+                                        bar: 'Bar'
+                                    },
+                                    type: ['line', 'bar']
+                                },
+                                restore: {
+                                    show: true,
+                                    title: "Restore"
+                                },
+                                saveAsImage: {
+                                    show: true,
+                                    title: "Save Image"
+                                }
+                            }
+                        },
+                        calculable: true,
+                        xAxis: [{
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13',
+                            '14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
+                            '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52']
+                        }],
+                        yAxis: [{
+                            type: 'value'
+                        }],
+                        series: [{
+                            name: '周消费',
+                            type: 'line',
+                            smooth: true,
+                            itemStyle: {
+                                normal: {
+                                    /*areaStyle: {
+                                        type: 'default'
+                                    }*/
+                                }
+                            },
+                            data: [data["week1Consumption"], data["week2Consumption"], data["week3Consumption"], data["week4Consumption"], data["week5Consumption"], data["week6Consumption"],
+                                    data["week7Consumption"], data["week8Consumption"], data["week9Consumption"], data["week10Consumption"], data["week11Consumption"], data["week12Consumption"],
+                                    data["week13Consumption"], data["week14Consumption"], data["week15Consumption"], data["week16Consumption"], data["week17Consumption"], data["week18Consumption"],
+                                    data["week19Consumption"], data["week20Consumption"], data["week21Consumption"], data["week22Consumption"], data["week23Consumption"], data["week24Consumption"],
+                                    data["week25Consumption"], data["week26Consumption"], data["week27Consumption"], data["week28Consumption"], data["week29Consumption"], data["week30Consumption"],
+                                    data["week31Consumption"], data["week32Consumption"], data["week33Consumption"], data["week34Consumption"], data["week35Consumption"], data["week36Consumption"],
+                                    data["week37Consumption"], data["week38Consumption"], data["week39Consumption"], data["week40Consumption"], data["week41Consumption"], data["week42Consumption"],
+                                    data["week43Consumption"], data["week44Consumption"], data["week45Consumption"], data["week46Consumption"], data["week47Consumption"], data["week48Consumption"],
+                                    data["week49Consumption"], data["week50Consumption"], data["week51Consumption"], data["week52Consumption"]]
+                        }]
+                    });
+                }
+
+            });
 
 
     }

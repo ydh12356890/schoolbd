@@ -1,7 +1,6 @@
 package com.springmvc.dao;
 
 import com.springmvc.entity.Student;
-import com.springmvc.entity.StudentScore;
 
 public interface StudentMapper {
     int deleteByPrimaryKey(String stuNumber);
@@ -15,12 +14,4 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
-
-
-
-
-
-
-
-
 }

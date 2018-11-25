@@ -19,11 +19,26 @@
   </select>
 
   <select id = "selectScorePredict" resultMap="BaseResultMap" parameterType="java.lang.String">
-    SELECT t.course_id,
+    SELECT t.stu_number,
+    t.course_id,
     t.course_name,
     t.score_predict
     FROM scorepredict t WHERE t.stu_number = #{stuNumber,jdbcType=VARCHAR}
 
+  </select>
+  
+  <select id="selectScoreBystuNumberLimit" resultMap="BaseResultMap" parameterType="Map">
+    SELECT * FROM scorepredict
+    <if test="startIndex!=null">
+      <where>
+        <if test="stuNumber!=null and stuNumber!=''"> stu_number=#{stuNumber}</if>
+      </where>
+      LIMIT #{startIndex},#{pageSize}
+    </if>
+  </select>
+
+<select id="selectScoreLimitSize" resultMap="BaseResultMap" parameterType="Map">
+    SELECT * FROM scorepredict WHERE stu_number=#{stuNumber,jdbcType=VARCHAR}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

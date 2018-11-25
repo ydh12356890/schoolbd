@@ -1,10 +1,9 @@
 package com.springmvc.service.interf;
 
-import com.springmvc.entity.ScorePredict;
-import com.springmvc.entity.Student;
-import com.springmvc.entity.StudentScore;
+import com.springmvc.entity.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: ydh
@@ -13,9 +12,15 @@ import java.util.List;
  * @todo
  */
 public interface IStudentService {
+
+    Undergraduate getUndergraduateInfo(String studentid);
+    Postgraduate getPostgraduateInfo(String xh);
+    NStudent getStuConsumpInfo(String xh);
     Student getStudentInfo(String stunumber);
     //List<Student> getStudentList();
     StudentScore getStuScoreDisService(String stuNumber);
 
     List<ScorePredict> getScorePredictService(String stuNumber);
+
+    Map<String,Object> getScoreLimitTable (Map<String,Object> param);
 }

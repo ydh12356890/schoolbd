@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.UndergraduateMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.entity.Undergraduate" >
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    studentid, name, schoolid, majorid, gender, classid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from undergraduate_basic
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from undergraduate_basic
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.entity.Undergraduate" >
+    insert into undergraduate_basic (studentid, name, schoolid, 
+      majorid, gender, classid
+      )
+    values (#{studentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{schoolid,jdbcType=VARCHAR}, 
+      #{majorid,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.entity.Undergraduate" >
+    insert into undergraduate_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        studentid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="schoolid != null" >
+        schoolid,
+      </if>
+      <if test="majorid != null" >
+        majorid,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="classid != null" >
+        classid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="majorid != null" >
+        #{majorid,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.entity.Undergraduate" >
+    update undergraduate_basic
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        schoolid = #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="majorid != null" >
+        majorid = #{majorid,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classid = #{classid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.entity.Undergraduate" >
+    update undergraduate_basic
+    set name = #{name,jdbcType=VARCHAR},
+      schoolid = #{schoolid,jdbcType=VARCHAR},
+      majorid = #{majorid,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      classid = #{classid,jdbcType=VARCHAR}
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </update>
+</mapper>

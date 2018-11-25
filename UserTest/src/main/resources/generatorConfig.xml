@@ -54,13 +54,21 @@
                             selectByExampleQueryId="false">
 
     </table>-->
-        <table  schema="schoolbd"
+      <!--  <table  schema="schoolbd"
                 tableName="stuinfo" domainObjectName="Student"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
 
+        </table>-->
+        <table  schema="campus_bigdata"
+                tableName="undergraduate_basic" domainObjectName="Undergraduate"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+
         </table>
+
        <!-- <table  schema="schoolbd"
                 tableName="coursescoredis" domainObjectName="StudentScore"
                 enableCountByExample="false" enableUpdateByExample="false"

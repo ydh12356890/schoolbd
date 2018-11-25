@@ -1,20 +1,19 @@
 package com.springmvc.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.springmvc.entity.ScorePredict;
-import com.springmvc.entity.StudentScore;
-import com.springmvc.entity.Student;
+import com.springmvc.entity.*;
 import com.springmvc.service.impl.StudentServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: ydh
@@ -27,7 +26,41 @@ public class studentController {
     @Resource
     StudentServiceImpl studentService;
 
+
+
+    @RequestMapping("/student/getStudentScore")
+    @ResponseBody
+    public Map<String,Object> getStuScorePredict(int pageNumber,int pageSize,String stuNumber){
+       Map<String,Object> param = new HashMap<String, Object>();
+       int a = (pageNumber-1)*pageSize;
+       int b = pageSize;
+       param.put("startIndex",a);
+       param.put("pageSize",b);
+       param.put("stuNumber",stuNumber);
+       return studentService.getScoreLimitTable(param);
+
+    }
     @RequestMapping("/student/getstuinfo")
+    @ResponseBody
+    public Postgraduate getStuInfo(@RequestBody Postgraduate postgraduate){
+        String stuNum = postgraduate.getXh();
+
+        Postgraduate postgraduate1 = studentService.getPostgraduateInfo(stuNum);
+
+        return postgraduate1;
+    }
+
+    @RequestMapping("/student/getUndergraduateInfo")
+    @ResponseBody
+    public Undergraduate getStuInfo(@RequestBody Undergraduate undergraduate){
+        String stuNum = undergraduate.getStudentid();
+
+        Undergraduate undergraduate1 = studentService.getUndergraduateInfo(stuNum);
+
+        return undergraduate1;
+    }
+
+  /*  @RequestMapping("/student/getstuinfo")
     @ResponseBody
     public  Student getStuInfo(@RequestBody Student student){
         String stuNum = student.getStuNumber();
@@ -35,14 +68,25 @@ public class studentController {
         Student student1 = studentService.getStudentInfo(stuNum);
 
         return student1;
-    }
+    }*/
     @RequestMapping("/getCardConsumption")
+    @ResponseBody
+    public NStudent getStuConsumController(@RequestBody NStudent nStudent){
+        String stunum = nStudent.getXh();
+        NStudent nStudent1 = studentService.getStuConsumpInfo(stunum);
+        return nStudent1;
+
+    }
+
+
+
+ /*   @RequestMapping("/getCardConsumption")
     @ResponseBody
     public Student getStuAllInfo(@RequestBody Student student){
         String stuNum1 = student.getStuNumber();
         Student student2 = studentService.getStudentInfo(stuNum1);
         return  student2;
-    }
+    }*/
 
     /*public Student getStuInfo(@RequestBody Map<String,String> map){
 

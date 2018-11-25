@@ -13,10 +13,12 @@
     <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
     <link rel="icon" href="../icon/buptlogo.png">
 
+
     <title>校园信息化</title>
 
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
+
 
 </head>
 <%--<style>
@@ -73,18 +75,18 @@
                     <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
                 </div>
                 <div class="profile_pic">
-                        <img src="../icon/bd.jpg" class="profile-img"><span>welcome,${sessionScope.get("user").userName}</span>
+                        <%--<img src="../icon/bupt.png" rel="icon" class="image-circle profile-img">--%>
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span>welcome,${sessionScope.get("user").userName}</span>
                 </div>
             </div>
             <ul class="nav nav-sidebar" >
                 <li class="active"><a href="#" onclick="showAtRight('rightmainpage.html')">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
                 <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.html')">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 个人信息</a></li>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
                 <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
-                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 群体-学院</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightclasspage.html')">
-                    <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> 群体-班级</a></li>
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
                 <li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>
             </ul>
@@ -96,13 +98,14 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="../icon/bd.jpg" alt="">${sessionScope.get("user").userName}
+                                    <%--<img src="../icon/bupt.png" rel="icon" alt="">${sessionScope.get("user").userName}--%>
+                                    <span class="glyphicon glyphicon-user"></span>${sessionScope.get("user").userName}
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <%--<li><a href="javascript:;">修改密码</a></li>--%>
                                     <li><a class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal" role="button">修改密码</a></li>
-                                    <li><a class="btn btn-default" href="#" role="button">退出登录</a></li>
+                                    <li><a class="btn btn-default" href="#" role="button" id="logout">退出登录</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -212,14 +215,97 @@
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src = "../js/echarts.common.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+
 <script>
-    $(document).ready(function(){
+
+        $(document).ready(function(){
         $('ul.nav >li').click(function (e) {
             $('ul.nav>li').removeClass('active');
             $(this).addClass('active');
 
         });
     });
+        function checkNotPass() {
+                console.log("群体学院界面查询不及格按钮");
+             /* $('#mytab').bootstrapTable('refresh',{
+                    url : "student/getStudentScore"
+                });*/
+             console.log($('#inputSchool').val());
+             $('#mytab').bootstrapTable('destroy');
+
+            $('#mytab').bootstrapTable({
+                method :"post",
+                url : "/student/getStudentScore",
+                contentType : "application/x-www-form-urlencoded",
+                dataType : "json",
+                striped : true, //是否显示行间隔色
+                sortable : true,
+                pageNumber : 1, //初始化加载第一页
+                pagination : true , //是否分页
+                sidePagination : "server", //server：服务前端分页 ； client：前端分页
+                pageSize : 4,//单页记录数
+                pageList : [5,10,20,30], //可选择的单页记录数
+                showRefresh : true,  // 刷新按钮
+                queryParamsType:'',
+                height : 400,
+                queryParams : function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber : params.pageNumber, //每页显示数量
+                        pageSize : params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        stuNumber : $('#inputSchool').val()
+
+                        // Tel : $('#search_tel').val()
+
+                    };
+                    return temp;
+                },
+                columns :[{ title : '序号',
+                    formatter : function (value,row,index) {
+                        var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                        var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                        return pageSize*(pageNumber-1)+index+1;
+                    },
+                    sortable : true
+                },{
+                    title : '学号',
+                    field : 'stuNumber',
+                    sortable : true
+                },{
+                    title : '课程号',
+                    field : 'courseId',
+                    sortable : true
+                },{
+                    title : '课程名',
+                    field : 'courseName',
+                    sortable : true
+                },{
+                    title : '课程预测成绩',
+                    field : 'scorePredict',
+                    sortable : true
+                }/*,{
+            title : '操作',
+            field : 'id',
+            sortable : false,
+            formatter : operation //对资源进行操作
+        }*/]
+            });
+            console.log("table 已执行");
+            //value代表该列的值，row代表当前对象
+            /* function formatSex(value,row,index) {
+                 return value==1?"男":"女";
+                 //return row.sex == 1?"男":"女";
+             }
+             //删除编辑操作
+             function operation(value,row,index) {
+                 var htm = "<button>删除</button><button>修改</button>"
+                 return htm;
+             }*/
+            //查询按钮事件
+        }
+
     function clearForm() {
        document.getElementById("modalOldUserpassword").value=null;
         document.getElementById("modalNewUserpassword1").value=null;
@@ -323,17 +409,17 @@
                 url: "/student/getstuinfo",
                 dataType: "json",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({stuNumber: stuNum}),
+                data: JSON.stringify({xh: stuNum}),
                 success: function (data) {
                     console.log(data);
-                    document.getElementById("numberId").innerText = data["stuNumber"];
-                    document.getElementById("nameId").innerText = data["stuName"];
-                    document.getElementById("ageId").innerText = data["stuAge"];
-                    document.getElementById("sexId").innerText = data["stuSex"];
-                    document.getElementById("nationId").innerText = data["stuNation"];
-                    document.getElementById("politicsId").innerText = data["stuPolitics"];
-                    document.getElementById("schoolId").innerText = data["stuSchool"];
-                    document.getElementById("majorId").innerText = data["stuMajor"];
+                    document.getElementById("numberId").innerText = data["xh"];
+                    document.getElementById("nameId").innerText = data["xm"];
+                    document.getElementById("ageId").innerText = data["xbdm"];
+                    document.getElementById("sexId").innerText = data["csrq"];
+                    document.getElementById("nationId").innerText = data["byyx"];
+                    document.getElementById("politicsId").innerText = data["byzydm"];
+                    document.getElementById("schoolId").innerText = data["rxzydm"];
+                    document.getElementById("majorId").innerText = data["zzmmdm"];
                 },
                 error: function () {
                     document.getElementById("numberId").innerText = null;
@@ -353,6 +439,42 @@
 
 
     }
+        function check2() {
+            var stuNum = $("#inputStuNum2").val();
+            if(stuNum==""){
+                alert("学号不能为空，请重新输入");
+            }else {
+                console.log(stuNum);
+                $.ajax({
+                    type: "post",
+                    url: "/student/getUndergraduateInfo",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({studentid: stuNum}),
+                    success: function (data) {
+                        console.log(data);
+                        document.getElementById("numberId2").innerText = data["studentid"];
+                        document.getElementById("nameId2").innerText = data["name"];
+                        document.getElementById("ageId2").innerText = data["schoolid"];
+                        document.getElementById("sexId2").innerText = data["majorid"];
+                        document.getElementById("nationId2").innerText = data["gender"];
+                        document.getElementById("politicsId2").innerText = data["classid"];
+                    },
+                    error: function () {
+                        document.getElementById("numberId2").innerText = null;
+                        document.getElementById("nameId2").innerText = null;
+                        document.getElementById("ageId2").innerText = null;
+                        document.getElementById("sexId2").innerText = null;
+                        document.getElementById("nationId2").innerText = null;
+                        document.getElementById("politicsId2").innerText = null;
+                        alert("该学号不存在，请重新输入！");
+                    }
+
+                })
+            }
+
+
+        }
 
     function checkHistoryScore() {
         var stuNum = $("#inputStuNum").val();
@@ -429,76 +551,7 @@
 
 
 
-        /* //显示一段动画
-         pieChart.showLoading();
-         //数据加载完之前先显示一段简单的loading动画
 
-         //异步请求数据
-         $.ajax({
-             type: "post",
-             async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-             url: "/getPie", //
-             contentType:"application/json;charset=utf-8",
-             data:JSON.stringify({stuNumber:stuNum}),
-             dataType: "json", //返回数据形式为json
-             success: function (result) {
-                 console.log(result);
-
-                 pieChart.hideLoading(); //隐藏加载动画
-                 pieChart.setOption({ //加载数据图表
-                     title: {
-                         text: '学生成绩',
-                         subtext: '成绩比',
-                         x: 'center'
-
-                     },
-                     tooltip: {
-                         trigger: 'item',
-                         formatter: "{a} <br/>{b} : {c} ({d}%)"
-
-                     },
-                     legend: {
-                         orient: 'vertical',
-                         x: 'left',
-                         data: []
-
-                     },
-                     toolbox: {
-                         show: true,
-                         feature: {
-                             mark: {show: true},
-                             dataView: {show: true, readOnly: false},
-                             magicType: {
-                                 show: true,
-                                 type: ['pie', 'funnel'],
-                                 option: {
-                                     funnel: {
-                                         x: '25%',
-                                         width: '50%',
-                                         funnelAlign: 'left',
-                                         max: 1548
-                                     }
-                                 }
-                             },
-                             restore: {show: true},
-                             saveAsImage: {show: true}
-                         }
-                     },
-                     calculable: true,
-                     series: [
-                         {
-                             // 根据名字对应到相应的系列
-                             name: '成绩',
-                             type: 'pie',
-                             radius: '55%',
-                             center: ['50%', '60%'],
-                             data: JSON.stringify(result)
-                         }]
-                 });
-
-             }
-
-         })*/
     }
     $("#logout").click( function() {
         console.log("注销");
@@ -508,7 +561,7 @@
             dataType:"text",
             success:function (data) {
                 if(data=="success") {
-                    window.location.href = "/index.jsp";
+                    window.location.href = "mainpage.jsp";
                 }
                 else {
                     //alert("用户名或密码错误！");
@@ -517,42 +570,6 @@
         })
         
     });
-
-
-    /* function turnpage(url) {
-         var url0 = document.URL;
-         console.log(url0);
-
-         var num = url0.indexOf('?');
-          console.log(num);
-
-         var oldurl;
-
-         if(num==-1){
-             oldurl = url0;
-         }
-         else {
-             oldurl = url0.slice(0,num);
-         }
-         var newurl = oldurl+'?'+url;
-
-         console.log(newurl);
-
-         history.pushState(null,null,newurl);
-         var ajaxurl = newurl + '.html';
-
-         $.ajax({
-             type:"get",
-             url:ajaxurl,
-             success: function (html) {
-                 $('.rightdiv').html(html);
-
-             }
-         });
-
-
-
-     }*/
 
 
     /*function check() {
@@ -1121,13 +1138,13 @@
                 async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
                 url: "/getCardConsumption",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({stuNumber: stuNum}),
+                data: JSON.stringify({xh: stuNum}),
                 dataType: "json", //返回数据形式为json
                 success: function (data) {
                     console.log(data);
                     echartLine.setOption({
                         title: {
-                            text: '一卡通消费信息',
+                            text: '一卡通消费信息(单位：分)',
                             subtext: '全年52周'
                         },
                         tooltip: {
@@ -1181,15 +1198,15 @@
                                     }*/
                                 }
                             },
-                            data: [data["week1Consumption"], data["week2Consumption"], data["week3Consumption"], data["week4Consumption"], data["week5Consumption"], data["week6Consumption"],
-                                    data["week7Consumption"], data["week8Consumption"], data["week9Consumption"], data["week10Consumption"], data["week11Consumption"], data["week12Consumption"],
-                                    data["week13Consumption"], data["week14Consumption"], data["week15Consumption"], data["week16Consumption"], data["week17Consumption"], data["week18Consumption"],
-                                    data["week19Consumption"], data["week20Consumption"], data["week21Consumption"], data["week22Consumption"], data["week23Consumption"], data["week24Consumption"],
-                                    data["week25Consumption"], data["week26Consumption"], data["week27Consumption"], data["week28Consumption"], data["week29Consumption"], data["week30Consumption"],
-                                    data["week31Consumption"], data["week32Consumption"], data["week33Consumption"], data["week34Consumption"], data["week35Consumption"], data["week36Consumption"],
-                                    data["week37Consumption"], data["week38Consumption"], data["week39Consumption"], data["week40Consumption"], data["week41Consumption"], data["week42Consumption"],
-                                    data["week43Consumption"], data["week44Consumption"], data["week45Consumption"], data["week46Consumption"], data["week47Consumption"], data["week48Consumption"],
-                                    data["week49Consumption"], data["week50Consumption"], data["week51Consumption"], data["week52Consumption"]]
+                            data: [data["week1"], data["week2"], data["week3"], data["week4"], data["week5"], data["week6"],
+                                data["week7"], data["week8"], data["week9"], data["week10"], data["week11"], data["week12"],
+                                data["week13"], data["week14"], data["week15"], data["week16"], data["week17"], data["week18"],
+                                data["week19"], data["week20"], data["week21"], data["week22"], data["week23"], data["week24"],
+                                data["week25"], data["week26"], data["week27"], data["week28"], data["week29"], data["week30"],
+                                data["week31"], data["week32"], data["week33"], data["week34"], data["week35"], data["week36"],
+                                data["week37"], data["week38"], data["week39"], data["week40"], data["week41"], data["week42"],
+                                data["week43"], data["week44"], data["week45"], data["week46"], data["week47"], data["week48"],
+                                data["week49"], data["week50"], data["week51"], data["week52"]]
                         }]
                     });
                 }

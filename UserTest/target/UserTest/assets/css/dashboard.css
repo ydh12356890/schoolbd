@@ -304,6 +304,9 @@ ul.navbar-right>li>a{
   margin: 3px;
   padding: 3px;
 }
+.notpass select{
+  height: 32px;
+}
 div.tab-content{
   border-left:1px solid #D9DEE4;
   border-right:1px solid #D9DEE4;
@@ -320,13 +323,14 @@ div.personInfo1{
 .table>tbody>tr>td.info{
   background-color: white;
 }
-.table.table-bordered{
+.table.table-hover.table-bordered{
   border:1px solid black;
   margin-bottom: 10px;
   max-width: 100%;
 
 }
-.table.table-bordered,tbody,tr,td{
+.table.table-hover.table-bordered thead,
+.table.table-hover.table-bordered th{
   border:1px solid black;
   border-collapse: collapse;
 }

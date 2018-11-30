@@ -20,7 +20,13 @@ public interface IStudentService {
     //List<Student> getStudentList();
     StudentScore getStuScoreDisService(String stuNumber);
 
-    List<ScorePredict> getScorePredictService(String stuNumber);
-
     Map<String,Object> getScoreLimitTable (Map<String,Object> param);
+
+    Map<String,Object> getCourseScoreLimit(Map<String,Object> param);
+
+    Map<String,Object> getGoodScoreStuLimitTable (Map<String,Object> param);
+
+    Map<String,Object> getGoodCourseScoreLimit(Map<String,Object> param);
+
+    List<School> getSchoolNameService(String xymc);
 }

@@ -23,18 +23,26 @@ public class StudentServiceImpl implements IStudentService {
     @Resource
     StudentScoreMapper studentScoreMapper;
     @Resource
-    ScorePredictMapper scorePredictMapper;
-    @Resource
     NStudentMapper nStudentMapper;
     @Resource
     PostgraduateMapper postgraduateMapper;
     @Resource
     UndergraduateMapper undergraduateMapper;
+    @Resource
+    SchoolMapper schoolMapper;
+
+    @Resource
+    StuScorePredictMapper stuScorePredictMapper;
+
+    @Override
+    public List<School> getSchoolNameService(String xymc) {
+        return schoolMapper.selectSchoolName(xymc);
+    }
 
 
     @Override
     public Undergraduate getUndergraduateInfo(String studentid) {
-        return  undergraduateMapper.selectByPrimaryKey(studentid);
+        return  undergraduateMapper.selectUndergraduateBaseInfo(studentid);
     }
 
     @Override
@@ -61,21 +69,50 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public List<ScorePredict> getScorePredictService(String stuNumber) {
-        List<ScorePredict> scorePredictList = scorePredictMapper.selectScorePredict(stuNumber);
-        return scorePredictList;
-    }
-
-    @Override
     public Map<String, Object> getScoreLimitTable(Map<String, Object> param) {
         //bootstrap-table要求服务器返回的json须包含：total，rows
         Map<String,Object> result = new HashMap<String,Object>();
-        int total=scorePredictMapper.selectScoreLimitSize(param).size();
-        List<ScorePredict> rows=scorePredictMapper.selectScoreBystuNumberLimit(param);
+        int total=undergraduateMapper.selectScoreLimitSize(param).size();
+        List<Undergraduate> rows=undergraduateMapper.selectScoreBystuNumberLimit(param);
         result.put("total",total);
         result.put("rows",rows);
         return result;
     }
+
+    @Override
+    public Map<String, Object> getCourseScoreLimit(Map<String, Object> param) {
+        //bootstrap-table要求服务器返回的json须包含：total，rows
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=stuScorePredictMapper.selectCourseScoreLimitSize(param).size();
+        List<StuScorePredict> rows=stuScorePredictMapper.selectCourseScoreBystudentidLimit(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getGoodScoreStuLimitTable(Map<String, Object> param) {
+        //bootstrap-table要求服务器返回的json须包含：total，rows
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=undergraduateMapper.selectGoodScoreLimitSize(param).size();
+        List<Undergraduate> rows=undergraduateMapper.selectGoodScoreStuLimit(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getGoodCourseScoreLimit(Map<String, Object> param) {
+        //bootstrap-table要求服务器返回的json须包含：total，rows
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=stuScorePredictMapper.selectGoodCourseScoreLimitSize(param).size();
+        List<StuScorePredict> rows=stuScorePredictMapper.selectGoodCourseScoreBystudentidLimit(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+}
+
+
 
    /* @Override
     public List<Student> getStudentList() {

@@ -1,5 +1,6 @@
 package com.springmvc.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.springmvc.entity.*;
 import com.springmvc.service.impl.StudentServiceImpl;
@@ -27,8 +28,23 @@ public class studentController {
     StudentServiceImpl studentService;
 
 
+    @RequestMapping("/student/checkschool")  //查询学院名
+    @ResponseBody
+    public List<School> getSchoolNameController(@RequestBody School school){
+        String xymc = school.getXymc();
+        return studentService.getSchoolNameService(xymc);
+    }
+   /* public Map<String,Object> getStuScorePredict(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        return studentService.getScoreLimitTable(param);
 
-    @RequestMapping("/student/getStudentScore")
+    }*/
+    /* @RequestMapping("/student/getStudentScore")
     @ResponseBody
     public Map<String,Object> getStuScorePredict(int pageNumber,int pageSize,String stuNumber){
        Map<String,Object> param = new HashMap<String, Object>();
@@ -39,8 +55,66 @@ public class studentController {
        param.put("stuNumber",stuNumber);
        return studentService.getScoreLimitTable(param);
 
+    }*/
+   @RequestMapping("/student/getStudentScore")  //根据学院名称，服务端分页查询出预测成绩不及格的所有学生
+   @ResponseBody
+    public String getStuScorePredict(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        String jsonstr =  JSON.toJSONString(studentService.getScoreLimitTable(param));
+        System.out.println("主表："+jsonstr);
+        return jsonstr;
+
     }
-    @RequestMapping("/student/getstuinfo")
+    @RequestMapping("/student/getGoodStudentScore")  //根据学院名称，服务端分页查询出预测成绩优秀的所有学生
+    @ResponseBody
+    public String getGoodStuScorePredict(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        String jsonstr =  JSON.toJSONString(studentService.getGoodScoreStuLimitTable(param));
+        System.out.println("主表："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getCourseScore")  //根据学号，服务端分页查询出预测成绩不及格对应的所有课程
+    @ResponseBody
+    public String getCourseScore(int pageNumber,int pageSize,String studentid){
+       Map<String,Object> param = new HashMap<String, Object>();
+       int a = (pageNumber-1)*pageSize;
+       int b = pageSize;
+       param.put("startIndex",a);
+       param.put("pageSize",b);
+       param.put("studentid",studentid);
+       String jsonstr =  JSON.toJSONString(studentService.getCourseScoreLimit(param));
+       System.out.println("子表"+jsonstr);
+       return jsonstr;
+
+    }
+    @RequestMapping("/student/getGoodCourseScore")  //根据学号，服务端分页查询出预测成绩优秀对应的所有课程
+    @ResponseBody
+    public String getGoodCourseScore(int pageNumber,int pageSize,String studentid){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("studentid",studentid);
+        String jsonstr =  JSON.toJSONString(studentService.getGoodCourseScoreLimit (param));
+        System.out.println("子表"+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getstuinfo")  //获取研究生的基本信息
     @ResponseBody
     public Postgraduate getStuInfo(@RequestBody Postgraduate postgraduate){
         String stuNum = postgraduate.getXh();
@@ -50,7 +124,7 @@ public class studentController {
         return postgraduate1;
     }
 
-    @RequestMapping("/student/getUndergraduateInfo")
+    @RequestMapping("/student/getUndergraduateInfo")   //获取本科生的基本信息
     @ResponseBody
     public Undergraduate getStuInfo(@RequestBody Undergraduate undergraduate){
         String stuNum = undergraduate.getStudentid();
@@ -60,16 +134,7 @@ public class studentController {
         return undergraduate1;
     }
 
-  /*  @RequestMapping("/student/getstuinfo")
-    @ResponseBody
-    public  Student getStuInfo(@RequestBody Student student){
-        String stuNum = student.getStuNumber();
-
-        Student student1 = studentService.getStudentInfo(stuNum);
-
-        return student1;
-    }*/
-    @RequestMapping("/getCardConsumption")
+    @RequestMapping("/getCardConsumption")  //获取一卡通全年52周消费信息（研究生）
     @ResponseBody
     public NStudent getStuConsumController(@RequestBody NStudent nStudent){
         String stunum = nStudent.getXh();
@@ -77,92 +142,14 @@ public class studentController {
         return nStudent1;
 
     }
-
-
-
- /*   @RequestMapping("/getCardConsumption")
-    @ResponseBody
-    public Student getStuAllInfo(@RequestBody Student student){
-        String stuNum1 = student.getStuNumber();
-        Student student2 = studentService.getStudentInfo(stuNum1);
-        return  student2;
-    }*/
-
-    /*public Student getStuInfo(@RequestBody Map<String,String> map){
-
-        String stuNumber = map.get("stuNumber").toString();
-        Student student = studentService.getStudentInfo(stuNumber);
-        return  student;
-
-
-    }*/
-
-    /*@RequestMapping("/getPie")
-    @ResponseBody
-    public List<StudentScore> getStuScoreController(@RequestBody Student student){
-        Student studentChoosed = studentService.getStudentInfo(student.getStuNumber());
-        List<StudentScore> results = new ArrayList<StudentScore>();
-
-        BigDecimal stuscore1 =  studentChoosed.getStuScore1();
-        BigDecimal stuscore2 =  studentChoosed.getStuScore2();
-        BigDecimal stuscore3 =  studentChoosed.getStuScore3();
-        BigDecimal stuscore4 =  studentChoosed.getStuScore4();
-        BigDecimal stuscore5 =  studentChoosed.getStuScore5();
-
-        String stusubject1 = studentChoosed.getStuSubject1();
-        String stusubject2 = studentChoosed.getStuSubject2();
-        String stusubject3 = studentChoosed.getStuSubject3();
-        String stusubject4 = studentChoosed.getStuSubject4();
-        String stusubject5 = studentChoosed.getStuSubject5();
-
-        results.add(new StudentScore(stusubject1,stuscore1));
-        results.add(new StudentScore(stusubject2,stuscore2));
-        results.add(new StudentScore(stusubject3,stuscore3));
-        results.add(new StudentScore(stusubject4,stuscore4));
-        results.add(new StudentScore(stusubject5,stuscore5));
-
-        return results;
-
-
-
-
-
-
-        *//*List<StudentScore> results = new ArrayList<StudentScore>();
-
-        for(Student student : studentList){
-           String stuname = student.getStuName();
-            BigDecimal stuscore = student.getStuScore();
-            StudentScore result = new StudentScore(stuname,stuscore);
-            results.add(result);
-        }
-        System.out.println("json数据："+results);
-        return results;
-*//*
-
-    }
-*/
-    @RequestMapping("/getScoreDis")
+    @RequestMapping("/getScoreDis")  //获取成绩分布
     @ResponseBody
     public  StudentScore getStuScoreDisController(@RequestBody Student student){
         StudentScore studentScore = studentService.getStuScoreDisService(student.getStuNumber());
-
-       /* int zeroFiftynine = studentScore.getZeroFiftynine();
-        int sixtySixtynine = studentScore.getSixtySixtynine();
-        int seventySeventynine = studentScore.getSeventySeventynine();
-        int eightyEightynine= studentScore.getEightyEightynine();
-        int ninetyHundred= studentScore.getNinetyHundred();*/
-
         return studentScore;
 
     }
-    @RequestMapping("/getScorePredict")
-    @ResponseBody
-    public List<ScorePredict> getScorePredictList (@RequestBody Student student) {
-        List<ScorePredict> scorePredictList = studentService.getScorePredictService(student.getStuNumber());
-        return scorePredictList;
 
-    }
 
 
 

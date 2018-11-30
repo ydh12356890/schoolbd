@@ -62,11 +62,10 @@
 
         </table>-->
         <table  schema="campus_bigdata"
-                tableName="undergraduate_basic" domainObjectName="Undergraduate"
+                tableName="score_predict" domainObjectName="StuScorePredict"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
-
         </table>
 
        <!-- <table  schema="schoolbd"

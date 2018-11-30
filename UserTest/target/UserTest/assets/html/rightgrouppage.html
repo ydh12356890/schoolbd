@@ -6,6 +6,7 @@
     <title>rightgrouppage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!--<link rel="stylesheet" href="../css/dataTables.bootstrap.min.css">
@@ -25,19 +26,45 @@
             <div class="notpass">
                 <h4>预测学院中成绩不及格的学生</h4>
                 <div>
-                    <form class="form-inline">
+                    <select id="selectschool">
+                        <option value="1">电子工程学院</option>
+                        <option value="2">公共管理学院</option>
+                        <option value="3">光电信息学院</option>
+                        <option value="4">国际学院</option>
+                        <option value="5">计算机学院</option>
+                        <option value="6">继续教育学院</option>
+                        <option value="7">经济管理学院</option>
+                        <option value="8">理学院学院</option>
+                        <option value="9">马克思主义学院</option>
+                        <option value="10">民族教育学院</option>
+                        <option value="11">人文学院</option>
+                        <option value="12">软件学院</option>
+                        <option value="13">数字媒体与设计艺术学院</option>
+                        <option value="14">体育部</option>
+                        <option value="15">网络技术研究院</option>
+                        <option value="16">网络教育学院</option>
+                        <option value="17">网络空间安全学院</option>
+                        <option value="18">现代邮政学院</option>
+                        <option value="19">信息光子学与光通信研究院</option>
+                        <option value="20">信息与通信工程学院</option>
+                        <option value="21">叶培大创新创业学院</option>
+                        <option value="22">自动化学院</option>
+                        <option value="23">（无锡）感知技术与产业研究院</option>
+                    </select>
+                   <!-- <form class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="inputSchool">School</label>
-                            <input type="text" class="form-control" id="inputSchool" placeholder="请输入学院...">
+                            <input type="text" class="form-control" id="inputSchool">
+                            <div id="searchresult" style="display: none">
+
+                            </div>
                         </div>
-                       <!-- <div class="form-group">
-                            <label class="sr-only" for="inputPlus">Add</label>
-                            <input type="text" class="form-control" id="inputPlus" placeholder="请输入...">
-                        </div>-->
-                        <button type="button"  class="btn btn-primary" onclick="checkNotPass()">查询</button>
-                    </form>
+
+                    </form>-->
+                    <button type="button"  class="btn btn-primary" onclick="checkNotPass()">查询</button>
                 </div>
-                <table id="mytab" class="table table-hover"></table>
+
+                <table id="mytab" class="table table-hover table-bordered"></table>
 
             </div>
         </div>
@@ -45,33 +72,45 @@
             <div class="notpass">
                 <h4>预测学院中成绩优秀的学生</h4>
                 <div>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label class="sr-only" for="inputSchool2">School</label>
-                            <input type="text" class="form-control" id="inputSchool2" placeholder="请输入学院...">
-                        </div>
-                        <!-- <div class="form-group">
-                             <label class="sr-only" for="inputPlus">Add</label>
-                             <input type="text" class="form-control" id="inputPlus" placeholder="请输入...">
-                         </div>-->
-                        <button type="button" class="btn btn-primary">查询</button>
-                    </form>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-condensed">
-                        <thead>
-                        <tr>
-                            <th>学号</th>
-                            <th>姓名</th>
-                            <th>学院代码</th>
-                            <th>学院</th>
-                            <th>预测成绩</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <select id="selectschool2">
+                        <option value="1">电子工程学院</option>
+                        <option value="2">公共管理学院</option>
+                        <option value="3">光电信息学院</option>
+                        <option value="4">国际学院</option>
+                        <option value="5">计算机学院</option>
+                        <option value="6">继续教育学院</option>
+                        <option value="7">经济管理学院</option>
+                        <option value="8">理学院学院</option>
+                        <option value="9">马克思主义学院</option>
+                        <option value="10">民族教育学院</option>
+                        <option value="11">人文学院</option>
+                        <option value="12">软件学院</option>
+                        <option value="13">数字媒体与设计艺术学院</option>
+                        <option value="14">体育部</option>
+                        <option value="15">网络技术研究院</option>
+                        <option value="16">网络教育学院</option>
+                        <option value="17">网络空间安全学院</option>
+                        <option value="18">现代邮政学院</option>
+                        <option value="19">信息光子学与光通信研究院</option>
+                        <option value="20">信息与通信工程学院</option>
+                        <option value="21">叶培大创新创业学院</option>
+                        <option value="22">自动化学院</option>
+                        <option value="23">（无锡）感知技术与产业研究院</option>
+                    </select>
+                    <!-- <form class="form-inline">
+                         <div class="form-group">
+                             <label class="sr-only" for="inputSchool">School</label>
+                             <input type="text" class="form-control" id="inputSchool">
+                             <div id="searchresult" style="display: none">
 
+                             </div>
+                         </div>
+
+                     </form>-->
+                    <button type="button"  class="btn btn-primary" onclick="checkGood()">查询</button>
                 </div>
+
+                <table id="mytabgood" class="table table-hover table-bordered"></table>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade group_panel" id="messages">
@@ -112,11 +151,13 @@
 
 
 </div>
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+
+<!--<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src = "../js/echarts.common.min.js"></script>
 <script src="../js/bootstrap-table.min.js"></script>
-<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>-->
 <script>
 
 

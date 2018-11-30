@@ -18,6 +18,123 @@
     from undergraduate_basic
     where studentid = #{studentid,jdbcType=VARCHAR}
   </select>
+
+  <resultMap id="UndergraduateInfoMap" type="com.springmvc.entity.Undergraduate">
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+    <association property="school" column="xymc" javaType="com.springmvc.entity.School">
+      <id column="xydm" property="xydm" jdbcType="VARCHAR" />
+      <result column="xymc" property="xymc" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+  <select id="selectUndergraduateBaseInfo" resultMap="UndergraduateInfoMap" parameterType="java.lang.String" >
+    SELECT a.*,c.xymc
+    FROM undergraduate_basic a,
+    xydm_dzb c
+    WHERE studentid = #{studentid,jdbcType=VARCHAR} AND a.schoolid=c.xydm
+  </select>
+
+
+
+  <!--<resultMap id="CourseResultMap" type="com.springmvc.entity.StuScorePredict" >
+    <id column="idscore_predict" property="idscorePredict" jdbcType="INTEGER" />
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+    <result column="zscj" property="zscj" jdbcType="VARCHAR" />
+    <result column="yccj" property="yccj" jdbcType="VARCHAR" />
+    <association property="course" column="kcdm"  javaType="com.springmvc.entity.Course">
+      <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+      <result column="kcmc" property="kcmc" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  <select id="selectKcmcBykcdm" parameterType="java.lang.String"  resultMap="CourseResultMap">
+    SELECT a.xh,a.kcdm, b.kcmc,a.zscj,a.yccj
+    FROM score_predict a,
+    bzks_kc b
+    WHERE a.kcdm=b.kcdm AND <![CDATA[a.yccj <60]]>
+  </select>-->
+
+
+  <resultMap id="UndergraduateMap" type="com.springmvc.entity.Undergraduate">
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <association property="school" column="xymc" javaType="com.springmvc.entity.School">
+      <id column="xydm" property="xydm" jdbcType="VARCHAR" />
+      <result column="xymc" property="xymc" jdbcType="VARCHAR" />
+    </association>
+   <association property="stuScorePredict" javaType="com.springmvc.entity.StuScorePredict">
+     <id column="idscore_predict" property="idscorePredict" jdbcType="INTEGER" />
+     <result column="xh" property="xh" jdbcType="VARCHAR" />
+     <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+     <result column="zscj" property="zscj" jdbcType="VARCHAR" />
+     <result column="yccj" property="yccj" jdbcType="VARCHAR" />
+   </association>
+  </resultMap>
+  <select id="selectScoreBystuNumberLimit" parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          <![CDATA[ b.yccj<60 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectGoodScoreStuLimit" parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    <![CDATA[ b.yccj>=90 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+
+  <select id="selectScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">
+    SELECT
+    a.studentid, a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          <![CDATA[ b.yccj<60 ]]>
+  </select>
+
+  <select id="selectGoodScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">
+    SELECT
+    a.studentid, a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    <![CDATA[ b.yccj>=90 ]]>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from undergraduate_basic
     where studentid = #{studentid,jdbcType=VARCHAR}

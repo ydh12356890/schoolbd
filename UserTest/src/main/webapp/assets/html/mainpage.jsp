@@ -9,63 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
     <link rel="icon" href="../icon/buptlogo.png">
-
-
     <title>校园信息化</title>
-
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
-
-
 </head>
-<%--<style>
-    #personPicture{
-        background: #ffffff;
-        border: 1px solid #E6E9ED;
-        margin-bottom: 5px;
-        width: 100%;
-        height: auto;
-        vertical-align: middle;
-        display: table-cell;
-        text-align: center;
-        float: left;
-
-    }
-    #personInfo{
-        border: 1px solid #E6E9ED;
-        background: #ffffff;
-        margin-bottom: 5px;
-        /*padding: 50px;*/
-        width: 100%;
-        height: auto;
-        float: left;
-
-    }
-    #historyScore{
-        background: #ffffff;
-        border: 1px solid #E6E9ED;
-        margin-bottom: 5px;
-        width: 100%;
-        height: auto;
-        float: left;
-        clear: left;
-
-    }
-    #currentCourse{
-        background: #ffffff;
-        border: 1px solid #E6E9ED;
-        margin-bottom: 5px;
-        width: 100%;
-        height: auto;
-        float: left;
-
-    }
-
-</style>--%>
-
 <body>
 <div class="container-fluid">
     <div class="row">
@@ -113,7 +64,6 @@
                 </div>
                 <div id="rightdiv" class="rightdiv"></div>
             </div>
-
         </div>
     </div>
 </div>
@@ -157,82 +107,165 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearForm()">取消</button>
                 <button type="button" class="btn btn-primary" onclick="submitNewPassword()">保存</button>
-
             </div>
-
         </div>
-
     </div>
-
-
 </div>
-
-<%--<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                Project name</button>
-            <a class="navbar-brand" style="color: white">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" style="color: white">${sessionScope.get("user").userName}</a></li>
-                <li><button class="btn btn-primary" type="button", id ='logout'>
-                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销</button></li>
-            </ul>
-        </div>
-    </div>
-</nav>--%>
-
-<%--<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar" >
-                <li class="active"><a href="#" onclick="showAtRight('rightmainpage.html')">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
-                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.html')">
-                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 个人信息</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
-                   <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 群体-学院</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightclasspage.html')">
-                    <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> 群体-班级</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="rightpage" style="background: #f7f7f7">
-
-            <div id="rightdiv">
-
-            </div>
-        </div>
-    </div>
-</div>--%>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src = "../js/echarts.common.min.js"></script>
 <script src="../js/bootstrap-table.min.js"></script>
 <script src="../js/bootstrap-table-zh-CN.min.js"></script>
-
 <script>
-
-        $(document).ready(function(){
+    $(document).ready(function(){
         $('ul.nav >li').click(function (e) {
             $('ul.nav>li').removeClass('active');
             $(this).addClass('active');
 
         });
+
     });
-        function checkNotPass() {
-                console.log("群体学院界面查询不及格按钮");
-             /* $('#mytab').bootstrapTable('refresh',{
-                    url : "student/getStudentScore"
-                });*/
-             console.log($('#inputSchool').val());
+    function checkGood() {
+            console.log("群体学院界面查询优秀按钮");
+            var selectValue = $("#selectschool2 option:selected").text();
+            console.log(selectValue);
+
+
+            $('#mytabgood').bootstrapTable('destroy');
+
+            $('#mytabgood').bootstrapTable({
+                method :"post",
+                url : "/student/getGoodStudentScore",
+                contentType : "application/x-www-form-urlencoded",
+                dataType : "json",
+                striped : true, //是否显示行间隔色
+                sortable : true,
+                pageNumber : 1, //初始化加载第一页
+                pagination : true , //是否分页
+                sidePagination : "server", //server：服务前端分页 ； client：前端分页
+                pageSize : 5,//单页记录数
+                pageList : [6,10,20,30], //可选择的单页记录数
+                showColumns:true  ,
+                showRefresh : true,  // 刷新按钮
+                queryParamsType:'',
+                detailView : true,
+                //height : 400,
+                queryParams : function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber : params.pageNumber, //每页显示数量
+                        pageSize : params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        xymc : selectValue
+
+                        // Tel : $('#search_tel').val()
+
+                    };
+                    return temp;
+                },
+                columns :[
+                    /*{ title : '序号',
+                    formatter : function (value,row,index) {
+                        var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                        var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                        return pageSize*(pageNumber-1)+index+1;
+                    },
+                    sortable : true
+                },*/{
+                        title : '学号',
+                        field : 'studentid',
+                        sortable : false
+                    },{
+                        title : '姓名',
+                        field : 'name',
+                        sortable : false
+                    },{
+                        title : '学院代码',
+                        field : 'schoolid',
+                        sortable : false
+                    },{
+                        title : '学院名',
+                        field : 'xymc',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.school.xymc;
+                        }
+                    }],
+                onExpandRow : function (index,row,$detail) {
+                    InitGoodSubTable(index,row,$detail);
+
+                }
+            });
+            console.log("goodtable 已执行");
+        }
+    function InitGoodSubTable(index,row,$detail) {
+            console.log(row);
+            console.log(index);
+            console.log($detail);
+            var parentid = row.studentid;
+            console.log(parentid);
+            var cur_table = $detail.html('<table class="table table-hover table-bordered"></table>').find('table');
+            $(cur_table).bootstrapTable({
+                method :"post",
+                url : "/student/getGoodCourseScore",
+                contentType : "application/x-www-form-urlencoded",
+                dataType : "json",
+                striped : true, //是否显示行间隔色
+                sortable : true,
+                pageNumber : 1, //初始化加载第一页
+                pagination : true , //是否分页
+                sidePagination : "server", //server：服务前端分页 ； client：前端分页
+                pageSize : 4,//单页记录数
+                pageList : [5,10,20,30], //可选择的单页记录数
+                queryParamsType:'',
+                //height : 400,
+                queryParams : function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber : params.pageNumber, //每页显示数量
+                        pageSize : params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        studentid : parentid
+
+                        // Tel : $('#search_tel').val()
+
+                    };
+                    return temp;
+                },
+                columns:[{
+                    title : '课程代码',
+                    field : 'kcdm',
+                    sortable : false
+
+                },
+                    {
+                        title : '课程名',
+                        field : 'kcmc',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.course.kcmc;
+                        }
+
+                    },{
+                        title : '真实成绩',
+                        field : 'zscj',
+                        sortable : false
+
+                    },{
+                        title : '预测成绩',
+                        field : 'yccj',
+                        sortable : false
+
+                    }]
+            })
+
+
+        }
+    function checkNotPass() {
+            console.log("群体学院界面查询不及格按钮");
+            var selectValue = $("#selectschool option:selected").text();
+            console.log(selectValue);
+
+
              $('#mytab').bootstrapTable('destroy');
 
             $('#mytab').bootstrapTable({
@@ -247,50 +280,62 @@
                 sidePagination : "server", //server：服务前端分页 ； client：前端分页
                 pageSize : 4,//单页记录数
                 pageList : [5,10,20,30], //可选择的单页记录数
+                showColumns:true  ,
                 showRefresh : true,  // 刷新按钮
                 queryParamsType:'',
-                height : 400,
+                detailView : true,
+                //height : 400,
                 queryParams : function queryParams(params) {  //上传服务器的参数
                     var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
                         pageNumber : params.pageNumber, //每页显示数量
                         pageSize : params.pageSize,  //SQL语句起始索引
                         //page : (params.offset / params.limit)+1 , 当前页码
-                        stuNumber : $('#inputSchool').val()
+                        xymc : selectValue
 
                         // Tel : $('#search_tel').val()
 
                     };
                     return temp;
                 },
-                columns :[{ title : '序号',
+                columns :[
+                    /*{ title : '序号',
                     formatter : function (value,row,index) {
                         var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
                         var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
                         return pageSize*(pageNumber-1)+index+1;
                     },
                     sortable : true
-                },{
+                },*/{
                     title : '学号',
-                    field : 'stuNumber',
-                    sortable : true
+                    field : 'studentid',
+                    sortable : false
                 },{
-                    title : '课程号',
-                    field : 'courseId',
-                    sortable : true
+                    title : '姓名',
+                    field : 'name',
+                    sortable : false
                 },{
-                    title : '课程名',
-                    field : 'courseName',
-                    sortable : true
+                    title : '学院代码',
+                    field : 'schoolid',
+                    sortable : false
                 },{
-                    title : '课程预测成绩',
-                    field : 'scorePredict',
-                    sortable : true
-                }/*,{
+                    title : '学院名',
+                    field : 'xymc',
+                    sortable : false,
+                    formatter : function (value,row,index) {
+                        return row.school.xymc;
+                    }
+                }
+
+                /*,{
             title : '操作',
             field : 'id',
             sortable : false,
             formatter : operation //对资源进行操作
-        }*/]
+        }*/],
+                onExpandRow : function (index,row,$detail) {
+                    InitSubTable(index,row,$detail);
+                    
+                }
             });
             console.log("table 已执行");
             //value代表该列的值，row代表当前对象
@@ -305,12 +350,72 @@
              }*/
             //查询按钮事件
         }
+    function InitSubTable(index,row,$detail) {
+            console.log(row);
+            console.log(index);
+            console.log($detail);
+            var parentid = row.studentid;
+            console.log(parentid);
+            var cur_table = $detail.html('<table class="table table-hover table-bordered"></table>').find('table');
+            $(cur_table).bootstrapTable({
+                method :"post",
+                url : "/student/getCourseScore",
+                contentType : "application/x-www-form-urlencoded",
+                dataType : "json",
+                striped : true, //是否显示行间隔色
+                sortable : true,
+                pageNumber : 1, //初始化加载第一页
+                pagination : true , //是否分页
+                sidePagination : "server", //server：服务前端分页 ； client：前端分页
+                pageSize : 4,//单页记录数
+                pageList : [5,10,20,30], //可选择的单页记录数
+                queryParamsType:'',
+                //height : 400,
+                queryParams : function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber : params.pageNumber, //每页显示数量
+                        pageSize : params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        studentid : parentid
 
+                        // Tel : $('#search_tel').val()
+
+                    };
+                    return temp;
+                },
+                columns:[{
+                        title : '课程代码',
+                        field : 'kcdm',
+                        sortable : false
+
+                    },
+                    {
+                        title : '课程名',
+                        field : 'kcmc',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.course.kcmc;
+                        }
+
+                    },{
+                        title : '真实成绩',
+                        field : 'zscj',
+                        sortable : false
+
+                    },{
+                        title : '预测成绩',
+                        field : 'yccj',
+                        sortable : false
+
+                }]
+            })
+
+            
+        }
     function clearForm() {
-       document.getElementById("modalOldUserpassword").value=null;
+        document.getElementById("modalOldUserpassword").value=null;
         document.getElementById("modalNewUserpassword1").value=null;
         document.getElementById("modalNewUserpassword2").value=null;
-        
     }
     $("#closebtn").click(function () {
         document.getElementById("modalOldUserpassword").value=null;
@@ -357,7 +462,6 @@
         }
         
     }
-
     function showAtRight(url) {
         var xmlHttp;
         if(window.XMLHttpRequest){
@@ -397,8 +501,10 @@
         xmlHttp.open("GET",url,true);
         xmlHttp.send();
 
+
+
     }
-    function check() {
+    function check() {   //研究生基本信息
         var stuNum = $("#inputStuNum").val();
         if(stuNum==""){
             alert("学号不能为空，请重新输入");
@@ -414,8 +520,8 @@
                     console.log(data);
                     document.getElementById("numberId").innerText = data["xh"];
                     document.getElementById("nameId").innerText = data["xm"];
-                    document.getElementById("ageId").innerText = data["xbdm"];
-                    document.getElementById("sexId").innerText = data["csrq"];
+                    document.getElementById("sexId").innerText = data["xbdm"]==1?"男":"女";
+                    document.getElementById("ageId").innerText = parseInt(data["csrq"]);
                     document.getElementById("nationId").innerText = data["byyx"];
                     document.getElementById("politicsId").innerText = data["byzydm"];
                     document.getElementById("schoolId").innerText = data["rxzydm"];
@@ -439,7 +545,7 @@
 
 
     }
-        function check2() {
+    function check2() {   //本科生基本信息
             var stuNum = $("#inputStuNum2").val();
             if(stuNum==""){
                 alert("学号不能为空，请重新输入");
@@ -455,9 +561,9 @@
                         console.log(data);
                         document.getElementById("numberId2").innerText = data["studentid"];
                         document.getElementById("nameId2").innerText = data["name"];
-                        document.getElementById("ageId2").innerText = data["schoolid"];
-                        document.getElementById("sexId2").innerText = data["majorid"];
-                        document.getElementById("nationId2").innerText = data["gender"];
+                        document.getElementById("sexId2").innerText = data["school"].xymc;
+                        document.getElementById("ageId2").innerText = data["majorid"];
+                        document.getElementById("nationId2").innerText = data["gender"]==1.0?"男":"女";
                         document.getElementById("politicsId2").innerText = data["classid"];
                     },
                     error: function () {
@@ -475,7 +581,6 @@
 
 
         }
-
     function checkHistoryScore() {
         var stuNum = $("#inputStuNum").val();
         console.log(stuNum);
@@ -570,8 +675,6 @@
         })
         
     });
-
-
     /*function check() {
         $.ajax({
             type : "GET",
@@ -592,7 +695,7 @@
         });
 
     }*/
-    function ScorePredict() {
+    /*function ScorePredict() {
         var stuNum = $("#inputStuNum").val();
         $.ajax({
             type : "post",
@@ -615,8 +718,7 @@
         });
 
 
-    }
-
+    }*/
     var theme = {
         color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
@@ -836,7 +938,7 @@
             fontFamily: 'Arial, Verdana, sans-serif'
         }
     };
-   function checkBarGraph() {
+    function checkBarGraph() {
         console.log("click触发");
         var echartBar = echarts.init(document.getElementById('bargraphdiv'),theme);
         echartBar.setOption({
@@ -918,7 +1020,6 @@
             }
         }
     };
-
     var placeHolderStyle = {
         normal: {
             color: 'rgba(0,0,0,0)',
@@ -1144,7 +1245,7 @@
                     console.log(data);
                     echartLine.setOption({
                         title: {
-                            text: '一卡通消费信息(单位：分)',
+                            text: '一卡通消费信息(单位：元)',
                             subtext: '全年52周'
                         },
                         tooltip: {
@@ -1198,15 +1299,15 @@
                                     }*/
                                 }
                             },
-                            data: [data["week1"], data["week2"], data["week3"], data["week4"], data["week5"], data["week6"],
-                                data["week7"], data["week8"], data["week9"], data["week10"], data["week11"], data["week12"],
-                                data["week13"], data["week14"], data["week15"], data["week16"], data["week17"], data["week18"],
-                                data["week19"], data["week20"], data["week21"], data["week22"], data["week23"], data["week24"],
-                                data["week25"], data["week26"], data["week27"], data["week28"], data["week29"], data["week30"],
-                                data["week31"], data["week32"], data["week33"], data["week34"], data["week35"], data["week36"],
-                                data["week37"], data["week38"], data["week39"], data["week40"], data["week41"], data["week42"],
-                                data["week43"], data["week44"], data["week45"], data["week46"], data["week47"], data["week48"],
-                                data["week49"], data["week50"], data["week51"], data["week52"]]
+                            data: [data["week1"]/100, data["week2"]/100, data["week3"]/100, data["week4"]/100, data["week5"]/100, data["week6"]/100,
+                                data["week7"]/100, data["week8"]/100, data["week9"]/100, data["week10"]/100, data["week11"]/100, data["week12"]/100,
+                                data["week13"]/100, data["week14"]/100, data["week15"]/100, data["week16"]/100, data["week17"]/100, data["week18"]/100,
+                                data["week19"]/100, data["week20"]/100, data["week21"]/100, data["week22"]/100, data["week23"]/100, data["week24"]/100,
+                                data["week25"]/100, data["week26"]/100, data["week27"]/100, data["week28"]/100, data["week29"]/100, data["week30"]/100,
+                                data["week31"]/100, data["week32"]/100, data["week33"]/100, data["week34"]/100, data["week35"]/100, data["week36"]/100,
+                                data["week37"]/100, data["week38"]/100, data["week39"]/100, data["week40"]/100, data["week41"]/100, data["week42"]/100,
+                                data["week43"]/100, data["week44"]/100, data["week45"]/100, data["week46"]/100, data["week47"]/100, data["week48"]/100,
+                                data["week49"]/100, data["week50"]/100, data["week51"]/100, data["week52"]/100]
                         }]
                     });
                 }

@@ -1,5 +1,7 @@
 package com.springmvc.entity;
 
+import java.util.List;
+
 public class Undergraduate {
     private String studentid;
 
@@ -12,6 +14,41 @@ public class Undergraduate {
     private String gender;
 
     private String classid;
+
+     private School school;
+
+    public StuScorePredict getStuScorePredict() {
+        return stuScorePredict;
+    }
+
+    public void setStuScorePredict(StuScorePredict stuScorePredict) {
+        this.stuScorePredict = stuScorePredict;
+    }
+
+    private StuScorePredict stuScorePredict;
+  /*  private  Course course;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }*/
+
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
+
+
+
+
 
     public String getStudentid() {
         return studentid;

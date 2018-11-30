@@ -1,6 +1,5 @@
 package com.springmvc.dao;
 
-import com.springmvc.entity.ScorePredict;
 import com.springmvc.entity.StuScorePredict;
 import com.springmvc.entity.Undergraduate;
 

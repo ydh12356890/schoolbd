@@ -34,11 +34,18 @@ public class StudentServiceImpl implements IStudentService {
     @Resource
     StuScorePredictMapper stuScorePredictMapper;
 
+    @Resource
+    StuConsumeOutlierMapper stuConsumeOutlierMapper;
+
     @Override
     public List<School> getSchoolNameService(String xymc) {
         return schoolMapper.selectSchoolName(xymc);
     }
 
+    @Override
+    public List<StuScorePredict> getTwoScoreservice(String xh) {
+        return stuScorePredictMapper.selectTwoScoreByXh(xh);
+    }
 
     @Override
     public Undergraduate getUndergraduateInfo(String studentid) {
@@ -56,8 +63,13 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Student getStudentInfo(String stuNumber) {
+    public StuConsumeOutlier getStuConsumeOutlierService(String xh, String year) {
+        StuConsumeOutlier stuConsumeOutlier = stuConsumeOutlierMapper.selectByXhAndYear(xh,year);
+        return stuConsumeOutlier;
+    }
 
+    @Override
+    public Student getStudentInfo(String stuNumber) {
         return studentMapper.selectByPrimaryKey(stuNumber);
     }
 

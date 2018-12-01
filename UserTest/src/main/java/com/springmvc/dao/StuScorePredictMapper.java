@@ -25,5 +25,7 @@ public interface StuScorePredictMapper {
     List<StuScorePredict> selectGoodCourseScoreBystudentidLimit(Map<String,Object> param);
     List<StuScorePredict> selectGoodCourseScoreLimitSize(Map<String,Object> param);
 
+    List<StuScorePredict> selectTwoScoreByXh(String xh);
+
 
 }

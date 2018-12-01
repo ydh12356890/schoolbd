@@ -142,12 +142,21 @@ public class studentController {
         return nStudent1;
 
     }
-    @RequestMapping("/getScoreDis")  //获取成绩分布
-    @ResponseBody
-    public  StudentScore getStuScoreDisController(@RequestBody Student student){
-        StudentScore studentScore = studentService.getStuScoreDisService(student.getStuNumber());
-        return studentScore;
 
+    @RequestMapping("/getYearConsumptionOutlier")  //获取一卡通全年53周消费离群值（研究生）
+    @ResponseBody
+    public StuConsumeOutlier getStuConsumOutlierController(@RequestBody StuConsumeOutlier stuConsumeOutlier){
+        String xh = stuConsumeOutlier.getXh();
+        String year = stuConsumeOutlier.getYear();
+        StuConsumeOutlier stuConsumeOutlier1 = studentService.getStuConsumeOutlierService(xh,year);
+        return stuConsumeOutlier1;
+
+    }
+
+    @RequestMapping("/getTwoScore")  //获取成绩分布
+    @ResponseBody
+    public  List<StuScorePredict> getStuScoreDisController(@RequestBody StuScorePredict stuScorePredict){
+        return studentService.getTwoScoreservice (stuScorePredict.getXh());
     }
 
 

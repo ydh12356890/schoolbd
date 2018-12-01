@@ -64,6 +64,9 @@
     <id column="studentid" property="studentid" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
     <association property="school" column="xymc" javaType="com.springmvc.entity.School">
       <id column="xydm" property="xydm" jdbcType="VARCHAR" />
       <result column="xymc" property="xymc" jdbcType="VARCHAR" />
@@ -78,7 +81,7 @@
   </resultMap>
   <select id="selectScoreBystuNumberLimit" parameterType="Map" resultMap="UndergraduateMap">
     SELECT
-     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc
+     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
     FROM
     undergraduate_basic a,
     xydm_dzb c,
@@ -93,7 +96,7 @@
 
   <select id="selectGoodScoreStuLimit" parameterType="Map" resultMap="UndergraduateMap">
     SELECT
-    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc
+    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
     FROM
     undergraduate_basic a,
     xydm_dzb c,

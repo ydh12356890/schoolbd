@@ -292,7 +292,6 @@ ul.navbar-right>li>a{
 
 }
 .schooldiv{
-  border: 1px solid #E6E9ED;
   padding: 10px;
   height:auto
 }
@@ -316,13 +315,10 @@ div.tab-content{
 div.personInfo1{
   padding:0 200px;
   margin:  3px  ;
-  border: 1px solid #D9DEE4;
+  /*border: 1px solid #D9DEE4;*/
 
 }
 
-.table>tbody>tr>td.info{
-  background-color: white;
-}
 .table.table-hover.table-bordered{
   border:1px solid black;
   margin-bottom: 10px;
@@ -337,6 +333,14 @@ div.personInfo1{
 .table-bordered > tbody > tr > td{
   border:1px solid black;
 }
+
+.form-group>label{
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 0 3px;
+  font-size: 14px;
+}
+
 .img-circle.profile_img {
   width: 70%;
   background: #fff;

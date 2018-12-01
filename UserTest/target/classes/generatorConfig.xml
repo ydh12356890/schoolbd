@@ -62,7 +62,7 @@
 
         </table>-->
         <table  schema="campus_bigdata"
-                tableName="score_predict" domainObjectName="StuScorePredict"
+                tableName="student_anomaly" domainObjectName="StuConsumeOutlier"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">

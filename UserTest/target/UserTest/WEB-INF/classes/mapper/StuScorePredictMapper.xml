@@ -36,6 +36,17 @@
     LIMIT #{startIndex},#{pageSize}
   </select>
 
+  <select id="selectTwoScoreByXh" parameterType="java.lang.String" resultMap="CourseResultMap">
+    SELECT
+    a.idscore_predict,a.kcdm, a.zscj,a.yccj,b.kcmc
+    FROM
+    score_predict a,
+    bzks_kc b
+    WHERE
+    a.xh=#{xh,jdbcType=VARCHAR} AND
+    a.kcdm=b.kcdm
+  </select>
+
   <select id="selectGoodCourseScoreBystudentidLimit" parameterType="Map" resultMap="CourseResultMap">
     SELECT
     a.idscore_predict,a.kcdm, a.zscj,a.yccj,b.kcmc

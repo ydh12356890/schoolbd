@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc.dao.StuConsumeOutlierMapper">
+  <resultMap id="BaseResultMap" type="com.springmvc.entity.StuConsumeOutlier">
+    <result column="xh" jdbcType="VARCHAR" property="xh" />
+    <result column="week1" jdbcType="DECIMAL" property="week1" />
+    <result column="week2" jdbcType="DECIMAL" property="week2" />
+    <result column="week3" jdbcType="DECIMAL" property="week3" />
+    <result column="week4" jdbcType="DECIMAL" property="week4" />
+    <result column="week5" jdbcType="DECIMAL" property="week5" />
+    <result column="week6" jdbcType="DECIMAL" property="week6" />
+    <result column="week7" jdbcType="DECIMAL" property="week7" />
+    <result column="week8" jdbcType="DECIMAL" property="week8" />
+    <result column="week9" jdbcType="DECIMAL" property="week9" />
+    <result column="week10" jdbcType="DECIMAL" property="week10" />
+    <result column="week11" jdbcType="DECIMAL" property="week11" />
+    <result column="week12" jdbcType="DECIMAL" property="week12" />
+    <result column="week13" jdbcType="DECIMAL" property="week13" />
+    <result column="week14" jdbcType="DECIMAL" property="week14" />
+    <result column="week15" jdbcType="DECIMAL" property="week15" />
+    <result column="week16" jdbcType="DECIMAL" property="week16" />
+    <result column="week17" jdbcType="DECIMAL" property="week17" />
+    <result column="week18" jdbcType="DECIMAL" property="week18" />
+    <result column="week19" jdbcType="DECIMAL" property="week19" />
+    <result column="week20" jdbcType="DECIMAL" property="week20" />
+    <result column="week21" jdbcType="DECIMAL" property="week21" />
+    <result column="week22" jdbcType="DECIMAL" property="week22" />
+    <result column="week23" jdbcType="DECIMAL" property="week23" />
+    <result column="week24" jdbcType="DECIMAL" property="week24" />
+    <result column="week25" jdbcType="DECIMAL" property="week25" />
+    <result column="week26" jdbcType="DECIMAL" property="week26" />
+    <result column="week27" jdbcType="DECIMAL" property="week27" />
+    <result column="week28" jdbcType="DECIMAL" property="week28" />
+    <result column="week29" jdbcType="DECIMAL" property="week29" />
+    <result column="week30" jdbcType="DECIMAL" property="week30" />
+    <result column="week31" jdbcType="DECIMAL" property="week31" />
+    <result column="week32" jdbcType="DECIMAL" property="week32" />
+    <result column="week33" jdbcType="DECIMAL" property="week33" />
+    <result column="week34" jdbcType="DECIMAL" property="week34" />
+    <result column="week35" jdbcType="DECIMAL" property="week35" />
+    <result column="week36" jdbcType="DECIMAL" property="week36" />
+    <result column="week37" jdbcType="DECIMAL" property="week37" />
+    <result column="week38" jdbcType="DECIMAL" property="week38" />
+    <result column="week39" jdbcType="DECIMAL" property="week39" />
+    <result column="week40" jdbcType="DECIMAL" property="week40" />
+    <result column="week41" jdbcType="DECIMAL" property="week41" />
+    <result column="week42" jdbcType="DECIMAL" property="week42" />
+    <result column="week43" jdbcType="DECIMAL" property="week43" />
+    <result column="week44" jdbcType="DECIMAL" property="week44" />
+    <result column="week45" jdbcType="DECIMAL" property="week45" />
+    <result column="week46" jdbcType="DECIMAL" property="week46" />
+    <result column="week47" jdbcType="DECIMAL" property="week47" />
+    <result column="week48" jdbcType="DECIMAL" property="week48" />
+    <result column="week49" jdbcType="DECIMAL" property="week49" />
+    <result column="week50" jdbcType="DECIMAL" property="week50" />
+    <result column="week51" jdbcType="DECIMAL" property="week51" />
+    <result column="week52" jdbcType="DECIMAL" property="week52" />
+    <result column="week53" jdbcType="DECIMAL" property="week53" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
+  </resultMap>
+  
+  <select id="selectByXhAndYear" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM student_anomaly WHERE xh=#{xh,jdbcType=VARCHAR} AND year = #{year,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="com.springmvc.entity.StuConsumeOutlier">
+    insert into student_anomaly (xh, week1, week2, 
+      week3, week4, week5, 
+      week6, week7, week8, 
+      week9, week10, week11, 
+      week12, week13, week14, 
+      week15, week16, week17, 
+      week18, week19, week20, 
+      week21, week22, week23, 
+      week24, week25, week26, 
+      week27, week28, week29, 
+      week30, week31, week32, 
+      week33, week34, week35, 
+      week36, week37, week38, 
+      week39, week40, week41, 
+      week42, week43, week44, 
+      week45, week46, week47, 
+      week48, week49, week50, 
+      week51, week52, week53, 
+      year)
+    values (#{xh,jdbcType=VARCHAR}, #{week1,jdbcType=DECIMAL}, #{week2,jdbcType=DECIMAL}, 
+      #{week3,jdbcType=DECIMAL}, #{week4,jdbcType=DECIMAL}, #{week5,jdbcType=DECIMAL}, 
+      #{week6,jdbcType=DECIMAL}, #{week7,jdbcType=DECIMAL}, #{week8,jdbcType=DECIMAL}, 
+      #{week9,jdbcType=DECIMAL}, #{week10,jdbcType=DECIMAL}, #{week11,jdbcType=DECIMAL}, 
+      #{week12,jdbcType=DECIMAL}, #{week13,jdbcType=DECIMAL}, #{week14,jdbcType=DECIMAL}, 
+      #{week15,jdbcType=DECIMAL}, #{week16,jdbcType=DECIMAL}, #{week17,jdbcType=DECIMAL}, 
+      #{week18,jdbcType=DECIMAL}, #{week19,jdbcType=DECIMAL}, #{week20,jdbcType=DECIMAL}, 
+      #{week21,jdbcType=DECIMAL}, #{week22,jdbcType=DECIMAL}, #{week23,jdbcType=DECIMAL}, 
+      #{week24,jdbcType=DECIMAL}, #{week25,jdbcType=DECIMAL}, #{week26,jdbcType=DECIMAL}, 
+      #{week27,jdbcType=DECIMAL}, #{week28,jdbcType=DECIMAL}, #{week29,jdbcType=DECIMAL}, 
+      #{week30,jdbcType=DECIMAL}, #{week31,jdbcType=DECIMAL}, #{week32,jdbcType=DECIMAL}, 
+      #{week33,jdbcType=DECIMAL}, #{week34,jdbcType=DECIMAL}, #{week35,jdbcType=DECIMAL}, 
+      #{week36,jdbcType=DECIMAL}, #{week37,jdbcType=DECIMAL}, #{week38,jdbcType=DECIMAL}, 
+      #{week39,jdbcType=DECIMAL}, #{week40,jdbcType=DECIMAL}, #{week41,jdbcType=DECIMAL}, 
+      #{week42,jdbcType=DECIMAL}, #{week43,jdbcType=DECIMAL}, #{week44,jdbcType=DECIMAL}, 
+      #{week45,jdbcType=DECIMAL}, #{week46,jdbcType=DECIMAL}, #{week47,jdbcType=DECIMAL}, 
+      #{week48,jdbcType=DECIMAL}, #{week49,jdbcType=DECIMAL}, #{week50,jdbcType=DECIMAL}, 
+      #{week51,jdbcType=DECIMAL}, #{week52,jdbcType=DECIMAL}, #{week53,jdbcType=DECIMAL}, 
+      #{year,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.entity.StuConsumeOutlier">
+    insert into student_anomaly
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        xh,
+      </if>
+      <if test="week1 != null">
+        week1,
+      </if>
+      <if test="week2 != null">
+        week2,
+      </if>
+      <if test="week3 != null">
+        week3,
+      </if>
+      <if test="week4 != null">
+        week4,
+      </if>
+      <if test="week5 != null">
+        week5,
+      </if>
+      <if test="week6 != null">
+        week6,
+      </if>
+      <if test="week7 != null">
+        week7,
+      </if>
+      <if test="week8 != null">
+        week8,
+      </if>
+      <if test="week9 != null">
+        week9,
+      </if>
+      <if test="week10 != null">
+        week10,
+      </if>
+      <if test="week11 != null">
+        week11,
+      </if>
+      <if test="week12 != null">
+        week12,
+      </if>
+      <if test="week13 != null">
+        week13,
+      </if>
+      <if test="week14 != null">
+        week14,
+      </if>
+      <if test="week15 != null">
+        week15,
+      </if>
+      <if test="week16 != null">
+        week16,
+      </if>
+      <if test="week17 != null">
+        week17,
+      </if>
+      <if test="week18 != null">
+        week18,
+      </if>
+      <if test="week19 != null">
+        week19,
+      </if>
+      <if test="week20 != null">
+        week20,
+      </if>
+      <if test="week21 != null">
+        week21,
+      </if>
+      <if test="week22 != null">
+        week22,
+      </if>
+      <if test="week23 != null">
+        week23,
+      </if>
+      <if test="week24 != null">
+        week24,
+      </if>
+      <if test="week25 != null">
+        week25,
+      </if>
+      <if test="week26 != null">
+        week26,
+      </if>
+      <if test="week27 != null">
+        week27,
+      </if>
+      <if test="week28 != null">
+        week28,
+      </if>
+      <if test="week29 != null">
+        week29,
+      </if>
+      <if test="week30 != null">
+        week30,
+      </if>
+      <if test="week31 != null">
+        week31,
+      </if>
+      <if test="week32 != null">
+        week32,
+      </if>
+      <if test="week33 != null">
+        week33,
+      </if>
+      <if test="week34 != null">
+        week34,
+      </if>
+      <if test="week35 != null">
+        week35,
+      </if>
+      <if test="week36 != null">
+        week36,
+      </if>
+      <if test="week37 != null">
+        week37,
+      </if>
+      <if test="week38 != null">
+        week38,
+      </if>
+      <if test="week39 != null">
+        week39,
+      </if>
+      <if test="week40 != null">
+        week40,
+      </if>
+      <if test="week41 != null">
+        week41,
+      </if>
+      <if test="week42 != null">
+        week42,
+      </if>
+      <if test="week43 != null">
+        week43,
+      </if>
+      <if test="week44 != null">
+        week44,
+      </if>
+      <if test="week45 != null">
+        week45,
+      </if>
+      <if test="week46 != null">
+        week46,
+      </if>
+      <if test="week47 != null">
+        week47,
+      </if>
+      <if test="week48 != null">
+        week48,
+      </if>
+      <if test="week49 != null">
+        week49,
+      </if>
+      <if test="week50 != null">
+        week50,
+      </if>
+      <if test="week51 != null">
+        week51,
+      </if>
+      <if test="week52 != null">
+        week52,
+      </if>
+      <if test="week53 != null">
+        week53,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="week1 != null">
+        #{week1,jdbcType=DECIMAL},
+      </if>
+      <if test="week2 != null">
+        #{week2,jdbcType=DECIMAL},
+      </if>
+      <if test="week3 != null">
+        #{week3,jdbcType=DECIMAL},
+      </if>
+      <if test="week4 != null">
+        #{week4,jdbcType=DECIMAL},
+      </if>
+      <if test="week5 != null">
+        #{week5,jdbcType=DECIMAL},
+      </if>
+      <if test="week6 != null">
+        #{week6,jdbcType=DECIMAL},
+      </if>
+      <if test="week7 != null">
+        #{week7,jdbcType=DECIMAL},
+      </if>
+      <if test="week8 != null">
+        #{week8,jdbcType=DECIMAL},
+      </if>
+      <if test="week9 != null">
+        #{week9,jdbcType=DECIMAL},
+      </if>
+      <if test="week10 != null">
+        #{week10,jdbcType=DECIMAL},
+      </if>
+      <if test="week11 != null">
+        #{week11,jdbcType=DECIMAL},
+      </if>
+      <if test="week12 != null">
+        #{week12,jdbcType=DECIMAL},
+      </if>
+      <if test="week13 != null">
+        #{week13,jdbcType=DECIMAL},
+      </if>
+      <if test="week14 != null">
+        #{week14,jdbcType=DECIMAL},
+      </if>
+      <if test="week15 != null">
+        #{week15,jdbcType=DECIMAL},
+      </if>
+      <if test="week16 != null">
+        #{week16,jdbcType=DECIMAL},
+      </if>
+      <if test="week17 != null">
+        #{week17,jdbcType=DECIMAL},
+      </if>
+      <if test="week18 != null">
+        #{week18,jdbcType=DECIMAL},
+      </if>
+      <if test="week19 != null">
+        #{week19,jdbcType=DECIMAL},
+      </if>
+      <if test="week20 != null">
+        #{week20,jdbcType=DECIMAL},
+      </if>
+      <if test="week21 != null">
+        #{week21,jdbcType=DECIMAL},
+      </if>
+      <if test="week22 != null">
+        #{week22,jdbcType=DECIMAL},
+      </if>
+      <if test="week23 != null">
+        #{week23,jdbcType=DECIMAL},
+      </if>
+      <if test="week24 != null">
+        #{week24,jdbcType=DECIMAL},
+      </if>
+      <if test="week25 != null">
+        #{week25,jdbcType=DECIMAL},
+      </if>
+      <if test="week26 != null">
+        #{week26,jdbcType=DECIMAL},
+      </if>
+      <if test="week27 != null">
+        #{week27,jdbcType=DECIMAL},
+      </if>
+      <if test="week28 != null">
+        #{week28,jdbcType=DECIMAL},
+      </if>
+      <if test="week29 != null">
+        #{week29,jdbcType=DECIMAL},
+      </if>
+      <if test="week30 != null">
+        #{week30,jdbcType=DECIMAL},
+      </if>
+      <if test="week31 != null">
+        #{week31,jdbcType=DECIMAL},
+      </if>
+      <if test="week32 != null">
+        #{week32,jdbcType=DECIMAL},
+      </if>
+      <if test="week33 != null">
+        #{week33,jdbcType=DECIMAL},
+      </if>
+      <if test="week34 != null">
+        #{week34,jdbcType=DECIMAL},
+      </if>
+      <if test="week35 != null">
+        #{week35,jdbcType=DECIMAL},
+      </if>
+      <if test="week36 != null">
+        #{week36,jdbcType=DECIMAL},
+      </if>
+      <if test="week37 != null">
+        #{week37,jdbcType=DECIMAL},
+      </if>
+      <if test="week38 != null">
+        #{week38,jdbcType=DECIMAL},
+      </if>
+      <if test="week39 != null">
+        #{week39,jdbcType=DECIMAL},
+      </if>
+      <if test="week40 != null">
+        #{week40,jdbcType=DECIMAL},
+      </if>
+      <if test="week41 != null">
+        #{week41,jdbcType=DECIMAL},
+      </if>
+      <if test="week42 != null">
+        #{week42,jdbcType=DECIMAL},
+      </if>
+      <if test="week43 != null">
+        #{week43,jdbcType=DECIMAL},
+      </if>
+      <if test="week44 != null">
+        #{week44,jdbcType=DECIMAL},
+      </if>
+      <if test="week45 != null">
+        #{week45,jdbcType=DECIMAL},
+      </if>
+      <if test="week46 != null">
+        #{week46,jdbcType=DECIMAL},
+      </if>
+      <if test="week47 != null">
+        #{week47,jdbcType=DECIMAL},
+      </if>
+      <if test="week48 != null">
+        #{week48,jdbcType=DECIMAL},
+      </if>
+      <if test="week49 != null">
+        #{week49,jdbcType=DECIMAL},
+      </if>
+      <if test="week50 != null">
+        #{week50,jdbcType=DECIMAL},
+      </if>
+      <if test="week51 != null">
+        #{week51,jdbcType=DECIMAL},
+      </if>
+      <if test="week52 != null">
+        #{week52,jdbcType=DECIMAL},
+      </if>
+      <if test="week53 != null">
+        #{week53,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -38,8 +38,8 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
                 <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
                     <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>
+                <%--<li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>--%>
             </ul>
         </div>
         <div class="col-md-10 col-md-offset-2 main" id="rightpage">
@@ -180,6 +180,13 @@
                         field : 'name',
                         sortable : false
                     },{
+                        title : '性别',
+                        field : 'gender',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.gender==1.0?"男":"女";
+                        }
+                    },{
                         title : '学院代码',
                         field : 'schoolid',
                         sortable : false
@@ -190,6 +197,16 @@
                         formatter : function (value,row,index) {
                             return row.school.xymc;
                         }
+                    },
+                    {
+                        title : '专业代码',
+                        field : 'majorid',
+                        sortable : false
+                    },
+                    {
+                        title : '班级代码',
+                        field : 'classid',
+                        sortable : false
                     }],
                 onExpandRow : function (index,row,$detail) {
                     InitGoodSubTable(index,row,$detail);
@@ -314,6 +331,13 @@
                     field : 'name',
                     sortable : false
                 },{
+                        title : '性别',
+                        field : 'gender',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.gender==1.0?"男":"女";
+                        }
+                    },{
                     title : '学院代码',
                     field : 'schoolid',
                     sortable : false
@@ -324,7 +348,17 @@
                     formatter : function (value,row,index) {
                         return row.school.xymc;
                     }
-                }
+                },
+                    {
+                        title : '专业代码',
+                        field : 'majorid',
+                        sortable : false
+                    },
+                    {
+                        title : '班级代码',
+                        field : 'classid',
+                        sortable : false
+                    }
 
                 /*,{
             title : '操作',
@@ -504,221 +538,6 @@
 
 
     }
-    function check() {   //研究生基本信息
-        var stuNum = $("#inputStuNum").val();
-        if(stuNum==""){
-            alert("学号不能为空，请重新输入");
-        }else {
-            console.log(stuNum);
-            $.ajax({
-                type: "post",
-                url: "/student/getstuinfo",
-                dataType: "json",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({xh: stuNum}),
-                success: function (data) {
-                    console.log(data);
-                    document.getElementById("numberId").innerText = data["xh"];
-                    document.getElementById("nameId").innerText = data["xm"];
-                    document.getElementById("sexId").innerText = data["xbdm"]==1?"男":"女";
-                    document.getElementById("ageId").innerText = parseInt(data["csrq"]);
-                    document.getElementById("nationId").innerText = data["byyx"];
-                    document.getElementById("politicsId").innerText = data["byzydm"];
-                    document.getElementById("schoolId").innerText = data["rxzydm"];
-                    document.getElementById("majorId").innerText = data["zzmmdm"];
-                },
-                error: function () {
-                    document.getElementById("numberId").innerText = null;
-                    document.getElementById("nameId").innerText = null;
-                    document.getElementById("ageId").innerText = null;
-                    document.getElementById("sexId").innerText = null;
-                    document.getElementById("nationId").innerText = null;
-                    document.getElementById("politicsId").innerText = null;
-                    document.getElementById("schoolId").innerText = null;
-                    document.getElementById("majorId").innerText = null;
-                    document.getElementById("stuScore").innerText = null;
-                    alert("该学号不存在，请重新输入！");
-                }
-
-            })
-        }
-
-
-    }
-    function check2() {   //本科生基本信息
-            var stuNum = $("#inputStuNum2").val();
-            if(stuNum==""){
-                alert("学号不能为空，请重新输入");
-            }else {
-                console.log(stuNum);
-                $.ajax({
-                    type: "post",
-                    url: "/student/getUndergraduateInfo",
-                    dataType: "json",
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify({studentid: stuNum}),
-                    success: function (data) {
-                        console.log(data);
-                        document.getElementById("numberId2").innerText = data["studentid"];
-                        document.getElementById("nameId2").innerText = data["name"];
-                        document.getElementById("sexId2").innerText = data["school"].xymc;
-                        document.getElementById("ageId2").innerText = data["majorid"];
-                        document.getElementById("nationId2").innerText = data["gender"]==1.0?"男":"女";
-                        document.getElementById("politicsId2").innerText = data["classid"];
-                    },
-                    error: function () {
-                        document.getElementById("numberId2").innerText = null;
-                        document.getElementById("nameId2").innerText = null;
-                        document.getElementById("ageId2").innerText = null;
-                        document.getElementById("sexId2").innerText = null;
-                        document.getElementById("nationId2").innerText = null;
-                        document.getElementById("politicsId2").innerText = null;
-                        alert("该学号不存在，请重新输入！");
-                    }
-
-                })
-            }
-
-
-        }
-    function checkHistoryScore() {
-        var stuNum = $("#inputStuNum").val();
-        console.log(stuNum);
-        //初始化echart
-        var barChart = echarts.init(document.getElementById("stuScore"));
-        var option = null;
-        //页面加载数据
-        $(function () {
-            $.ajax({
-                type: "post",
-                async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                url: "/getScoreDis",
-                contentType:"application/json;charset=utf-8",
-                data:JSON.stringify({stuNumber:stuNum}),
-                dataType: "json", //返回数据形式为json
-                success: function (data) {
-                    console.log(data);
-                    option ={
-                        title :{
-                            text: '课程成绩区间分布',
-                            x:'center',
-                            y:'top'
-
-                        },
-                        tooltip: {},
-                        legend: {
-                            //data:['成绩分布图']  //标签内容
-                            //注意例子格式为数组，后台传过来的需要对应格式处理数据
-                            //data：["aa","bb"]
-                        },
-                        xAxis: {
-                            name:'成绩',
-                            show:true,
-                            data: ['0-59','60-69','70-79','80-89','90-100'],
-                            //x轴项目名数值排列
-                            type:'category',
-                        },
-                        yAxis:{
-                            name:'课程门数',
-                            type: 'value',
-
-                        },
-                        series:[{
-                            //name: '成绩分布图',//与标签内容相同
-                            type:'bar',
-                            itemStyle:{
-                                normal:{
-                                    color: function (params) {
-                                        var colorList = ['#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-                                            '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-                                            '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'];
-                                        return colorList[params.dataIndex];
-
-                                    },
-                                    //以下为是否显示，显示位置和格式的设置
-                                    label:{
-                                        show:true,
-                                        position:'top',
-                                        //formatter:'{b}\n{c}'
-                                    }
-                                }
-                            },
-                            barWidth:50,
-                            data: [data["zeroFiftynine"],data["sixtySixtynine"],data["seventySeventynine"],data["eightyEightynine"],data["ninetyHundred"]]
-                        }]
-                    };
-                    barChart.setOption(option);
-                }
-
-            });
-
-        });
-
-
-
-
-    }
-    $("#logout").click( function() {
-        console.log("注销");
-        $.ajax({
-            url:"/user/logout",
-            type:"post",
-            dataType:"text",
-            success:function (data) {
-                if(data=="success") {
-                    window.location.href = "mainpage.jsp";
-                }
-                else {
-                    //alert("用户名或密码错误！");
-                }
-            }
-        })
-        
-    });
-    /*function check() {
-        $.ajax({
-            type : "GET",
-            url : "/user/getalluser",
-            dataType : "json",
-            success:function(data){
-                var obj = eval(data);
-                var tbody = $('<tbody></tbody>');
-                $(obj).each(function (index) {
-                    var val = obj[index];
-                    var tr = $('<tr></tr>');
-                    tr.append('<td>'+ val.userId + '</td>' + '<td>'+val.userName + '</td>' + '<td>' + val.userPassword + '</td>');
-                    tbody.append(tr);
-                });
-                $('#tableuserlist tbody').replaceWith(tbody);
-            }
-
-        });
-
-    }*/
-    /*function ScorePredict() {
-        var stuNum = $("#inputStuNum").val();
-        $.ajax({
-            type : "post",
-            url : "/getScorePredict",
-            dataType: "json",
-            contentType:"application/json;charset=utf-8",
-            data:JSON.stringify({stuNumber:stuNum}),
-            success:function(data){
-                var obj = eval(data);
-                var tbody = $('<tbody></tbody>');
-                $(obj).each(function (index) {
-                    var val = obj[index];
-                    var tr = $('<tr></tr>');
-                    tr.append('<td>'+ val.courseId + '</td>' + '<td>'+val.courseName + '</td>' + '<td>' + val.scorePredict + '</td>');
-                    tbody.append(tr);
-                });
-                $('#tableScorePredictlist tbody').replaceWith(tbody);
-            }
-
-        });
-
-
-    }*/
     var theme = {
         color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
@@ -1035,7 +854,7 @@
         }
     };
     function checkMiniPie() {
-       console.log("mini pie click");
+        console.log("mini pie click");
 
         var echartMiniPie = echarts.init(document.getElementById('minipiediv'), theme);
         echartMiniPie.setOption({
@@ -1138,6 +957,358 @@
 
 
     }
+    function checkPostgraduateInfo() {   //研究生基本信息
+        var stuNum = $("#inputStuNum").val();
+        //初始化echart
+        var echartLine = echarts.init(document.getElementById('cardConsumptiondiv'),theme);
+        var option = null;
+        if(stuNum==""){
+            alert("学号不能为空，请重新输入");
+        }else {
+            console.log(stuNum);
+            $.ajax({
+                type: "post",
+                url: "/student/getstuinfo",
+                dataType: "json",
+                sync :true,
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({xh: stuNum}),
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById("numberId").innerText = data["xh"];
+                    document.getElementById("nameId").innerText = data["xm"];
+                    document.getElementById("sexId").innerText = data["xbdm"]==1?"男":"女";
+                    document.getElementById("ageId").innerText = parseInt(data["csrq"]);
+                    document.getElementById("nationId").innerText = data["byyx"];
+                    document.getElementById("politicsId").innerText = data["byzydm"];
+                    document.getElementById("schoolId").innerText = data["rxzydm"];
+                    document.getElementById("majorId").innerText = data["zzmmdm"];
+                },
+                error: function () {
+                    document.getElementById("numberId").innerText = null;
+                    document.getElementById("nameId").innerText = null;
+                    document.getElementById("ageId").innerText = null;
+                    document.getElementById("sexId").innerText = null;
+                    document.getElementById("nationId").innerText = null;
+                    document.getElementById("politicsId").innerText = null;
+                    document.getElementById("schoolId").innerText = null;
+                    document.getElementById("majorId").innerText = null;
+                    document.getElementById("stuScore").innerText = null;
+                    alert("该学号不存在，请重新输入！");
+                }
+
+            });
+
+            //页面加载数据
+            $.ajax({
+                type: "post",
+                sync: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url: "/getCardConsumption",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({xh: stuNum}),
+                dataType: "json", //返回数据形式为json
+                success: function (data) {
+                    console.log(data);
+                       option = {
+                           title: {
+                               text: '一卡通消费信息(单位：元)',
+                               subtext: '全年52周'
+                           },
+                           tooltip: {
+                               trigger: 'axis'
+                           },
+                           legend: {
+                               /*x: 220,
+                               y: 40,
+                               data: ['Intent', 'Pre-order', 'Deal']*/
+                           },
+                           toolbox: {
+                               show: true,
+                               feature: {
+                                   /*magicType: {
+                                       show: true,
+                                       title: {
+                                           line: 'Line',
+                                           bar: 'Bar'
+                                       },
+                                       type: ['line', 'bar']
+                                   }*/
+                                   /*restore: {
+                                       show: true,
+                                       title: "Restore"
+                                   },
+                                   saveAsImage: {
+                                       show: true,
+                                       title: "Save Image"
+                                   }*/
+                               }
+                           },
+                           calculable: true,
+                           xAxis: [{
+                               type: 'category',
+                               boundaryGap: false,
+                               data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13',
+                                   '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
+                                   '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52']
+                           }],
+                           yAxis: [{
+                               type: 'value'
+                           }],
+                           series: [{
+                               name: '周消费',
+                               type: 'line',
+                               itemStyle: {
+                                   normal: {
+                                       /*areaStyle: {
+                                           type: 'default'
+                                       }*/
+                                   }
+                               },
+                               data: [data["week1"] / 100, data["week2"] / 100, data["week3"] / 100, data["week4"] / 100, data["week5"] / 100, data["week6"] / 100,
+                                   data["week7"] / 100, data["week8"] / 100, data["week9"] / 100, data["week10"] / 100, data["week11"] / 100, data["week12"] / 100,
+                                   data["week13"] / 100, data["week14"] / 100, data["week15"] / 100, data["week16"] / 100, data["week17"] / 100, data["week18"] / 100,
+                                   data["week19"] / 100, data["week20"] / 100, data["week21"] / 100, data["week22"] / 100, data["week23"] / 100, data["week24"] / 100,
+                                   data["week25"] / 100, data["week26"] / 100, data["week27"] / 100, data["week28"] / 100, data["week29"] / 100, data["week30"] / 100,
+                                   data["week31"] / 100, data["week32"] / 100, data["week33"] / 100, data["week34"] / 100, data["week35"] / 100, data["week36"] / 100,
+                                   data["week37"] / 100, data["week38"] / 100, data["week39"] / 100, data["week40"] / 100, data["week41"] / 100, data["week42"] / 100,
+                                   data["week43"] / 100, data["week44"] / 100, data["week45"] / 100, data["week46"] / 100, data["week47"] / 100, data["week48"] / 100,
+                                   data["week49"] / 100, data["week50"] / 100, data["week51"] / 100, data["week52"] / 100]
+                           }]
+                       };
+                    echartLine.setOption(option);
+                }
+
+            });
+        }
+
+
+    }
+    function checkUndergraduateInfo() {   //本科生基本信息
+            var stuNum = $("#inputStuNum2").val();
+            var barChart = echarts.init(document.getElementById("stuScore2"),theme);
+            var option = null;
+            if(stuNum==""){
+                alert("学号不能为空，请重新输入");
+            }else {
+                console.log(stuNum);
+                $.ajax({
+                    type: "post",
+                    url: "/student/getUndergraduateInfo",
+                    dataType: "json",
+                    sync : true,
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({studentid: stuNum}),
+                    success: function (data) {
+                        console.log(data);
+                        document.getElementById("numberId2").innerText = data["studentid"];
+                        document.getElementById("nameId2").innerText = data["name"];
+                        document.getElementById("sexId2").innerText = data["school"].xymc;
+                        document.getElementById("ageId2").innerText = data["majorid"];
+                        document.getElementById("nationId2").innerText = data["gender"]==1.0?"男":"女";
+                        document.getElementById("politicsId2").innerText = data["classid"];
+                    },
+                    error: function () {
+                        document.getElementById("numberId2").innerText = null;
+                        document.getElementById("nameId2").innerText = null;
+                        document.getElementById("ageId2").innerText = null;
+                        document.getElementById("sexId2").innerText = null;
+                        document.getElementById("nationId2").innerText = null;
+                        document.getElementById("politicsId2").innerText = null;
+                        alert("该学号不存在，请重新输入！");
+                    }
+
+                });
+                $.ajax({
+                    type: "post",
+                    sync: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                    url: "/getTwoScore",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify({xh:stuNum}),
+                    dataType: "json", //返回数据形式为json
+                    success: function (data) {
+                        console.log(data);
+                        var kcmc=[];
+                        var zscj=[];
+                        var yccj=[];
+                        for(var i =0; i<data.length;i++){
+                            kcmc.push(data[i].course['kcmc']);
+                        }
+                        for(var i=0;i<data.length;i++){
+                            zscj.push(data[i].zscj);
+                        }
+                        for(var i=0;i<data.length;i++){
+                            yccj.push(data[i].yccj);
+                        }
+
+                        option ={
+                            title :{
+                                text: '课程成绩分布',
+                                subtext: '',
+                                x:'left',
+                                y:'top'
+
+                            },
+                            tooltip: {
+                                trigger:'axis'
+                            },
+                            legend: {
+                                data:['真实成绩','预测成绩']
+                            },
+                            toolbox: {
+                                show: true,
+                                feature: {
+                                    /*magicType: {
+                                        show: true,
+                                        title: {
+                                            line: 'Line',
+                                        },
+                                        type: ['line']
+                                    },*/
+                                }
+                            },
+                            calculable: true,
+                            xAxis: {
+                                name:'课程',
+                                show:true,
+                                data: kcmc,
+                                //x轴项目名数值排列
+                                type:'category',
+                                axisLabel:{
+                                    interval:0,
+                                    rotate:25
+                                }
+
+                            },
+                            yAxis:{
+                                name:'成绩',
+                                type: 'value',
+                                min:0,
+                                max:100,
+                                interval:20
+
+                            },
+                            grid:{
+                                show:true,
+                                bottom:'30%'
+
+                            },
+                            series:[{
+                                //name: '成绩分布图',//与标签内容相同
+                                name : '真实成绩',
+                                type:'line',
+                                // smooth : true,
+                                itemStyle: {
+                                    normal: {
+                                        /*areaStyle: {
+                                            type: 'default'
+                                        }*/
+                                    }
+                                },
+                                /* itemStyle:{
+                                     normal:{
+                                         color: function (params) {
+                                             var colorList = ['#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                                 '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                                 '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'];
+                                             return colorList[params.dataIndex];
+
+                                         },
+                                         //以下为是否显示，显示位置和格式的设置
+                                         label:{
+                                             show:true,
+                                             position:'top',
+                                             //formatter:'{b}\n{c}'
+                                         }
+                                     }
+                                 },
+                                 barWidth:50,*/
+                                data: zscj
+                            },
+                                {
+                                    //name: '成绩分布图',//与标签内容相同
+                                    name : '预测成绩',
+                                    type:'line',
+                                    // smooth : true,
+                                    itemStyle: {
+                                        normal: {
+                                            /*areaStyle: {
+                                                type: 'default'
+                                            }*/
+                                        }
+                                    },
+                                    data:yccj
+                                }]
+                        };
+                        barChart.setOption(option);
+                    }
+
+                });
+            }
+
+
+        }
+    $("#logout").click( function() {
+        console.log("注销");
+        $.ajax({
+            url:"/user/logout",
+            type:"post",
+            dataType:"text",
+            success:function (data) {
+                if(data=="success") {
+                    window.location.href = "mainpage.jsp";
+                }
+                else {
+                    //alert("用户名或密码错误！");
+                }
+            }
+        })
+        
+    });
+    /*function check() {
+        $.ajax({
+            type : "GET",
+            url : "/user/getalluser",
+            dataType : "json",
+            success:function(data){
+                var obj = eval(data);
+                var tbody = $('<tbody></tbody>');
+                $(obj).each(function (index) {
+                    var val = obj[index];
+                    var tr = $('<tr></tr>');
+                    tr.append('<td>'+ val.userId + '</td>' + '<td>'+val.userName + '</td>' + '<td>' + val.userPassword + '</td>');
+                    tbody.append(tr);
+                });
+                $('#tableuserlist tbody').replaceWith(tbody);
+            }
+
+        });
+
+    }*/
+    /*function ScorePredict() {
+        var stuNum = $("#inputStuNum").val();
+        $.ajax({
+            type : "post",
+            url : "/getScorePredict",
+            dataType: "json",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify({stuNumber:stuNum}),
+            success:function(data){
+                var obj = eval(data);
+                var tbody = $('<tbody></tbody>');
+                $(obj).each(function (index) {
+                    var val = obj[index];
+                    var tr = $('<tr></tr>');
+                    tr.append('<td>'+ val.courseId + '</td>' + '<td>'+val.courseName + '</td>' + '<td>' + val.scorePredict + '</td>');
+                    tbody.append(tr);
+                });
+                $('#tableScorePredictlist tbody').replaceWith(tbody);
+            }
+
+        });
+
+
+    }*/
+
     /*function checkLineGraph() {
         var echartLine = echarts.init(document.getElementById('linegraphdiv'), theme);
 
@@ -1228,93 +1399,95 @@
 
 
     }*/
-    function checkCardConsumption() {
-        var stuNum = $("#inputStuNum").val();
-        console.log(stuNum);
+
+    function checkConsumptionOutlier() {
+        var xh = $("#inputXh").val();
+        var year = $("#inputYear option:selected").text();
+        if(xh==""){
+            alert("学号不能为空！");
+        }else{
+        console.log(xh);
+        console.log(year);
         //初始化echart
-        var echartLine = echarts.init(document.getElementById('cardConsumptiondiv'), theme);
+        var echartLine = echarts.init(document.getElementById('yearConsumptiondiv'), theme);
         //页面加载数据
-            $.ajax({
-                type: "post",
-                async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                url: "/getCardConsumption",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({xh: stuNum}),
-                dataType: "json", //返回数据形式为json
-                success: function (data) {
-                    console.log(data);
-                    echartLine.setOption({
-                        title: {
-                            text: '一卡通消费信息(单位：元)',
-                            subtext: '全年52周'
-                        },
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            /*x: 220,
-                            y: 40,
-                            data: ['Intent', 'Pre-order', 'Deal']*/
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {
-                                    show: true,
-                                    title: {
-                                        line: 'Line',
-                                        bar: 'Bar'
-                                    },
-                                    type: ['line', 'bar']
+        $.ajax({
+            type: "post",
+            async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "/getYearConsumptionOutlier",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({xh: xh,year:year}),
+            dataType: "json", //返回数据形式为json
+            success: function (data) {
+                console.log(data);
+
+                echartLine.setOption({
+                    title: {
+                        text: '消费信息离群值',
+                        subtext: '全年53周'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        /*x: 220,
+                        y: 40,
+                        data: ['Intent', 'Pre-order', 'Deal']*/
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            /*magicType: {
+                                show: true,
+                                title: {
+                                    line: 'Line'
                                 },
-                                restore: {
-                                    show: true,
-                                    title: "Restore"
-                                },
-                                saveAsImage: {
-                                    show: true,
-                                    title: "Save Image"
-                                }
+                                type: ['line']
+                            }*/
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [{
+                        type: 'category',
+                        axisLine :{
+                            onZero:false,
+                        },
+                        boundaryGap: false,
+                        data: ['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13',
+                            '14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
+                            '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53']
+                    }],
+                    yAxis: [{
+                        type: 'value'
+                    }],
+                    series: [{
+                        name: '消费离群值',
+                        type: 'line',
+                        //smooth: true,
+                        itemStyle: {
+                            normal: {
+                                /*areaStyle: {
+                                    type: 'default'
+                                }*/
                             }
                         },
-                        calculable: true,
-                        xAxis: [{
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13',
-                            '14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
-                            '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52']
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
-                        series: [{
-                            name: '周消费',
-                            type: 'line',
-                            smooth: true,
-                            itemStyle: {
-                                normal: {
-                                    /*areaStyle: {
-                                        type: 'default'
-                                    }*/
-                                }
-                            },
-                            data: [data["week1"]/100, data["week2"]/100, data["week3"]/100, data["week4"]/100, data["week5"]/100, data["week6"]/100,
-                                data["week7"]/100, data["week8"]/100, data["week9"]/100, data["week10"]/100, data["week11"]/100, data["week12"]/100,
-                                data["week13"]/100, data["week14"]/100, data["week15"]/100, data["week16"]/100, data["week17"]/100, data["week18"]/100,
-                                data["week19"]/100, data["week20"]/100, data["week21"]/100, data["week22"]/100, data["week23"]/100, data["week24"]/100,
-                                data["week25"]/100, data["week26"]/100, data["week27"]/100, data["week28"]/100, data["week29"]/100, data["week30"]/100,
-                                data["week31"]/100, data["week32"]/100, data["week33"]/100, data["week34"]/100, data["week35"]/100, data["week36"]/100,
-                                data["week37"]/100, data["week38"]/100, data["week39"]/100, data["week40"]/100, data["week41"]/100, data["week42"]/100,
-                                data["week43"]/100, data["week44"]/100, data["week45"]/100, data["week46"]/100, data["week47"]/100, data["week48"]/100,
-                                data["week49"]/100, data["week50"]/100, data["week51"]/100, data["week52"]/100]
-                        }]
-                    });
-                }
+                        data: [data["week1"], data["week2"], data["week3"], data["week4"], data["week5"], data["week6"],
+                            data["week7"], data["week8"], data["week9"], data["week10"], data["week11"], data["week12"],
+                            data["week13"], data["week14"], data["week15"], data["week16"], data["week17"], data["week18"],
+                            data["week19"], data["week20"], data["week21"], data["week22"], data["week23"], data["week24"],
+                            data["week25"], data["week26"], data["week27"], data["week28"], data["week29"], data["week30"],
+                            data["week31"], data["week32"], data["week33"], data["week34"], data["week35"], data["week36"],
+                            data["week37"], data["week38"], data["week39"], data["week40"], data["week41"], data["week42"],
+                            data["week43"], data["week44"], data["week45"], data["week46"], data["week47"], data["week48"],
+                            data["week49"], data["week50"], data["week51"], data["week52"],data["week53"]]
+                    }]
+                });
+            }
 
-            });
+        });
+            }
 
-
+        
     }
 </script>
 

@@ -19,7 +19,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 
-
     User selectUserByUsername(String userName); //登录
     void insertNewUser(@Param("userName") String userName, @Param("userPassword") String userPassword); //注册 insertNewUser
 

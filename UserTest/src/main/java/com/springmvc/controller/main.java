@@ -46,6 +46,7 @@ public class main {
         }
         else {
             request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("lastschool", user);
 //            request.getSession().setAttribute("password",user);
 
             return "success";

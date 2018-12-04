@@ -69,6 +69,17 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<School> getpersonNumAllSchoolService() {
+        return schoolMapper.selectPersonNumUgAllSchool();
+    }
+
+    @Override
+    public List<MFRatio> getMFRatioSingleSchoolService(String xymc) {
+        List<MFRatio> mfRatioList = undergraduateMapper.selectMFRatioUgSingleSchool(xymc);
+        return mfRatioList;
+    }
+
+    @Override
     public Student getStudentInfo(String stuNumber) {
         return studentMapper.selectByPrimaryKey(stuNumber);
     }
@@ -123,6 +134,16 @@ public class StudentServiceImpl implements IStudentService {
         result.put("rows",rows);
         return result;
 }
+
+    @Override
+    public Map<String, Object> getAllSchoolStudentService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=undergraduateMapper.selectSchoolStudentSize(param).size();
+        List<Undergraduate> rows=undergraduateMapper.selectSchoolAllStudent(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
 
 
 

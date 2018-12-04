@@ -7,6 +7,8 @@ public class User {
 
     private String userPassword;
 
+    private String lastschool;
+
     public Integer getUserId() {
         return userId;
     }
@@ -29,5 +31,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
+    public String getLastschool() {
+        return lastschool;
+    }
+
+    public void setLastschool(String lastschool) {
+        this.lastschool = lastschool == null ? null : lastschool.trim();
     }
 }

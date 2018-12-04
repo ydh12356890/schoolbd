@@ -28,9 +28,15 @@ public interface IStudentService {
 
     Map<String,Object> getGoodCourseScoreLimit(Map<String,Object> param);
 
+    Map<String,Object> getAllSchoolStudentService(Map<String,Object> param);
+
     List<School> getSchoolNameService(String xymc);
 
     List<StuScorePredict> getTwoScoreservice(String xh);
 
     StuConsumeOutlier getStuConsumeOutlierService(String xh,String year);
+
+    List<School> getpersonNumAllSchoolService();
+
+    List<MFRatio> getMFRatioSingleSchoolService(String schoolid);
 }

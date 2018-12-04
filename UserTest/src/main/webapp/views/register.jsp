@@ -19,6 +19,7 @@
     <title>校园信息化</title>
     <link href="../assets/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/signin.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -27,20 +28,35 @@
     <form class="form-signin form-horizontal">
         <div class="form-group">
             <label for="inputUserName1" class="col-md-4 control-label">用户名</label>
-            <div class="col-md-8">
+            <div class="input-group col-md-8">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
                 <input type="text" name="userName1" id="inputUserName1" class="col-md-8 form-control" placeholder="请输入用户名...">
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword1" class="col-md-4 control-label">密码</label>
-            <div class="col-md-8">
+            <div class="input-group col-md-8">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
                 <input type="password" name="userPassword1" id="inputPassword1" class="form-control" placeholder="请输入密码...">
+                <span class="input-group-addon">
+                    <span class="show_pass1 glyphicon glyphicon-eye-close"></span>
+                </span>
             </div>
         </div>
         <div class="form-group">
             <label for="inputPassword2" class="col-md-4 control-label">确认密码</label>
-            <div class="col-md-8">
+            <div class="input-group col-md-8">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
                 <input type="password" name="userPassword2" id="inputPassword2" class="form-control" placeholder="请再次输入密码...">
+                <span class="input-group-addon">
+                    <span class="show_pass2 glyphicon glyphicon-eye-close"></span>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -85,6 +101,24 @@
             })
         }
     });
+
+</script>
+
+<script type="text/javascript">
+
+
+    $(".show_pass2").click(function () {
+        var pass = document.getElementById("inputPassword2");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_pass2").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_pass2").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
 
 </script>
 </body>

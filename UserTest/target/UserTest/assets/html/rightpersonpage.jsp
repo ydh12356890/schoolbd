@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/echarts.css">
-    <link href="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-select.min.css" rel="stylesheet">
 </head>
 <body>
 <div>
@@ -171,8 +171,8 @@
 <script src = "../js/echarts.common.min.js"></script>
 <script src="../js/bootstrap-table.min.js"></script>
 <script src="../js/bootstrap-table-zh-CN.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/i18n/defaults-zh_CN.min.js"></script>
+<script src="../js/bootstrap-select.min.js"></script>
+<script src="../js/defaults-zh_CN.min.js"></script>
 <script>
    /* $(function () {
         var searchXh = $("#inputautonum");

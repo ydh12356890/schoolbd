@@ -10,6 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="./assets/icon/buptlogo.png">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
   <title>校园信息化</title>
 
 </head>
@@ -33,14 +34,23 @@
     <form class="form-signin form-horizontal">
       <div class="form-group">
         <label for="inputUserName" class="col-md-4 control-label">用户名</label>
-        <div class="col-md-8">
-          <input type="text" name="userName" id="inputUserName" class="form-control" placeholder="请输入用户名...">
+        <div class="input-group col-md-8">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+          <input type="text" name="userName"  id="inputUserName" class="form-control" placeholder="请输入用户名...">
         </div>
       </div>
       <div class="form-group">
         <label for="inputPassword" class="col-md-4 control-label">密码</label>
-        <div class="col-md-8">
+        <div class="input-group col-md-8">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-lock"></span>
+          </span>
           <input type="password" name="userPassword" id="inputPassword" class="form-control" placeholder="请输入密码...">
+          <span class="input-group-addon">
+            <span class="show_pass glyphicon glyphicon-eye-close"></span>
+          </span>
         </div>
       </div>
       <div class="form-group">
@@ -85,6 +95,23 @@
      })
  }});
 
+
+</script>
+<script type="text/javascript">
+
+
+    $(".show_pass").click(function () {
+        var pass = document.getElementById("inputPassword");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_pass").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_pass").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
 
 </script>
 

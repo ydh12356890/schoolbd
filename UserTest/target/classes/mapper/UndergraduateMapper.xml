@@ -18,6 +18,23 @@
     from undergraduate_basic
     where studentid = #{studentid,jdbcType=VARCHAR}
   </select>
+  
+
+  <resultMap id="Map" type="com.springmvc.entity.MFRatio">
+    <result property="gender" column="gender" jdbcType="VARCHAR"/>
+    <result property="mfnumber" column="mfnumber" jdbcType="INTEGER"/>
+    <result property="schoolid" column="schoolid" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <select id="selectMFRatioUgSingleSchool" resultMap="Map" parameterType="java.lang.String">
+    SELECT count(studentid) as mfnumber,schoolid,gender
+    FROM undergraduate_basic a,
+    xydm_dzb b
+    WHERE b.xymc = #{xymc,jdbcType=VARCHAR} AND a.schoolid = b.xydm
+    GROUP BY gender
+  </select>
+
+
 
   <resultMap id="UndergraduateInfoMap" type="com.springmvc.entity.Undergraduate">
     <id column="studentid" property="studentid" jdbcType="VARCHAR" />
@@ -31,6 +48,29 @@
       <result column="xymc" property="xymc" jdbcType="VARCHAR" />
     </association>
   </resultMap>
+
+  <select id="selectSchoolAllStudent" resultMap="UndergraduateInfoMap"  parameterType="Map">
+  SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  c.xymc=#{xymc,jdbcType=VARCHAR} AND
+  c.xydm=a.schoolid
+  LIMIT #{startIndex},#{pageSize}
+</select>
+
+  <select id="selectSchoolStudentSize" resultMap="UndergraduateInfoMap"  parameterType="Map">
+    SELECT
+    a.studentid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid
+  </select>
   
   <select id="selectUndergraduateBaseInfo" resultMap="UndergraduateInfoMap" parameterType="java.lang.String" >
     SELECT a.*,c.xymc
@@ -90,7 +130,7 @@
           c.xymc=#{xymc,jdbcType=VARCHAR} AND
           c.xydm=a.schoolid AND
           a.studentid= b.xh AND
-          <![CDATA[ b.yccj<60 ]]>
+          <![CDATA[ b.yccj<70 ]]>
     LIMIT #{startIndex},#{pageSize}
   </select>
 
@@ -121,7 +161,7 @@
           c.xymc=#{xymc,jdbcType=VARCHAR} AND
           c.xydm=a.schoolid AND
           a.studentid= b.xh AND
-          <![CDATA[ b.yccj<60 ]]>
+          <![CDATA[ b.yccj<70 ]]>
   </select>
 
   <select id="selectGoodScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">

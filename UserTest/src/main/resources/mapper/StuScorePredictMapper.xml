@@ -32,7 +32,7 @@
     WHERE
     a.xh=#{studentid,jdbcType=VARCHAR} AND
     a.kcdm=b.kcdm AND
-    <![CDATA[ a.yccj<60 ]]>
+    <![CDATA[ a.yccj<70 ]]>
     LIMIT #{startIndex},#{pageSize}
   </select>
 
@@ -67,7 +67,7 @@
     score_predict a
     WHERE
     a.xh=#{studentid,jdbcType=VARCHAR} AND
-    <![CDATA[ a.yccj<60 ]]>
+    <![CDATA[ a.yccj<70 ]]>
   </select>
 
   <select id="selectGoodCourseScoreLimitSize" parameterType="Map" resultMap="BaseResultMap">

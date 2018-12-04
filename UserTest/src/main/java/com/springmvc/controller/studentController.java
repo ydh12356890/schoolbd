@@ -114,6 +114,23 @@ public class studentController {
 
     }
 
+    @RequestMapping("/student/getSchoolStudent")  //根据学院，查询出所有学生列表
+    @ResponseBody
+    public String getSchoolStudent(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        String jsonstr =  JSON.toJSONString(studentService.getAllSchoolStudentService (param));
+        System.out.println("子表"+jsonstr);
+        return jsonstr;
+
+    }
+
+
+
     @RequestMapping("/student/getstuinfo")  //获取研究生的基本信息
     @ResponseBody
     public Postgraduate getStuInfo(@RequestBody Postgraduate postgraduate){
@@ -158,6 +175,28 @@ public class studentController {
     public  List<StuScorePredict> getStuScoreDisController(@RequestBody StuScorePredict stuScorePredict){
         return studentService.getTwoScoreservice (stuScorePredict.getXh());
     }
+
+
+    @RequestMapping("/getSchoolPersonNum")  //获取各学院人数
+    @ResponseBody
+    public  List<School> getSchoolPersonNumController(){
+       List<School> schoolList = studentService.getpersonNumAllSchoolService();
+       return schoolList;
+      // Map<String,Object> result = new HashMap<String, Object>();
+    }
+
+
+    @RequestMapping("/getMFRatioSingleSchool")  //获取学院男女比例
+    @ResponseBody
+    public  List<MFRatio> getMFRatioSingleSchoolController(@RequestBody School school){
+        List<MFRatio> mfRatioList = studentService.getMFRatioSingleSchoolService(school.getXymc());
+        return mfRatioList;
+        // Map<String,Object> result = new HashMap<String, Object>();
+    }
+
+
+
+
 
 
 

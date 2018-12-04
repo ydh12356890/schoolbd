@@ -15,7 +15,12 @@
     from xydm_dzb
     where xydm = #{xydm,jdbcType=VARCHAR}
   </select>
-  
+
+  <select id="selectPersonNumUgAllSchool" resultMap="BaseResultMap">
+    select *
+    from xydm_dzb
+  </select>
+
   <select id="selectSchoolName" resultMap="BaseResultMap" parameterType="java.lang.String">
     SELECT * FROM xydm_dzb WHERE xymc LIKE concat("%",#{xymc},"%")
 

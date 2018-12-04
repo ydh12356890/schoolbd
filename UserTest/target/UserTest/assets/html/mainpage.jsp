@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
+<body onload="showAtRight('rightmainpage.jsp')"></body>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +33,7 @@
                 </div>
             </div>
             <ul class="nav nav-sidebar" >
-                <li class="active"><a href="#" onclick="showAtRight('rightmainpage.html')">
+                <li class="active"><a href="#" onclick="showAtRight('rightmainpage.jsp')">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
                 <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.html')">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
@@ -124,8 +125,8 @@
             $(this).addClass('active');
 
         });
-
     });
+
     function checkGood() {
             console.log("群体学院界面查询优秀按钮");
             var selectValue = $("#selectschool2 option:selected").text();
@@ -1072,7 +1073,41 @@
                                    data["week31"] / 100, data["week32"] / 100, data["week33"] / 100, data["week34"] / 100, data["week35"] / 100, data["week36"] / 100,
                                    data["week37"] / 100, data["week38"] / 100, data["week39"] / 100, data["week40"] / 100, data["week41"] / 100, data["week42"] / 100,
                                    data["week43"] / 100, data["week44"] / 100, data["week45"] / 100, data["week46"] / 100, data["week47"] / 100, data["week48"] / 100,
-                                   data["week49"] / 100, data["week50"] / 100, data["week51"] / 100, data["week52"] / 100]
+                                   data["week49"] / 100, data["week50"] / 100, data["week51"] / 100, data["week52"] / 100],
+                               markLine:{
+                                   symbol:"arrow",
+                                   data:[
+                                       {type:'average',name:'平均值'}
+                                   ],
+                                   itemStyle:{
+                                       normal:{
+                                           label:{
+                                               show:true,
+                                               formatter:function (param) {
+                                                   return param.name+":"+param.value;
+                                               }
+                                           }
+                                       }
+                                   }
+                               },
+                               markPoint:{
+                                   symbol:"pin",
+                                   // symbolSize:30
+                                   data:[
+                                       {type:'min',name:'最小值'},
+                                       {type:'max',name:'最大值'}
+                                   ],
+                                  /* itemStyle:{
+                                       normal:{
+                                           label:{
+                                               show:true,
+                                               formatter:function (param) {
+                                                   return param.name+":"+param.value;
+                                               }
+                                           }
+                                       }
+                                   }*/
+                               }
                            }]
                        };
                     echartLine.setOption(option);
@@ -1222,7 +1257,21 @@
                                      }
                                  },
                                  barWidth:50,*/
-                                data: zscj
+                                data: zscj,
+                                markLine:{
+                                    symbol:"arrow",
+                                    data:[
+                                        {type:'average',name:'平均值'}
+                                    ]
+                                },
+                                markPoint:{
+                                    symbol:"pin",
+                                    // symbolSize:30
+                                    data:[
+                                        {type:'min',name:'最小值'},
+                                        {type:'max',name:'最大值'}
+                                    ]
+                                }
                             },
                                 {
                                     //name: '成绩分布图',//与标签内容相同
@@ -1236,7 +1285,21 @@
                                             }*/
                                         }
                                     },
-                                    data:yccj
+                                    data:yccj,
+                                    markLine:{
+                                        symbol:"arrow",
+                                        data:[
+                                            {type:'average',name:'平均值'}
+                                        ]
+                                    },
+                                    markPoint:{
+                                        symbol:"pin",
+                                        // symbolSize:30
+                                        data:[
+                                            {type:'min',name:'最小值'},
+                                            {type:'max',name:'最大值'}
+                                        ]
+                                    }
                                 }]
                         };
                         barChart.setOption(option);
@@ -1400,6 +1463,265 @@
 
     }*/
 
+
+    function checkMFRatioSingleSchool() {
+        var selectSchoolalue = $("#lastschool option:selected").text();
+        var PieCollapseChartMF = echarts.init(document.getElementById("schoolMFRatiodiv"),theme);
+        console.log("${sessionScope.get("lastschool").lastschool}");
+        var PieCollapseChart = echarts.init(document.getElementById("schoolPersonNumdiv"),theme);
+        var option = null;
+        $.ajax({
+            type: "post",
+            async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "/getMFRatioSingleSchool",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify({xymc:selectSchoolalue}),
+            dataType: "json", //返回数据形式为json
+            success: function (data) {
+                console.log(data);
+                console.log("返回的数据");
+                var gender=[];
+                var number=[];
+                for(var i =0; i<data.length;i++){
+                    gender.push(data[i].gender==1.0?"男":(data[i].gender==2.0?"女":"未知"));
+                }
+                for(var i=0;i<data.length;i++){
+                    number.push(data[i].mfnumber);
+                }
+                var rs = [];
+                for(var i=0;i<data.length;i++){
+                    rs.push({name : gender[i], value : number[i]});
+                }
+                console.log(gender);
+                console.log(number);
+                console.log(rs)
+                option = {
+                    title: {
+                        text: '男女比例',
+                        subtext: '',
+                        x: 'left',
+                        y: 'top'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        x:'left',
+                        y :'bottom',
+                        orient:'vertical',
+                        data: gender
+                        // data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            /*magicType: {
+                                show: true,
+                                title: {
+                                    line: 'Line',
+                                },
+                                type: ['line']
+                            },*/
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: '性别比例',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '50%'],
+                        data: rs
+
+                    }]
+                };
+                PieCollapseChartMF.setOption(option);
+            }
+
+        });
+
+        $('#mytabschoolStu').bootstrapTable('destroy');
+
+        $('#mytabschoolStu').bootstrapTable({
+            method :"post",
+            url : "/student/getSchoolStudent",
+            contentType : "application/x-www-form-urlencoded",
+            dataType : "json",
+            striped : true, //是否显示行间隔色
+            sortable : true,
+            pageNumber : 1, //初始化加载第一页
+            pagination : true , //是否分页
+            sidePagination : "server", //server：服务前端分页 ； client：前端分页
+            pageSize : 4,//单页记录数
+            pageList : [5,10,20,30], //可选择的单页记录数
+            showColumns:true  ,
+            showRefresh : true,  // 刷新按钮
+            queryParamsType:'',
+            // detailView : true,
+            //height : 400,
+            queryParams : function queryParams(params) {  //上传服务器的参数
+                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                    pageNumber : params.pageNumber, //每页显示数量
+                    pageSize : params.pageSize,  //SQL语句起始索引
+                    //page : (params.offset / params.limit)+1 , 当前页码
+                    xymc : selectSchoolalue
+
+                    // Tel : $('#search_tel').val()
+
+                };
+                return temp;
+            },
+            columns :[
+                /*{ title : '序号',
+                formatter : function (value,row,index) {
+                    var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                    var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                    return pageSize*(pageNumber-1)+index+1;
+                },
+                sortable : true
+            },*/{
+                    title : '学号',
+                    field : 'studentid',
+                    sortable : false
+                },{
+                    title : '姓名',
+                    field : 'name',
+                    sortable : false
+                },{
+                    title : '性别',
+                    field : 'gender',
+                    sortable : false,
+                    formatter : function (value,row,index) {
+                        return row.gender==1.0?"男":(row.gender==2.0?"女":"未知");
+                    }
+                },
+                {
+                    title : '专业代码',
+                    field : 'majorid',
+                    sortable : false
+                },
+                {
+                    title : '班级代码',
+                    field : 'classid',
+                    sortable : false
+                }
+            ],
+            /* onExpandRow : function (index,row,$detail) {
+                 InitSubTable(index,row,$detail);
+
+             }*/
+        });
+
+
+        $.ajax({
+            type: "get",
+            async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "/getSchoolPersonNum",
+            contentType:"application/json;charset=utf-8",
+            data:'',
+            dataType: "json", //返回数据形式为json
+            success: function (data) {
+                console.log(data);
+                console.log("返回的数据");
+                var xymc=[];
+                var number=[];
+                for(var i =0; i<data.length;i++){
+                    xymc.push(data[i].xymc);
+                }
+                for(var i=0;i<data.length;i++){
+                    number.push(data[i].number);
+                }
+                var rs = [];
+                for(var i=0;i<data.length;i++){
+                    rs.push({name : xymc[i], value : number[i]});
+                }
+                console.log(xymc);
+                console.log(number);
+                console.log(rs)
+                option = {
+                    title: {
+                        text: '各学院人数占比',
+                        subtext: '',
+                        x: 'left',
+                        y: 'top'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        x:'center',
+                        y:'bottom',
+                        data: xymc
+                        // data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            /*magicType: {
+                                show: true,
+                                title: {
+                                    line: 'Line',
+                                },
+                                type: ['line']
+                            },*/
+                        }
+                    },
+                    calculable: true,
+                    series: [{
+                        name: '人数占比',
+                        type: 'pie',
+                        /*radius: '50%',
+                        center: ['50%', '50%'],*/
+                        radius: [70, 180],
+                        center: ['50%', '50%'],
+                        roseType: 'area',
+                        x: '50%',
+                        max: 20000,
+                        sort: 'ascending',
+                        data: rs
+
+                    }]
+                    /*series: [{
+                        name: 'Area Mode',
+                        type: 'pie',
+                        radius: [25, 90],
+                        center: ['50%', 170],
+                        roseType: 'area',
+                        x: '50%',
+                        max: 40,
+                        sort: 'ascending',
+                        data: [{
+                            value: 10,
+                            name: 'rose1'
+                        }, {
+                            value: 5,
+                            name: 'rose2'
+                        }, {
+                            value: 15,
+                            name: 'rose3'
+                        }, {
+                            value: 25,
+                            name: 'rose4'
+                        }, {
+                            value: 20,
+                            name: 'rose5'
+                        }, {
+                            value: 35,
+                            name: 'rose6'
+                        }]
+                    }]*/
+                };
+                PieCollapseChart.setOption(option);
+            }
+
+        });
+
+        console.log("table 已执行");
+    }
+
+
+
     function checkConsumptionOutlier() {
         var xh = $("#inputXh").val();
         var year = $("#inputYear option:selected").text();
@@ -1458,7 +1780,10 @@
                             '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53']
                     }],
                     yAxis: [{
-                        type: 'value'
+                        type: 'value',
+                        min:-1.0,
+                        max :1.0,
+                        interval:0.2
                     }],
                     series: [{
                         name: '消费离群值',
@@ -1479,7 +1804,21 @@
                             data["week31"], data["week32"], data["week33"], data["week34"], data["week35"], data["week36"],
                             data["week37"], data["week38"], data["week39"], data["week40"], data["week41"], data["week42"],
                             data["week43"], data["week44"], data["week45"], data["week46"], data["week47"], data["week48"],
-                            data["week49"], data["week50"], data["week51"], data["week52"],data["week53"]]
+                            data["week49"], data["week50"], data["week51"], data["week52"],data["week53"]],
+                        markLine:{
+                            symbol:"arrow",
+                            data:[
+                                {type:'average',name:'平均值'}
+                            ]
+                        },
+                        markPoint:{
+                            symbol:"pin",
+                            // symbolSize:30
+                            data:[
+                                {type:'min',name:'最小值'},
+                                {type:'max',name:'最大值'}
+                            ]
+                        }
                     }]
                 });
             }
@@ -1490,6 +1829,5 @@
         
     }
 </script>
-
 </body>
 </html>

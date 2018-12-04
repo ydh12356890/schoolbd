@@ -18,4 +18,5 @@ public interface SchoolMapper {
     int updateByPrimaryKey(School record);
 
     List<School> selectSchoolName(String xymc);
+    List<School> selectPersonNumUgAllSchool();
 }

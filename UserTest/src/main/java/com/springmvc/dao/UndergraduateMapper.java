@@ -1,5 +1,6 @@
 package com.springmvc.dao;
 
+import com.springmvc.entity.MFRatio;
 import com.springmvc.entity.PackStuScorePre;
 import com.springmvc.entity.StuScorePredict;
 import com.springmvc.entity.Undergraduate;
@@ -28,4 +29,9 @@ public interface UndergraduateMapper {
 
     List<Undergraduate> selectGoodScoreStuLimit(Map<String,Object> param);
     List<Undergraduate> selectGoodScoreLimitSize(Map<String,Object> param);
+
+    List<Undergraduate> selectSchoolAllStudent(Map<String,Object> param);
+    List<Undergraduate> selectSchoolStudentSize(Map<String,Object> param);
+
+    List<MFRatio> selectMFRatioUgSingleSchool(String xymc);
 }

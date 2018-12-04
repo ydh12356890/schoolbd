@@ -162,7 +162,6 @@ div.col-md-10.main{
   float: left;
   background: #EDEDED;
   border-bottom: 1px solid #D9DEE4;
-  margin-bottom: 10px;
   width: 100%;
   position: relative;
   height: 50px;
@@ -250,8 +249,9 @@ ul.navbar-right>li>a{
 }
 
 .main .rightdiv{
-  padding: 20px;
+  padding: 20px 10px 20px 20px;
   clear: left;
+  background: #f7f7f7;
 }
 .leftheader .project_title{
   padding: 5px;
@@ -356,4 +356,8 @@ div.personInfo1{
 }
 img{
   vertical-align: middle;
+}
+.tabborderc{
+  background: #ffffff;
+  border: 1px solid #E6E9ED;
 }

@@ -18,6 +18,7 @@ public interface UndergraduateMapper {
     Undergraduate selectByPrimaryKey(String studentid);
     Undergraduate selectUndergraduateBaseInfo(String studentid);
 
+    List<Undergraduate> selectAllXhByxh(String name);
 
 
     int updateByPrimaryKeySelective(Undergraduate record);

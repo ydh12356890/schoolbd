@@ -151,6 +151,16 @@ public class studentController {
         return undergraduate1;
     }
 
+
+    @RequestMapping("/getInputAutocomplete")   //获取本科生学号自动输入完成
+    @ResponseBody
+    public List<Undergraduate> getUgInputXh(@RequestBody Undergraduate undergraduate){
+        String name = undergraduate.getName();
+
+        List<Undergraduate> undergraduateList = studentService.getAllXhByxhService(name);
+        return undergraduateList;
+    }
+
     @RequestMapping("/getCardConsumption")  //获取一卡通全年52周消费信息（研究生）
     @ResponseBody
     public NStudent getStuConsumController(@RequestBody NStudent nStudent){
@@ -193,6 +203,8 @@ public class studentController {
         return mfRatioList;
         // Map<String,Object> result = new HashMap<String, Object>();
     }
+
+
 
 
 

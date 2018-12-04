@@ -19,6 +19,10 @@
     where studentid = #{studentid,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectAllXhByxh" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT studentid,name FROM undergraduate_basic where name LIKE concat(#{name},"%")
+  </select>
+  
 
   <resultMap id="Map" type="com.springmvc.entity.MFRatio">
     <result property="gender" column="gender" jdbcType="VARCHAR"/>

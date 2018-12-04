@@ -14,6 +14,9 @@ import java.util.Map;
 public interface IStudentService {
 
     Undergraduate getUndergraduateInfo(String studentid);
+
+    List <Undergraduate>  getAllXhByxhService(String name);
+
     Postgraduate getPostgraduateInfo(String xh);
     NStudent getStuConsumpInfo(String xh);
     Student getStudentInfo(String stunumber);

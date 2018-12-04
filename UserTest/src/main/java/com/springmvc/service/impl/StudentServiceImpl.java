@@ -53,6 +53,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<Undergraduate> getAllXhByxhService(String name) {
+        return undergraduateMapper.selectAllXhByxh(name);
+    }
+
+    @Override
     public Postgraduate getPostgraduateInfo(String xh) {
         return postgraduateMapper.selectByPrimaryKey(xh);
     }

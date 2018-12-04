@@ -238,6 +238,7 @@ ul.navbar-right>li>a{
   border:1px solid #D9DEE4;
 }
 .pull-right{
+  clear: right;
   float: right;
 }
 .top_nav .dropdown-menu li{

@@ -80,27 +80,48 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modalInputUsername" class="col-sm-2 control-label">用户名</label>
-                        <div class="col-sm-10">
+                        <label for="modalInputUsername" class="col-sm-3 control-label">用户名</label>
+                        <div class="input-group col-sm-8">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </span>
                             <input type="text"  id="modalInputUsername" class="form-control" value="${sessionScope.get("user").userName}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modalOldUserpassword" class="col-sm-2 control-label">原密码</label>
-                        <div class="col-sm-10">
+                        <label for="modalOldUserpassword" class="col-sm-3 control-label">原密码</label>
+                        <div class="input-group col-sm-8">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
                             <input type="password"  id="modalOldUserpassword" class="form-control" placeholder="请输入原密码">
+                            <span class="input-group-addon">
+                                <span class="show_old_pass glyphicon glyphicon-eye-close"></span>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modalNewUserpassword1" class="col-sm-2 control-label">新密码</label>
-                        <div class="col-sm-10">
+                        <label for="modalNewUserpassword1" class="col-sm-3 control-label">新密码</label>
+                        <div class="input-group col-sm-8">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
                             <input type="password"  id="modalNewUserpassword1" class="form-control" placeholder="请输入新密码">
+                            <span class="input-group-addon">
+                                <span class="show_new_pass glyphicon glyphicon-eye-close"></span>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modalNewUserpassword2" class="col-sm-2 control-label">确认新密码</label>
-                        <div class="col-sm-10">
+                        <label for="modalNewUserpassword2" class="col-sm-3 control-label">确认新密码</label>
+                        <div class="input-group col-sm-8">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
                             <input type="password"  id="modalNewUserpassword2" class="form-control" placeholder="请确认新密码">
+                            <span class="input-group-addon">
+                                <span class="show_new_pass2 glyphicon glyphicon-eye-close"></span>
+                            </span>
                         </div>
                     </div>
                 </form>
@@ -1828,6 +1849,57 @@
 
         
     }
+</script>
+<script type="text/javascript">
+
+
+    $(".show_old_pass").click(function () {
+        var pass = document.getElementById("modalOldUserpassword");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_old_pass").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_old_pass").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
+
+</script>
+<script type="text/javascript">
+
+
+    $(".show_new_pass").click(function () {
+        var pass = document.getElementById("modalNewUserpassword1");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_new_pass").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_new_pass").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
+
+</script>
+<script type="text/javascript">
+
+
+    $(".show_new_pass2").click(function () {
+        var pass = document.getElementById("modalNewUserpassword2");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_new_pass2").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_new_pass2").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
+
 </script>
 </body>
 </html>

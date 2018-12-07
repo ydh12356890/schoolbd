@@ -14,9 +14,8 @@
   <title>校园信息化</title>
 
 </head>
-<body>
-
-<div class="container">
+<body background="assets/icon/carousel5.jpg">
+<div class="mainsignindiv">
   <%--<form class="form-signin" id="form1" >
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputUserName" class="sr-only">Username</label>
@@ -27,11 +26,14 @@
       <label>
         <input type="checkbox" value="remember-me"> Remember me
       </label>
+
     </div>
     <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
     <a href="./views/register.jsp">Sign Up for System</a>
   </form>--%>
+
     <form class="form-signin form-horizontal">
+      <div class="loginindiv">
       <div class="form-group">
         <label for="inputUserName" class="col-md-4 control-label">用户名</label>
         <div class="input-group col-md-8">
@@ -54,10 +56,11 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-md-offset-4 col-md-8">
+        <div class="col-md-offset-4 col-md-8 signinbtn">
           <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
           <a href="./views/register.jsp">Sign Up for System</a>
         </div>
+      </div>
       </div>
     </form>
 

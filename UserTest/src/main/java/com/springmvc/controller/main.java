@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,6 +81,25 @@ public class main {
         }
 
     }
+
+    @RequestMapping("/user/lastschool")
+    @ResponseBody
+    public String updateLastSchoolByUsername(@RequestBody User user){
+        String userName = user.getUserName();
+        String lastschool = user.getLastschool();
+        int a = userService.updateLastSchoolByUsernameService(userName,lastschool);
+        if(a==1){
+            return "success";
+        }
+        else{
+            return "fail";
+        }
+
+
+
+    }
+
+
 
 
     @RequestMapping("/user/register")

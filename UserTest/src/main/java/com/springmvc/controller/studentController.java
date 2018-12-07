@@ -70,6 +70,58 @@ public class studentController {
         return jsonstr;
 
     }
+
+    @RequestMapping("/student/getStuFilterByXhName")  //根据学院名称、姓名学号，服务端分页模糊查询出预测成绩不及格的所有学生
+    @ResponseBody
+    public String getStuFilterByXhNameController(int pageNumber,int pageSize,String xymc,String studentid,String name){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        param.put("studentid",studentid);
+        param.put("name",name);
+        String jsonstr =  JSON.toJSONString(studentService.getStuFilterByXhName(param));
+        System.out.println("主表："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getStuFilterByXhNameGood")  //根据学院名称、姓名学号，服务端分页模糊查询出预测成绩优秀的所有学生
+    @ResponseBody
+    public String getStuFilterByXhNameGoodController(int pageNumber,int pageSize,String xymc,String studentid,String name){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        param.put("studentid",studentid);
+        param.put("name",name);
+        String jsonstr =  JSON.toJSONString(studentService.getStuFilterByXhNameGood(param));
+        System.out.println("主表："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getSchoolFilterStudent")  //根据学院名称、姓名学号，服务端分页模糊查询出该学院的所有学生
+    @ResponseBody
+    public String getSchoolStuFilterController(int pageNumber,int pageSize,String xymc,String studentid,String name){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        param.put("studentid",studentid);
+        param.put("name",name);
+        String jsonstr =  JSON.toJSONString(studentService.getAllSchoolStudentFilterService(param));
+        System.out.println("主表："+jsonstr);
+        return jsonstr;
+
+    }
+
     @RequestMapping("/student/getGoodStudentScore")  //根据学院名称，服务端分页查询出预测成绩优秀的所有学生
     @ResponseBody
     public String getGoodStuScorePredict(int pageNumber,int pageSize,String xymc){
@@ -125,6 +177,54 @@ public class studentController {
         param.put("xymc",xymc);
         String jsonstr =  JSON.toJSONString(studentService.getAllSchoolStudentService (param));
         System.out.println("子表"+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getstudentsByXhName")  //根据学号、姓名，查询出相应学生S
+    @ResponseBody
+    public String getStuByXhNameController(int pageNumber,int pageSize,String studentid,String name){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("studentid",studentid);
+        param.put("name",name);
+        String jsonstr =  JSON.toJSONString(studentService.getstusByXHNameService(param));
+        System.out.println("学号姓名筛选："+jsonstr);
+        return jsonstr;
+
+    }
+    @RequestMapping("/student/getPgstudentsByXhName")  //根据学号、姓名，查询出研究生相应学生S
+    @ResponseBody
+    public String getPgStuByXhNameController(int pageNumber,int pageSize,String studentid,String name){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("studentid",studentid);
+        param.put("name",name);
+        String jsonstr =  JSON.toJSONString(studentService.getPgStusByXHNameService(param));
+        System.out.println("学号姓名筛选："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getPgCCOByXhNameYear")  //根据学号、姓名、年份，查询出（离群值）研究生相应学生
+    @ResponseBody
+    public String getPgCCOByXhNameYearController(int pageNumber,int pageSize,String xh,String name,String year){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xh",xh);
+        param.put("name",name);
+        param.put("year",year);
+        String jsonstr =  JSON.toJSONString(studentService.getPgCCOService(param));
+        System.out.println("学号姓名筛选："+jsonstr);
         return jsonstr;
 
     }
@@ -204,6 +304,14 @@ public class studentController {
         // Map<String,Object> result = new HashMap<String, Object>();
     }
 
+
+    @RequestMapping("/getFourFail")  //获取fourfail
+    @ResponseBody
+    public  List<FourFail> getFourFailController(@RequestBody School school){
+        List<FourFail> fourFailList = studentService.getFourFailByXymcService(school.getXymc());
+        return fourFailList;
+        // Map<String,Object> result = new HashMap<String, Object>();
+    }
 
 
 

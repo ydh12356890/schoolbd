@@ -33,6 +33,19 @@ public interface IStudentService {
 
     Map<String,Object> getAllSchoolStudentService(Map<String,Object> param);
 
+    Map<String,Object> getAllSchoolStudentFilterService(Map<String,Object> param);
+
+    Map<String,Object> getstusByXHNameService(Map<String,Object> param);
+
+    Map<String,Object> getPgStusByXHNameService(Map<String,Object> param);
+
+    Map<String,Object> getStuFilterByXhName(Map<String,Object> param);
+
+    Map<String,Object> getStuFilterByXhNameGood(Map<String,Object> param);
+
+    Map<String,Object> getPgCCOService(Map<String,Object> param);
+
+
     List<School> getSchoolNameService(String xymc);
 
     List<StuScorePredict> getTwoScoreservice(String xh);
@@ -42,4 +55,6 @@ public interface IStudentService {
     List<School> getpersonNumAllSchoolService();
 
     List<MFRatio> getMFRatioSingleSchoolService(String schoolid);
+
+    List<FourFail> getFourFailByXymcService(String xymc);
 }

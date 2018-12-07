@@ -85,6 +85,12 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<FourFail> getFourFailByXymcService(String xymc) {
+        List<FourFail> fourFails = undergraduateMapper.selectFourFailByXymc(xymc);
+        return fourFails;
+    }
+
+    @Override
     public Student getStudentInfo(String stuNumber) {
         return studentMapper.selectByPrimaryKey(stuNumber);
     }
@@ -145,6 +151,67 @@ public class StudentServiceImpl implements IStudentService {
         Map<String,Object> result = new HashMap<String,Object>();
         int total=undergraduateMapper.selectSchoolStudentSize(param).size();
         List<Undergraduate> rows=undergraduateMapper.selectSchoolAllStudent(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getAllSchoolStudentFilterService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=undergraduateMapper.selectFilterSchoolStuSize(param).size();
+        List<Undergraduate> rows=undergraduateMapper.selectFilterSchoolStu(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getstusByXHNameService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = undergraduateMapper.selectstusByXhNameSize(param).size();
+        List<Undergraduate> rows = undergraduateMapper.selectstusByXhName(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+
+    }
+
+    @Override
+    public Map<String, Object> getPgStusByXHNameService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = postgraduateMapper.selectPgstusByXhNameSize (param).size();
+        List<Postgraduate> rows = postgraduateMapper.selectPgstusByXhName(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getStuFilterByXhName(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = undergraduateMapper.selectStuFilterByXHNameSize(param).size();
+        List<Undergraduate> rows = undergraduateMapper.selectStuFilterByXHName(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getStuFilterByXhNameGood(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = undergraduateMapper.selectStuFilterByXHNameSizeGood(param).size();
+        List<Undergraduate> rows = undergraduateMapper.selectStuFilterByXHNameGood(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getPgCCOService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = postgraduateMapper.selectPgByXhNameYearSize(param).size();
+        List<Postgraduate> rows = postgraduateMapper.selectPgByXhNameYear(param);
         result.put("total",total);
         result.put("rows",rows);
         return result;

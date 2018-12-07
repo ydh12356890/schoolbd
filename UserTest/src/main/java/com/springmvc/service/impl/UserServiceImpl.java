@@ -52,4 +52,10 @@ public class UserServiceImpl implements IUserService {
         return userMapper.getAllUser();
 
     }
+
+    @Override
+    public int updateLastSchoolByUsernameService(String userName, String lastschool) {
+       int a = userMapper.updateLastSchoolByUsername(userName,lastschool);
+       return a;
+    }
 }

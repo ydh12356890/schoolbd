@@ -38,6 +38,28 @@
     GROUP BY gender
   </select>
 
+  <resultMap id="UgFourFailGetMap" type="com.springmvc.entity.FourFail">
+    <result property="failstu" column="failstu" jdbcType="INTEGER"/>
+    <result property="kcmc" column="kcmc" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="selectFourFailByXymc" resultMap="UgFourFailGetMap" parameterType="java.lang.String">
+    SELECT
+    count(a.studentid) as failstu,d.kcmc
+    FROM
+    score_predict b,
+    undergraduate_basic a,
+    xydm_dzb c,
+    bzks_kc d
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid=b.xh AND
+    d.kcdm= b.kcdm AND
+    <![CDATA[ b.zscj<60 ]]>
+    group by d.kcmc
+    order by count(a.studentid);
+  </select>
 
 
   <resultMap id="UndergraduateInfoMap" type="com.springmvc.entity.Undergraduate">
@@ -52,6 +74,31 @@
       <result column="xymc" property="xymc" jdbcType="VARCHAR" />
     </association>
   </resultMap>
+  
+  <select id="selectstusByXhName" resultMap="UndergraduateInfoMap" parameterType="Map">
+    SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid,a.schoolid,c.xymc
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  a.studentid LIKE concat(#{studentid},"%") AND
+  a.name LIKE concat(#{name},"%") AND
+  c.xydm=a.schoolid
+  LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectstusByXhNameSize" resultMap="UndergraduateInfoMap" parameterType="Map">
+    SELECT
+    a.studentid,a.name
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    c.xydm=a.schoolid
+  </select>
 
   <select id="selectSchoolAllStudent" resultMap="UndergraduateInfoMap"  parameterType="Map">
   SELECT
@@ -75,7 +122,34 @@
     c.xymc=#{xymc,jdbcType=VARCHAR} AND
     c.xydm=a.schoolid
   </select>
-  
+
+  <select id="selectFilterSchoolStu" resultMap="UndergraduateInfoMap" parameterType="Map">
+  SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  c.xymc=#{xymc,jdbcType=VARCHAR} AND
+  c.xydm=a.schoolid AND
+  a.studentid LIKE concat(#{studentid},"%") AND
+  a.name LIKE concat(#{name},"%")
+  LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectFilterSchoolStuSize" resultMap="UndergraduateInfoMap" parameterType="Map">
+  SELECT
+    a.studentid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%")
+  </select>
+
   <select id="selectUndergraduateBaseInfo" resultMap="UndergraduateInfoMap" parameterType="java.lang.String" >
     SELECT a.*,c.xymc
     FROM undergraduate_basic a,
@@ -123,6 +197,74 @@
      <result column="yccj" property="yccj" jdbcType="VARCHAR" />
    </association>
   </resultMap>
+
+  <select id="selectStuFilterByXHName"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          a.studentid LIKE concat(#{studentid},"%") AND
+          a.name LIKE concat(#{name},"%") AND
+          <![CDATA[ b.yccj<70 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectStuFilterByXHNameSize"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    a.studentid,a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj<70 ]]>
+  </select>
+
+  <select id="selectStuFilterByXHNameGood"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj>=90 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectStuFilterByXHNameSizeGood"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    a.studentid,a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj>=90 ]]>
+  </select>
+
+
   <select id="selectScoreBystuNumberLimit" parameterType="Map" resultMap="UndergraduateMap">
     SELECT
      DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
@@ -153,7 +295,6 @@
     LIMIT #{startIndex},#{pageSize}
   </select>
 
-
   <select id="selectScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">
     SELECT
     a.studentid, a.name, a.schoolid,c.xymc
@@ -181,6 +322,9 @@
     a.studentid= b.xh AND
     <![CDATA[ b.yccj>=90 ]]>
   </select>
+
+
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from undergraduate_basic

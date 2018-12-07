@@ -2,6 +2,9 @@ package com.springmvc.dao;
 
 import com.springmvc.entity.Postgraduate;
 
+import java.util.List;
+import java.util.Map;
+
 public interface PostgraduateMapper {
     int deleteByPrimaryKey(String xh);
 
@@ -14,4 +17,10 @@ public interface PostgraduateMapper {
     int updateByPrimaryKeySelective(Postgraduate record);
 
     int updateByPrimaryKey(Postgraduate record);
+
+    List<Postgraduate> selectPgstusByXhName(Map<String,Object> param);
+    List<Postgraduate> selectPgstusByXhNameSize(Map<String,Object> param);
+
+    List<Postgraduate> selectPgByXhNameYear (Map<String,Object> param);
+    List<Postgraduate> selectPgByXhNameYearSize (Map<String,Object> param);
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
     <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="../css/bootstrap-select.min.css" rel="stylesheet">
     <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
     <link rel="icon" href="../icon/buptlogo.png">
     <title>校园信息化</title>
@@ -18,67 +19,6 @@
     <link href="../css/dashboard.css" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2 sidebar">
-            <div class="leftheader">
-                <div class="project_title">
-                    <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
-                </div>
-                <div class="profile_pic">
-                        <%--<img src="../icon/bupt.png" rel="icon" class="image-circle profile-img">--%>
-                            <span class="glyphicon glyphicon-user"></span>
-                            <span>welcome,${sessionScope.get("user").userName}</span>
-                </div>
-            </div>
-            <ul class="nav nav-sidebar" >
-                <%--<li class="active"><a href="#" onclick="showAtRight('rightmainpage.jsp')">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
-                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.jsp')">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
-                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>--%>
-
-                    <li class="active"><a href="#" onclick="showMainPage('rightmainpage.jsp')">
-                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
-                    <li class=""><a href="#"  onclick="showPersonPage('rightpersonpage.jsp')">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
-                    <li class=""><a href="#" onclick="showGroupPage('rightgrouppage.jsp')">
-                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
-                <%--<li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>--%>
-            </ul>
-        </div>
-        <div class="col-md-10 col-md-offset-2 main" id="rightpage">
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <nav>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <%--<img src="../icon/bupt.png" rel="icon" alt="">${sessionScope.get("user").userName}--%>
-                                    <span class="glyphicon glyphicon-user"></span>${sessionScope.get("user").userName}
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <%--<li><a href="javascript:;">修改密码</a></li>--%>
-                                    <li><a class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal" role="button">修改密码</a></li>
-                                    <li><a class="btn btn-default" href="#" role="button" id="logout">退出登录</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div id="rightdiv" class="rightdiv">
-                    <%--<label class="sr-only" for="inputAutoxh">输入学号</label>
-                    <input class="form-control" type="text" id="inputAutoxh"  autocomplete="off">--%>
-                    <jsp:include page="rightmainpage.jsp" flush="true"/>
-                       <%-- <jsp:include page="${}" flush="true"/>--%>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -144,6 +84,69 @@
         </div>
     </div>
 </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <div class="leftheader">
+                <div class="project_title">
+                    <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
+                </div>
+                <div class="profile_pic">
+                        <%--<img src="../icon/bupt.png" rel="icon" class="image-circle profile-img">--%>
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span>welcome,${sessionScope.get("user").userName}</span>
+                </div>
+            </div>
+            <ul class="nav nav-sidebar" >
+                <%--<li class="active"><a href="#" onclick="showAtRight('rightmainpage.jsp')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
+                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.jsp')">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
+                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>--%>
+
+                    <li class="active"><a href="#" onclick="showMainPage('rightmainpage.jsp');return false;">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
+                    <li class=""><a href="#"  onclick="showPersonPage('rightpersonpage.jsp');return false;">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
+                    <li class=""><a href="#" onclick="showGroupPage('rightgrouppage.jsp');return false;">
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
+                <%--<li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>--%>
+            </ul>
+        </div>
+        <div class="col-md-10 col-md-offset-2 main" id="rightpage">
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <%--<img src="../icon/bupt.png" rel="icon" alt="">${sessionScope.get("user").userName}--%>
+                                    <span class="glyphicon glyphicon-user"></span>${sessionScope.get("user").userName}
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <%--<li><a href="javascript:;">修改密码</a></li>--%>
+                                    <li><a class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal" role="button">修改密码</a></li>
+                                    <li><a class="btn btn-default" href="#" role="button" id="logout">退出登录</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+            <div id="rightdiv" class="rightdiv">
+                <%--<label class="sr-only" for="inputAutoxh">输入学号</label>
+                <input class="form-control" type="text" id="inputAutoxh"  autocomplete="off">--%>
+                <jsp:include page="rightmainpage.jsp" flush="true"/>
+                <%-- <jsp:include page="${}" flush="true"/>--%>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -152,13 +155,12 @@
 <script src="../js/bootstrap-table-zh-CN.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('ul.nav >li').click(function (e) {
-            $('ul.nav>li').removeClass('active');
+        $('ul.nav-sidebar >li').click(function (e) {
+            $('ul.nav-sidebar>li').removeClass('active');
             $(this).addClass('active');
 
         });
     });
-    
     function loadView(name) {
         $("#rightdiv").empty();
         $("#rightdiv").load(name);
@@ -173,8 +175,6 @@
     function showGroupPage(name) {
         loadView(name);
     }
-
-
     function clearForm() {
         document.getElementById("modalOldUserpassword").value=null;
         document.getElementById("modalNewUserpassword1").value=null;
@@ -266,8 +266,8 @@
     }*/
     var theme = {
         color: [
-            '#3498DB','#ff4d4d','#26B99A', '#751aff',
-            '#9B59B6','#4dffb8','#cc8800', '#8abb6f'
+            '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+            '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653'
         ],
 
         title: {
@@ -683,7 +683,6 @@
 
 
     }
-
     $("#logout").click( function() {
         console.log("注销");
         $.ajax({
@@ -701,150 +700,6 @@
         })
         
     });
-    /*function check() {
-        $.ajax({
-            type : "GET",
-            url : "/user/getalluser",
-            dataType : "json",
-            success:function(data){
-                var obj = eval(data);
-                var tbody = $('<tbody></tbody>');
-                $(obj).each(function (index) {
-                    var val = obj[index];
-                    var tr = $('<tr></tr>');
-                    tr.append('<td>'+ val.userId + '</td>' + '<td>'+val.userName + '</td>' + '<td>' + val.userPassword + '</td>');
-                    tbody.append(tr);
-                });
-                $('#tableuserlist tbody').replaceWith(tbody);
-            }
-
-        });
-
-    }*/
-    /*function ScorePredict() {
-        var stuNum = $("#inputStuNum").val();
-        $.ajax({
-            type : "post",
-            url : "/getScorePredict",
-            dataType: "json",
-            contentType:"application/json;charset=utf-8",
-            data:JSON.stringify({stuNumber:stuNum}),
-            success:function(data){
-                var obj = eval(data);
-                var tbody = $('<tbody></tbody>');
-                $(obj).each(function (index) {
-                    var val = obj[index];
-                    var tr = $('<tr></tr>');
-                    tr.append('<td>'+ val.courseId + '</td>' + '<td>'+val.courseName + '</td>' + '<td>' + val.scorePredict + '</td>');
-                    tbody.append(tr);
-                });
-                $('#tableScorePredictlist tbody').replaceWith(tbody);
-            }
-
-        });
-
-
-    }*/
-
-    /*function checkLineGraph() {
-        var echartLine = echarts.init(document.getElementById('linegraphdiv'), theme);
-
-        echartLine.setOption({
-            title: {
-                text: 'Line Graph',
-                subtext: 'Subtitle'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                x: 220,
-                y: 40,
-                data: ['Intent', 'Pre-order', 'Deal']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    magicType: {
-                        show: true,
-                        title: {
-                            line: 'Line',
-                            bar: 'Bar',
-                            stack: 'Stack',
-                            tiled: 'Tiled'
-                        },
-                        type: ['line', 'bar', 'stack', 'tiled']
-                    },
-                    restore: {
-                        show: true,
-                        title: "Restore"
-                    },
-                    saveAsImage: {
-                        show: true,
-                        title: "Save Image"
-                    }
-                }
-            },
-            calculable: true,
-            xAxis: [{
-                type: 'category',
-                boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            }],
-            yAxis: [{
-                type: 'value'
-            }],
-            series: [{
-                name: 'Deal',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        /!*areaStyle: {
-                            type: 'default'
-                        }*!/
-                    }
-                },
-                data: [10, 12, 21, 54, 260, 830, 710]},
-                {
-                    name: 'Pre-order',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                       /!* areaStyle: {
-                            type: 'default'
-                        }*!/
-                    }
-                },
-                data: [30, 182, 434, 791, 390, 30, 10]
-            },
-                {
-                name: 'Intent',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        /!*areaStyle: {
-                            type: 'default'
-                        }*!/
-                    }
-                },
-                data: [1320, 1132, 601, 234, 120, 90, 20]
-            }]
-        });
-
-
-    }*/
-
-
-
-
-
-
-
-
-
 </script>
 <script type="text/javascript">
 

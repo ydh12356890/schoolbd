@@ -17,6 +17,18 @@ public class Postgraduate {
 
     private String zzmmdm;
 
+    private StuConsumeOutlier stuConsumeOutlier;
+
+    public StuConsumeOutlier getStuConsumeOutlier() {
+        return stuConsumeOutlier;
+    }
+
+    public void setStuConsumeOutlier(StuConsumeOutlier stuConsumeOutlier) {
+        this.stuConsumeOutlier = stuConsumeOutlier;
+    }
+
+
+
     public String getXh() {
         return xh;
     }

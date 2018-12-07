@@ -18,5 +18,7 @@ public interface IUserService {
 
      List<User> getAllUser();
 
+     int updateLastSchoolByUsernameService(String userName,String lastschool);
+
 
 }

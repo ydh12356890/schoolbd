@@ -133,7 +133,7 @@ div.col-md-10.main{
  * Placeholder dashboard ideas
  */
 .col-md-2.sidebar{
-  background: #2A3F54;
+  background: #32659a;
 
 }
 .col-md-10.main {
@@ -160,7 +160,7 @@ div.col-md-10.main{
 
 .top_nav .nav_menu {
   float: left;
-  background: #EDEDED;
+  background: #f4f7f9;
   border-bottom: 1px solid #D9DEE4;
   width: 100%;
   position: relative;
@@ -340,6 +340,7 @@ div.personInfo1{
   max-width: 100%;
   margin: 0 0 0 3px;
   font-size: 14px;
+  color: snow;
 }
 
 .img-circle.profile_img {

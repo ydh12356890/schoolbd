@@ -22,10 +22,10 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 
-<body>
-
-<div class="container">
+<body background="../assets/icon/carousel4.jpg">
+<div class="mainsignindiv">
     <form class="form-signin form-horizontal">
+        <div class="loginindiv">
         <div class="form-group">
             <label for="inputUserName1" class="col-md-4 control-label">用户名</label>
             <div class="input-group col-md-8">
@@ -60,9 +60,10 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
+            <div class="col-md-offset-4 col-md-8 signinbtn">
                 <button class="btn btn-lg btn-primary btn-block" type="button" id="reg">Sign up</button>
             </div>
+        </div>
         </div>
     </form>
 </div> <!-- /container -->
@@ -75,11 +76,17 @@
         var username = $("#inputUserName1").val();
         var password = $("#inputPassword1").val();
         var password2 = $("#inputPassword2").val();
-        if(password!=password2){
+        if(username==""){
+            alert("用户名不能为空！");
+        }else if (password==""){
+            alert("密码不能为空！");
+
+        }else if(password2==""){
+            alert("确认密码不能为空！");
+        }else if(password!=password2){
             alert("两次密码输入不一致")
         }
         else{
-
             $.ajax({
                 url:"/user/register",
                 type:"post",

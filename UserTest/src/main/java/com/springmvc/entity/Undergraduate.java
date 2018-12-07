@@ -17,6 +17,9 @@ public class Undergraduate {
 
      private School school;
 
+    private StuScorePredict stuScorePredict;
+    private  Course course;
+
     public StuScorePredict getStuScorePredict() {
         return stuScorePredict;
     }
@@ -25,8 +28,7 @@ public class Undergraduate {
         this.stuScorePredict = stuScorePredict;
     }
 
-    private StuScorePredict stuScorePredict;
-  /*  private  Course course;
+
 
     public Course getCourse() {
         return course;
@@ -34,7 +36,7 @@ public class Undergraduate {
 
     public void setCourse(Course course) {
         this.course = course;
-    }*/
+    }
 
 
     public School getSchool() {

@@ -34,33 +34,33 @@
 
     <form class="form-signin form-horizontal">
       <div class="loginindiv">
-      <div class="form-group">
-        <label for="inputUserName" class="col-md-4 control-label">用户名</label>
-        <div class="input-group col-md-8">
+        <div class="form-group">
+          <label for="inputUserName" class="col-md-3 control-label">用户名</label>
+          <div class="input-group col-md-9">
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-user"></span>
           </span>
-          <input type="text" name="userName"  id="inputUserName" class="form-control" placeholder="请输入用户名...">
+            <input type="text" name="userName" id="inputUserName" class="form-control" placeholder="请输入用户名...">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="inputPassword" class="col-md-4 control-label">密码</label>
-        <div class="input-group col-md-8">
+        <div class="form-group">
+          <label for="inputPassword" class="col-md-3 control-label">密码</label>
+          <div class="input-group col-md-9">
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-lock"></span>
           </span>
-          <input type="password" name="userPassword" id="inputPassword" class="form-control" placeholder="请输入密码...">
-          <span class="input-group-addon">
+            <input type="password" name="userPassword" id="inputPassword" class="form-control" placeholder="请输入密码...">
+            <span class="input-group-addon">
             <span class="show_pass glyphicon glyphicon-eye-close"></span>
           </span>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-md-offset-4 col-md-8 signinbtn">
-          <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button" >Sign in</button>
-          <a href="./views/register.jsp">Sign Up for System</a>
+        <div class="form-group">
+          <div class="col-md-offset-3 col-md-9 signinbtn">
+            <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
+            <a href="./views/register.jsp">Sign Up for System</a>
+          </div>
         </div>
-      </div>
       </div>
     </form>
 

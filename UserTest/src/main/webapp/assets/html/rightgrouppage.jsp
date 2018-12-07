@@ -34,6 +34,7 @@
             <div class="notpass tabborderc">
                 <div>
                     <span>预测 <select id="selectschool">
+                        <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
                         <option value="3">光电信息学院</option>
@@ -94,6 +95,7 @@
 
                 <div>
                     <span>预测 <select id="selectschool2">
+                        <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
                         <option value="3">光电信息学院</option>
@@ -168,6 +170,7 @@
                             <label for="inputYear">年份</label>
                             <!--<input type="text" class="form-control" id="inputYear" placeholder="请输入年度...">-->
                             <select id="inputYear" style="margin: 0 5px">
+                                <option value="0" selected>请选择---</option>
                                 <option value="1">2016</option>
                                 <option value="2">2017</option>
                                 <option value="3">2018</option>

@@ -26,7 +26,9 @@
         <div style="float: right;width: 50%;text-align: center">
             <form class="form-inline">
                 <div class="form-group" style="margin-right: 0">
+                    <span>学院</span>
                     <select id="lastschool" class="selector" style="height: 32px">
+                        <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
                         <option value="3">光电信息学院</option>

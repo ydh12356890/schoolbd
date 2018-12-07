@@ -22,13 +22,13 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 
-<body background="../assets/icon/carousel4.jpg">
+<body background="../assets/icon/carousel5.jpg">
 <div class="mainsignindiv">
     <form class="form-signin form-horizontal">
         <div class="loginindiv">
         <div class="form-group">
-            <label for="inputUserName1" class="col-md-4 control-label">用户名</label>
-            <div class="input-group col-md-8">
+            <label for="inputUserName1" class="col-md-3 control-label">用户名</label>
+            <div class="input-group col-md-9">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-user"></span>
                 </span>
@@ -36,8 +36,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword1" class="col-md-4 control-label">密码</label>
-            <div class="input-group col-md-8">
+            <label for="inputPassword1" class="col-md-3 control-label">密码</label>
+            <div class="input-group col-md-9">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-lock"></span>
                 </span>
@@ -48,8 +48,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword2" class="col-md-4 control-label">确认密码</label>
-            <div class="input-group col-md-8">
+            <label for="inputPassword2" class="col-md-3 control-label">确认密码</label>
+            <div class="input-group col-md-9">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-lock"></span>
                 </span>
@@ -60,8 +60,9 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-4 col-md-8 signinbtn">
+            <div class="col-md-offset-3 col-md-9 signinbtn">
                 <button class="btn btn-lg btn-primary btn-block" type="button" id="reg">Sign up</button>
+                <button class="btn btn-lg btn-primary btn-block"><a href="../index.jsp">Back to Sign in</a></button>
             </div>
         </div>
         </div>

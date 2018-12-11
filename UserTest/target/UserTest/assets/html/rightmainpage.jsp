@@ -21,8 +21,8 @@
 </head>
 <body>
 <div>
-    <div style="padding: 5px;margin: 5px;text-align: left">
-        <h4 style="float: left;width: 50%">上次登录：<span id="defaultschool">${sessionScope.get("lastschool").lastschool}</span></h4>
+    <div>
+        <h4 style="float: left;width: 50%">历史记录：<span id="defaultschool">${sessionScope.get("lastschool").lastschool}</span></h4>
         <div style="float: right;width: 50%;text-align: center">
             <form class="form-inline">
                 <div class="form-group" style="margin-right: 0">
@@ -31,10 +31,10 @@
                         <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
-                        <option value="3">光电信息学院</option>
+                        <%--<option value="3">光电信息学院</option>--%>
                         <option value="4">国际学院</option>
                         <option value="5">计算机学院</option>
-                        <option value="6">继续教育学院</option>
+                        <%--<option value="6">继续教育学院</option>--%>
                         <option value="7">经济管理学院</option>
                         <option value="8">理学院</option>
                         <option value="9">马克思主义学院</option>
@@ -42,9 +42,9 @@
                         <option value="11">人文学院</option>
                         <option value="12">软件学院</option>
                         <option value="13">数字媒体与设计艺术学院</option>
-                        <option value="14">体育部</option>
+                       <%-- <option value="14">体育部</option>
                         <option value="15">网络技术研究院</option>
-                        <option value="16">网络教育学院</option>
+                        <option value="16">网络教育学院</option>--%>
                         <option value="17">网络空间安全学院</option>
                         <option value="18">现代邮政学院</option>
                         <option value="19">信息光子学与光通信研究院</option>
@@ -59,16 +59,25 @@
             </form>
         </div>
     </div>
-    <div class="tabborderc" style="float: left;width: 60%;margin: 0px 10px 20px 10px;padding: 20px;height: auto">
-        <div id="fourfaildiv" style="width: 100%;height: 500px;margin-left:auto;margin-right: auto ">
+    <div class="tabborderc" style="float: left;width: 70%;margin: 0px 10px 20px 0;height: auto">
+        <div>
+            <h4 id="failCourserate" style="float: left"></h4>
+            <h4 style="float: left">开设课程不及格率</h4>
+        </div>
+        <div id="fourfaildiv" style="width: 100%;height: 450px;margin-left:auto;margin-right: auto ">
         </div>
     </div>
-    <div class="tabborderc" style="float: right;width: 36%;padding: 20px;margin: 0 10px 20px 10px">
-        <div id="schoolMFRatiodiv" style="width: 100%;height: 500px;margin-left:auto;margin-right: auto;">
+    <div class="tabborderc" style="float: right;width: 27%;margin: 0 10px 20px 0">
+        <div id="schoolMFRatiodiv" style="width: 100%;height: 450px;margin-left:auto;margin-right: auto;">
         </div>
     </div>
-    <div class="tabborderc" style="clear: both;padding: 20px;margin: 10px;">
-        <h4 id="schoolh4" style="float: left;width: 40%"></h4>
+
+
+    <div class="tabborderc" style="clear: both;margin:0 10px 20px 0;">
+        <div style="float: left ;width: 40%">
+        <h4 id="schoolh4" style="float: left"></h4>
+        <h4 style="float: left">学生名单</h4>
+        </div>
         <div style="padding: 5px;float: right;width: 60% ;text-align: center" >
             <form class="form-inline">
                 <div class="form-group">
@@ -88,7 +97,17 @@
             <table id="mytabschoolStu" class="table table-hover table-bordered"></table>
         </div>
     </div>
-    <div class="tabborderc" style="clear: both;padding: 20px;margin: 10px;">
+
+    <div class="tabborderc" style="clear: both;margin: 0 10px 20px 0">
+        <div>
+            <h4 id="schoolCourse" style="float: left"></h4>
+            <h4 style="float: left">开设课程详情</h4>
+        </div>
+        <div>
+            <table id="schoolallCourse" class="table table-hover table-bordered"></table>
+        </div>
+    </div>
+    <div class="tabborderc" style="clear: both;margin: 0 10px 10px 0;">
         <div id="schoolPersonNumdiv" style="width: 100%;height: 500px;margin-left:auto;margin-right: auto ">
         </div>
     </div>
@@ -110,7 +129,7 @@
 
         var defaultschool = $(".selector").find("option:selected").text();
         console.log(defaultschool);*/
-        var optionff = null;
+        /*var optionff = null;
         var PieFFChart = echarts.init(document.getElementById("fourfaildiv"),theme);
         $.ajax({
             type: "post",
@@ -172,7 +191,7 @@
                 PieFFChart.setOption(optionff);
             }
 
-        });
+        });*/
 
         var optionMF = null;
         var PieCollapseChartMF = echarts.init(document.getElementById("schoolMFRatiodiv"),theme);
@@ -323,9 +342,11 @@
             contentType : "application/x-www-form-urlencoded",
             dataType : "json",
             striped : true, //是否显示行间隔色
-            sortable : true,
+            //sortable : true,
             pageNumber : 1, //初始化加载第一页
             pagination : true , //是否分页
+            //sortOrder : "desc",
+            // cardView:true,
             sidePagination : "server", //server：服务前端分页 ； client：前端分页
             pageSize : 4,//单页记录数
             pageList : [5,10,20,30], //可选择的单页记录数
@@ -377,6 +398,15 @@
                     title : '班级代码',
                     field : 'classid',
                     sortable : false
+                },{
+                    title : '操作',
+                    field : 'operation',
+                    align : 'center',
+                    sortable : false,
+                    formatter : function operation(value,row,index) {  //对资源进行操作
+                        var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='GoToRightPersonPage(\""+row.studentid+"\")'>查看详情</button>"
+                        return html;
+                    }
                 }
             ],
             /* onExpandRow : function (index,row,$detail) {
@@ -386,9 +416,279 @@
         });
 
 
+        document.getElementById("schoolCourse").innerHTML = school;
+        $('#schoolallCourse').bootstrapTable('destroy');
+        $('#schoolallCourse').bootstrapTable({
+            method :"post",
+            sync:true   ,
+            url : "/student/getSchoolAllCoursrByXymc",
+            contentType : "application/x-www-form-urlencoded",
+            dataType : "json",
+            striped : true, //是否显示行间隔色
+            //sortable : true,
+            pageNumber : 1, //初始化加载第一页
+            pagination : true , //是否分页
+            //sortOrder : "desc",
+            // cardView:true,
+            sidePagination : "server", //server：服务前端分页 ； client：前端分页
+            pageSize : 4,//单页记录数
+            pageList : [5,10,20,30], //可选择的单页记录数
+            showColumns:true  ,
+            showRefresh : true,  // 刷新按钮
+            queryParamsType:'',
+            // detailView : true,
+            //height : 400,
+            queryParams : function queryParams(params) {  //上传服务器的参数
+                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                    pageNumber : params.pageNumber, //每页显示数量
+                    pageSize : params.pageSize,  //SQL语句起始索引
+                    //page : (params.offset / params.limit)+1 , 当前页码
+                    xymc : school
+                    // Tel : $('#search_tel').val()
+                };
+                return temp;
+            },
+            columns :[
+                { title : '序号',
+                formatter : function (value,row,index) {
+                    var  pageSize = $('#schoolallCourse').bootstrapTable('getOptions').pageSize;
+                    var  pageNumber = $('#schoolallCourse').bootstrapTable('getOptions').pageNumber;
+                    return pageSize*(pageNumber-1)+index+1;
+                },
+                sortable : false
+            },{
+                    title : '课程代码',
+                    field : 'kcdm',
+                    sortable : false
+                },{
+                    title : '课程名称',
+                    field : 'kcmc',
+                    sortable : false
+                },{
+                    title : '选课人数',
+                    field : 'allnum',
+                    sortable : false,
+
+                },{
+                    title : '通过人数',
+                    field : 'passnum',
+                    sortable : false,
+
+                }, {
+                    title : '不及格人数',
+                    field : 'failnum',
+                    sortable : false
+                },
+                {
+                    title : '不及格率',
+                    field : 'failrate',
+                    sortable : false
+                }
+            ],
+
+        });
+
+        /*$('#failCourse').bootstrapTable('destroy');
+        $('#failCourse').bootstrapTable({
+            method :"post",
+            sync:true   ,
+            url : "/student/getFailCoursrByXymc",
+            contentType : "application/x-www-form-urlencoded",
+            dataType : "json",
+            striped : true, //是否显示行间隔色
+            //sortable : true,
+            pageNumber : 1, //初始化加载第一页
+            pagination : true , //是否分页
+            //sortOrder : "desc",
+            // cardView:true,
+            sidePagination : "server", //server：服务前端分页 ； client：前端分页
+            pageSize : 4,//单页记录数
+            pageList : [5,10,20,30], //可选择的单页记录数
+            showColumns:true  ,
+            showRefresh : true,  // 刷新按钮
+            queryParamsType:'',
+            // detailView : true,
+            //height : 400,
+            queryParams : function queryParams(params) {  //上传服务器的参数
+                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                    pageNumber : params.pageNumber, //每页显示数量
+                    pageSize : params.pageSize,  //SQL语句起始索引
+                    //page : (params.offset / params.limit)+1 , 当前页码
+                    xymc : school
+                    // Tel : $('#search_tel').val()
+                };
+                return temp;
+            },
+            columns :[
+                /!*{ title : '序号',
+                formatter : function (value,row,index) {
+                    var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                    var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                    return pageSize*(pageNumber-1)+index+1;
+                },
+                sortable : true
+            },*!/{
+                    title : '课程代码',
+                    field : 'kcdm',
+                    sortable : false
+                },{
+                    title : '课程名称',
+                    field : 'kcmc',
+                    sortable : false
+                },{
+                    title : '选课人数',
+                    field : 'allnum',
+                    sortable : false,
+
+                },
+                {
+                    title : '不及格人数',
+                    field : 'failnum',
+                    sortable : false
+                },
+                {
+                    title : '不及格率',
+                    field : 'failrate',
+                    sortable : false
+                }
+            ],
+
+        });*/
+        document.getElementById("failCourserate").innerHTML = school;
+        var optionBar = null;
+        var BarChart = echarts.init(document.getElementById("fourfaildiv"),theme);
+        $.ajax({
+            type: "post",
+            async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "/student/getAllFailCoursrByXymc",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify({xymc:school}),
+            dataType: "json", //返回数据形式为json
+            success: function (data) {
+                console.log(data);
+                console.log("返回的数据");
+                var kcmc=[];
+                var failrate=[];
+                for(var i =0; i<data.length;i++){
+                    kcmc.push(data[i].kcmc);
+                }
+                for(var i=0;i<data.length;i++){
+                    failrate.push(data[i].failrate);
+                }
+                optionBar = {
+                    title: {
+                        text: '',
+                        subtext: '',
+                        x: 'left',
+                        y: 'top'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+
+                    },
+                    legend: {
+                      /*  x:'center',
+                        y :'bottom',
+                        data: ['课程']*/
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            /*magicType: {
+                                show: true,
+                                title: {
+                                    line: 'Line',
+                                },
+                                type: ['line']
+                            },*/
+                        }
+                    },
+                    calculable: false,
+                    xAxis:[{
+                        name: '课程',
+                        type:'category',
+                        data:kcmc,
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 25
+                        }
+                    }],
+                    yAxis:[{
+                        name:'不及格率',
+                        type:'value'
+                    }],
+                    grid: {
+                        show: true,
+                        bottom: '30%'
+
+                    },
+                    series: [{
+                        name: '',
+                        type: 'bar',
+                        data: failrate,
+                        /*markPoint:{
+                            data:[{
+                                type: 'max',
+                                name :'最大值'
+                            },{
+                                type:'min',
+                                name : '最小值'
+                            }]
+                        },*/
+                        markLine:{
+                            symbol:"arrow",
+                            data:[{type:'average',name:'平均值'}],
+                            lineStyle:{
+                                normal:{
+                                    color:'#0000e6'
+                                }
+                            },
+                            itemStyle:{
+                                normal:{
+                                    label:{
+                                        show:true,
+                                        formatter:function (param) {
+                                            return param.name+":"+param.value;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        itemStyle:{
+                            normal:{
+                                color:function (params) {
+                                    var colorlist=['#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653'];
+                                    return colorlist[params.dataIndex];
+                                }
+
+                            }
+                        }
+                    }]
+                };
+                BarChart.setOption(optionBar);
+            }
+
+        });
+
+
 
 
     })
+
+    function GoToRightPersonPage(value) {
+        var studentid = value;
+        console.log(studentid);
+        GotoPersonPage('rightpersonpage.jsp',studentid);
+        
+    }
+    
     function checkMFRatioSingleSchool() {
         var selectSchoolalue = $("#lastschool option:selected").text();
         console.log("${sessionScope.get("lastschool").lastschool}");
@@ -397,7 +697,7 @@
         console.log(username);
 
         document.getElementById("schoolh4").innerHTML = selectSchoolalue;
-        var optionff = null;
+        /*var optionff = null;
         var PieFFChart = echarts.init(document.getElementById("fourfaildiv"),theme);
         $.ajax({
             type: "post",
@@ -459,7 +759,7 @@
                 PieFFChart.setOption(optionff);
             }
 
-        });
+        });*/
 
         var optionMF = null;
         var PieCollapseChartMF = echarts.init(document.getElementById("schoolMFRatiodiv"),theme);
@@ -596,12 +896,211 @@
                     title : '班级代码',
                     field : 'classid',
                     sortable : false
+                },{
+                    title : '操作',
+                    field : 'operation',
+                    align : 'center',
+                    sortable : false,
+                    formatter : function operation(value,row,index) {  //对资源进行操作
+                        var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='GoToRightPersonPage(\""+row.studentid+"\")'>查看详情</button>"
+                        return html;
+                    }
                 }
             ],
             /* onExpandRow : function (index,row,$detail) {
                  InitSubTable(index,row,$detail);
 
              }*/
+        });
+
+        document.getElementById("schoolCourse").innerHTML = selectSchoolalue;
+        $('#schoolallCourse').bootstrapTable('destroy');
+        $('#schoolallCourse').bootstrapTable({
+            method :"post",
+            sync:true   ,
+            url : "/student/getSchoolAllCoursrByXymc",
+            contentType : "application/x-www-form-urlencoded",
+            dataType : "json",
+            striped : true, //是否显示行间隔色
+            //sortable : true,
+            pageNumber : 1, //初始化加载第一页
+            pagination : true , //是否分页
+            //sortOrder : "desc",
+            // cardView:true,
+            sidePagination : "server", //server：服务前端分页 ； client：前端分页
+            pageSize : 4,//单页记录数
+            pageList : [5,10,20,30], //可选择的单页记录数
+            showColumns:true  ,
+            showRefresh : true,  // 刷新按钮
+            queryParamsType:'',
+            // detailView : true,
+            //height : 400,
+            queryParams : function queryParams(params) {  //上传服务器的参数
+                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                    pageNumber : params.pageNumber, //每页显示数量
+                    pageSize : params.pageSize,  //SQL语句起始索引
+                    //page : (params.offset / params.limit)+1 , 当前页码
+                    xymc : selectSchoolalue
+                    // Tel : $('#search_tel').val()
+                };
+                return temp;
+            },
+            columns :[
+                { title : '序号',
+                    formatter : function (value,row,index) {
+                        var  pageSize = $('#schoolallCourse').bootstrapTable('getOptions').pageSize;
+                        var  pageNumber = $('#schoolallCourse').bootstrapTable('getOptions').pageNumber;
+                        return pageSize*(pageNumber-1)+index+1;
+                    },
+                    sortable : false
+                },{
+                    title : '课程代码',
+                    field : 'kcdm',
+                    sortable : false
+                },{
+                    title : '课程名称',
+                    field : 'kcmc',
+                    sortable : false
+                },{
+                    title : '选课人数',
+                    field : 'allnum',
+                    sortable : false,
+
+                },{
+                    title : '通过人数',
+                    field : 'passnum',
+                    sortable : false,
+
+                }, {
+                    title : '不及格人数',
+                    field : 'failnum',
+                    sortable : false
+                },
+                {
+                    title : '不及格率',
+                    field : 'failrate',
+                    sortable : false
+                }
+            ],
+
+        });
+
+        document.getElementById("failCourserate").innerHTML = selectSchoolalue;
+        var optionBar = null;
+        var BarChart = echarts.init(document.getElementById("fourfaildiv"),theme);
+        $.ajax({
+            type: "post",
+            async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "/student/getAllFailCoursrByXymc",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify({xymc:selectSchoolalue}),
+            dataType: "json", //返回数据形式为json
+            success: function (data) {
+                console.log(data);
+                console.log("返回的数据");
+                var kcmc=[];
+                var failrate=[];
+                for(var i =0; i<data.length;i++){
+                    kcmc.push(data[i].kcmc);
+                }
+                for(var i=0;i<data.length;i++){
+                    failrate.push(data[i].failrate);
+                }
+                optionBar = {
+                    title: {
+                        text: '',
+                        subtext: '',
+                        x: 'left',
+                        y: 'top'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+
+                    },
+                    legend: {
+                        /*  x:'center',
+                          y :'bottom',
+                          data: ['课程']*/
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            /*magicType: {
+                                show: true,
+                                title: {
+                                    line: 'Line',
+                                },
+                                type: ['line']
+                            },*/
+                        }
+                    },
+                    calculable: false,
+                    xAxis:[{
+                        name: '课程',
+                        type:'category',
+                        data:kcmc,
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 25
+                        }
+                    }],
+                    yAxis:[{
+                        name:'不及格率',
+                        type:'value'
+                    }],
+                    grid: {
+                        show: true,
+                        bottom: '30%'
+
+                    },
+                    series: [{
+                        name: '',
+                        type: 'bar',
+                        data: failrate,
+                        /*markPoint:{
+                            data:[{
+                                type: 'max',
+                                name :'最大值'
+                            },{
+                                type:'min',
+                                name : '最小值'
+                            }]
+                        },*/
+                        markLine:{
+                            symbol:"arrow",
+                            data:[{type:'average',name:'平均值'}],
+                            itemStyle:{
+                                normal:{
+                                    label:{
+                                        show:true,
+                                        formatter:function (param) {
+                                            return param.name+":"+param.value;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        itemStyle:{
+                            normal:{
+                                color:function (params) {
+                                    var colorlist=['#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653',
+                                        '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
+                                        '#9B59B6','#4dffb8','#cc8800', '#8abb6f','#eacf02','#86e65a','#da7447','#826653'];
+                                    return colorlist[params.dataIndex];
+                                }
+
+                            }
+                        }
+                    }]
+                };
+                BarChart.setOption(optionBar);
+            }
+
         });
 
 
@@ -713,14 +1212,16 @@
                         title: '班级代码',
                         field: 'classid',
                         sortable: false
-                    }
-
-                    /*,{
-                title : '操作',
-                field : 'id',
-                sortable : false,
-                formatter : operation //对资源进行操作
-            }*/],
+                    },{
+                        title : '操作',
+                        field : 'operation',
+                        align : 'center',
+                        sortable : false,
+                        formatter : function operation(value,row,index) {  //对资源进行操作
+                            var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='GoToRightPersonPage(\""+row.studentid+"\")'>查看详情</button>"
+                            return html;
+                        }
+                    }],
             });
         }
 

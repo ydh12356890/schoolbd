@@ -31,16 +31,16 @@
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active group_panel" id="home">
-            <div class="notpass tabborderc">
+            <div class="notpass tabbordercgroup">
                 <div>
                     <span>预测 <select id="selectschool">
                         <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
-                        <option value="3">光电信息学院</option>
+                        <%--<option value="3">光电信息学院</option>--%>
                         <option value="4">国际学院</option>
                         <option value="5">计算机学院</option>
-                        <option value="6">继续教育学院</option>
+                        <%--<option value="6">继续教育学院</option>--%>
                         <option value="7">经济管理学院</option>
                         <option value="8">理学院</option>
                         <option value="9">马克思主义学院</option>
@@ -48,16 +48,16 @@
                         <option value="11">人文学院</option>
                         <option value="12">软件学院</option>
                         <option value="13">数字媒体与设计艺术学院</option>
-                        <option value="14">体育部</option>
-                        <option value="15">网络技术研究院</option>
-                        <option value="16">网络教育学院</option>
+                        <%--<option value="14">体育部</option>--%>
+                        <%--<option value="15">网络技术研究院</option>--%>
+                        <%--<option value="16">网络教育学院</option>--%>
                         <option value="17">网络空间安全学院</option>
                         <option value="18">现代邮政学院</option>
                         <option value="19">信息光子学与光通信研究院</option>
                         <option value="20">信息与通信工程学院</option>
-                        <option value="21">叶培大创新创业学院</option>
+                        <%--<option value="21">叶培大创新创业学院</option>--%>
                         <option value="22">自动化学院</option>
-                        <option value="23">（无锡）感知技术与产业研究院</option>
+                        <%--<option value="23">（无锡）感知技术与产业研究院</option>--%>
                     </select> 成绩可能不及格的学生</span>
                     <button type="button"  class="btn btn-primary" onclick="checkNotPass()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
                 </div>
@@ -91,17 +91,17 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade group_panel" id="profile">
-            <div class="notpass tabborderc">
+            <div class="notpass tabbordercgroup">
 
                 <div>
                     <span>预测 <select id="selectschool2">
                         <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
-                        <option value="3">光电信息学院</option>
+                        <%--<option value="3">光电信息学院</option>--%>
                         <option value="4">国际学院</option>
                         <option value="5">计算机学院</option>
-                        <option value="6">继续教育学院</option>
+                        <%--<option value="6">继续教育学院</option>--%>
                         <option value="7">经济管理学院</option>
                         <option value="8">理学院</option>
                         <option value="9">马克思主义学院</option>
@@ -109,16 +109,16 @@
                         <option value="11">人文学院</option>
                         <option value="12">软件学院</option>
                         <option value="13">数字媒体与设计艺术学院</option>
-                        <option value="14">体育部</option>
-                        <option value="15">网络技术研究院</option>
-                        <option value="16">网络教育学院</option>
+                        <%--<option value="14">体育部</option>--%>
+                        <%--<option value="15">网络技术研究院</option>--%>
+                        <%--<option value="16">网络教育学院</option>--%>
                         <option value="17">网络空间安全学院</option>
                         <option value="18">现代邮政学院</option>
                         <option value="19">信息光子学与光通信研究院</option>
                         <option value="20">信息与通信工程学院</option>
-                        <option value="21">叶培大创新创业学院</option>
+                        <%--<option value="21">叶培大创新创业学院</option>--%>
                         <option value="22">自动化学院</option>
-                        <option value="23">（无锡）感知技术与产业研究院</option>
+                        <%--<option value="23">（无锡）感知技术与产业研究院</option>--%>
                     </select> 成绩可能优秀的学生</span>
                     <button type="button"  class="btn btn-primary" onclick="checkGood()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
                 </div>
@@ -154,7 +154,7 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade group_panel" id="messages">
-            <div class="notpass tabborderc">
+            <div class="notpass tabbordercgroup">
                 <h4>特定年份学生的消费离群值分布图</h4>
                 <div>
                     <form class="form-inline">
@@ -181,7 +181,7 @@
                 </div>
                 <table id="pgstuccotab" class="table table-hover table-bordered"></table>
             </div>
-            <div class="tabborderc" style="padding: 3px; margin: 3px">
+            <div class="tabbordercgroup" style="padding: 3px; margin: 3px">
                 <div id="yearConsumptiondiv" style="width: 100%;height: 500px;margin:15px auto">
 
                 </div>
@@ -740,9 +740,13 @@
         var pgxh = $("#inputXh").val();
         var pgname = $("#inputName").val();
         var year = $("#inputYear option:selected").text();
-        if(pgxh==""&&pgname==""){
+        if(pgxh===""&&pgname===""){
             alert("学号、姓名不能全为空！");
-        }else{
+        }else if(year==="请选择---"){
+            alert("请选择年份！");
+
+        }else
+            {
             console.log(pgxh);
             console.log(pgname);
             console.log(year);
@@ -818,7 +822,7 @@
                         align : 'center',
                         sortable : false,
                         formatter : function operation(value,row,index) {  //对资源进行操作
-                            var html = "<button type='button' style='color: blue' class='btn btn-default' onclick='checkPgCCOInfo(\""+row.xh+"\")'>查看详情</button>"
+                            var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkPgCCOInfo(\""+row.xh+"\")'>查看详情</button>"
                             return html;
                         }
                     }]
@@ -852,8 +856,8 @@
 
                echartLine.setOption({
                    title: {
-                       text: '消费信息离群值',
-                       subtext: '全年53周'
+                       text: '消费信息离群值(全年53周)',
+                       subtext:data["xh"]
                    },
                    tooltip: {
                        trigger: 'axis',
@@ -891,7 +895,13 @@
                        type: 'value',
                        min:-1.0,
                        max :1.0,
-                       interval:0.2
+                       interval:0.2,
+                       /*splitArea:{
+                           show:true,
+                           areaStyle:{
+                               color:['#ffc09f','#ffffff']
+                           }
+                       }*/
                    }],
                    series: [{
                        name: '消费离群值',

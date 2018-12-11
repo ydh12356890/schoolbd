@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link href="../css/bootstrap-select.min.css" rel="stylesheet">
-    <%--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" >--%>
     <link rel="icon" href="../icon/buptlogo.png">
     <title>校园信息化</title>
     <!-- Custom styles for this template -->
@@ -105,11 +104,11 @@
                 <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
                     <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>--%>
 
-                    <li class="active"><a href="#" onclick="showMainPage('rightmainpage.jsp');return false;">
+                    <li class="active" id="mainpageli"><a href="#" onclick="showMainPage('rightmainpage.jsp');return false;">
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
-                    <li class=""><a href="#"  onclick="showPersonPage('rightpersonpage.jsp');return false;">
+                    <li class="" id="personpageli"><a href="#"  onclick="showPersonPage('rightpersonpage.jsp');return false;">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
-                    <li class=""><a href="#" onclick="showGroupPage('rightgrouppage.jsp');return false;">
+                    <li class="" id="grouppageli"><a href="#" onclick="showGroupPage('rightgrouppage.jsp');return false;">
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
                 <%--<li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>--%>
@@ -169,12 +168,29 @@
     function showMainPage(name) {
         loadView(name);
     }
-    function showPersonPage(name) {
-        loadView(name);
-    }
     function showGroupPage(name) {
         loadView(name);
     }
+
+    function showPersonPage(name) {
+        loadView(name);
+    }
+
+    function GotoPersonPage(name,param) {
+        console.log("进入mainpage.jsp的showPersonPage函数");
+        loadView2(name,param);
+    }
+
+    function loadView2(name,param) {
+        console.log("执行loadView2函数");
+        $("#mainpageli").removeClass('active');
+        $("#personpageli").addClass('active');
+        $("#rightdiv").empty();
+        $("#rightdiv").load(name,{"studentid":param});
+
+    }
+
+
     function clearForm() {
         document.getElementById("modalOldUserpassword").value=null;
         document.getElementById("modalNewUserpassword1").value=null;

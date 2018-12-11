@@ -91,6 +91,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<FailCourse> getAllFailCourseService(String xymc) {
+        return stuScorePredictMapper.selectAllFailCourseByXymc(xymc);
+    }
+
+    @Override
     public Student getStudentInfo(String stuNumber) {
         return studentMapper.selectByPrimaryKey(stuNumber);
     }
@@ -212,6 +217,26 @@ public class StudentServiceImpl implements IStudentService {
         Map<String,Object> result = new HashMap<String, Object>();
         int total = postgraduateMapper.selectPgByXhNameYearSize(param).size();
         List<Postgraduate> rows = postgraduateMapper.selectPgByXhNameYear(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getFailCourseService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = stuScorePredictMapper.selectFailCourseByxymcSize(param).size();
+        List<FailCourse> rows = stuScorePredictMapper.selectFailCourseByxymc(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getSchoolAllCourseService(Map<String, Object> param) {
+        Map<String,Object> result = new HashMap<String, Object>();
+        int total = stuScorePredictMapper.selectSchoolAllCourseByXymcSize(param).size();
+        List<FailCourse> rows = stuScorePredictMapper.selectSchoolAllCourseByXymc(param);
         result.put("total",total);
         result.put("rows",rows);
         return result;

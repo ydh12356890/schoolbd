@@ -80,6 +80,147 @@
     <![CDATA[ a.yccj>=90 ]]>
   </select>
 
+  <resultMap id="FailCourseMap" type="com.springmvc.entity.FailCourse">
+    <result property="kcdm" column="kcdm" jdbcType="VARCHAR"/>
+    <result property="kcmc" column="kcmc" jdbcType="VARCHAR"/>
+    <result property="failnum" column="failnum" jdbcType="INTEGER"/>
+    <result property="allnum" column="allnum" jdbcType="INTEGER"/>
+    <result property="passnum" column="passnum" jdbcType="INTEGER"/>
+    <result property="failrate" column="failrate" jdbcType="DECIMAL"/>
+  </resultMap>
+
+  <select id="selectSchoolAllCourseByXymc" resultMap="FailCourseMap" parameterType="Map">
+    SELECT
+    g.kcdm,
+    g.kcmc,
+    g.allnum,
+    h.passnum,
+    (g.allnum - h.passnum) AS failnum,
+    (g.allnum - h.passnum) / g.allnum AS failrate
+FROM
+    (SELECT
+        COUNT(a.xh) AS allnum, a.kcdm, b.kcmc
+    FROM
+        score_predict a, bzks_kc b
+    WHERE
+        a.kcdm = b.kcdm
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) g,
+    (SELECT
+        COUNT(a.xh) AS passnum, a.kcdm
+    FROM
+        score_predict a, bzks_kc b
+    WHERE
+        a.kcdm = b.kcdm AND a.zscj >= 60
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) h,
+    undergraduate_basic j,
+    xydm_dzb k,
+    score_predict l
+WHERE
+    g.kcdm = h.kcdm AND j.studentid = l.xh
+        AND k.xymc = #{xymc,jdbcType=VARCHAR}
+        AND k.xydm = j.schoolid
+GROUP BY g.kcdm
+ORDER BY failrate DESC
+LIMIT #{startIndex},#{pageSize}
+  </select>
+  <select id="selectSchoolAllCourseByXymcSize" resultMap="FailCourseMap" parameterType="Map">
+    SELECT
+    g.kcdm,
+    g.kcmc,
+    g.allnum,
+    h.passnum,
+    (g.allnum - h.passnum) AS failnum,
+    (g.allnum - h.passnum) / g.allnum AS failrate
+FROM
+    (SELECT
+        COUNT(a.xh) AS allnum, a.kcdm, b.kcmc
+    FROM
+        score_predict a, bzks_kc b
+    WHERE
+        a.kcdm = b.kcdm
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) g,
+    (SELECT
+        COUNT(a.xh) AS passnum, a.kcdm
+    FROM
+        score_predict a, bzks_kc b
+    WHERE
+        a.kcdm = b.kcdm AND a.zscj >= 60
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) h,
+    undergraduate_basic j,
+    xydm_dzb k,
+    score_predict l
+WHERE
+    g.kcdm = h.kcdm AND j.studentid = l.xh
+        AND k.xymc = #{xymc,jdbcType=VARCHAR}
+        AND k.xydm = j.schoolid
+GROUP BY g.kcdm
+ORDER BY failrate DESC
+  </select>
+
+  <select id="selectFailCourseByxymc" resultMap="FailCourseMap" parameterType="Map">
+    SELECT
+    c.num as failnum, c.kcdm, c.kcmc,count(d.xh) as allnum,c.num/count(d.xh) as failrate
+    FROM
+    (SELECT
+    COUNT(a.xh) AS num, a.kcdm, b.kcmc
+    FROM
+    score_predict a, bzks_kc b
+    WHERE
+    <![CDATA[a.zscj < 60]]>   AND a.kcdm = b.kcdm
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) c,
+    score_predict d,
+    xydm_dzb e,
+    undergraduate_basic f
+    where c.kcdm=d.kcdm and e.xymc= #{xymc,jdbcType=VARCHAR} and e.xydm=f.schoolid and f.studentid=d.xh
+    group by d.kcdm
+    order by failrate desc
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+  <select id="selectFailCourseByxymcSize" resultMap="FailCourseMap" parameterType="Map">
+    SELECT
+    c.num as failnum, c.kcdm, c.kcmc,count(d.xh) as allnum,c.num/count(d.xh) as failrate
+    FROM
+    (SELECT
+    COUNT(a.xh) AS num, a.kcdm, b.kcmc
+    FROM
+    score_predict a, bzks_kc b
+    WHERE
+    <![CDATA[a.zscj < 60]]>   AND a.kcdm = b.kcdm
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) c,
+    score_predict d,
+    xydm_dzb e,
+    undergraduate_basic f
+    where c.kcdm=d.kcdm and e.xymc= #{xymc,jdbcType=VARCHAR} and e.xydm=f.schoolid and f.studentid=d.xh
+    group by d.kcdm
+    order by failrate desc
+  </select>
+  
+  <select id="selectAllFailCourseByXymc" parameterType="java.lang.String" resultMap="FailCourseMap">
+    SELECT
+    c.num as failnum, c.kcdm, c.kcmc,count(d.xh) as allnum,c.num/count(d.xh) as failrate
+    FROM
+    (SELECT
+    COUNT(a.xh) AS num, a.kcdm, b.kcmc
+    FROM
+    score_predict a, bzks_kc b
+    WHERE
+    <![CDATA[a.zscj < 60]]>   AND a.kcdm = b.kcdm
+    GROUP BY a.kcdm
+    ORDER BY COUNT(a.xh) DESC) c,
+    score_predict d,
+    xydm_dzb e,
+    undergraduate_basic f
+    where c.kcdm=d.kcdm and e.xymc= #{xymc,jdbcType=VARCHAR} and e.xydm=f.schoolid and f.studentid=d.xh
+    group by d.kcdm
+    order by failrate desc
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

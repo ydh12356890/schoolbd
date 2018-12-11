@@ -28,7 +28,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active group_panel" id="home">
                 <div class="notpass">
-                    <div id="div-header1" class="tabborderc" style="padding: 3px;margin: 3px;">
+                    <div id="div-header1" class="tabborderc" >
                         <div style="margin: 5px">
                             <form class="form-inline">
                                 <div class="form-group">
@@ -45,7 +45,7 @@
                         </div>
                         <table id="ugstutab" class="table table-hover table-bordered"></table>
                     </div>
-                    <div id="historyScore1" class="tabborderc" style="padding: 3px; margin: 3px;">
+                    <div id="historyScore1" class="tabborderc" >
                         <div style="margin: 5px">
                             <!--<button class=" btn btn-primary" id="historycourse2" type="button" onclick="checkUgHistoryScore()" disabled>
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询历史成绩
@@ -71,7 +71,7 @@
             </div>
             <div role="tabpanel" class="tab-pane fade group_panel" id="profile">
                 <div class="notpass">
-                    <div id="div-header2" class="tabborderc" style="padding: 3px;margin: 3px; ">
+                    <div id="div-header2" class="tabborderc">
                         <div style="margin: 5px">
                             <form class="form-inline">
                                 <div class="form-group">
@@ -88,7 +88,7 @@
                         </div>
                         <table id="pgstutab" class="table table-hover table-bordered"></table>
                     </div>
-                    <div id="cardconsumption2" class="tabborderc" style="padding: 3px; margin: 3px;">
+                    <div id="cardconsumption2" class="tabborderc">
                         <div style="margin: 5px">
                             <!--<button class=" btn btn-primary" id="cardcons" type="button" onclick="checkPgCardConsumption()" disabled>
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询一卡通消费信息
@@ -108,6 +108,9 @@
     </div>
 
 </div>
+<%
+    String studentid = request.getParameter("studentid");
+%>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <%--<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -148,92 +151,113 @@
        })
 
    }*/
+   $(document).ready(function () {
+       var studentid = "<%=studentid%>";
+       console.log(studentid);
+       var  inputvalue = document.getElementById("inputUgXh");
+       inputvalue.value = studentid;
+       console.log(inputvalue.value);
+       if(inputvalue.value!=="null"){
+           console.log("if执行");
+           checkUndergraduateInfo();
+       }
+       else{
+            document.getElementById("inputUgXh").value = "";
+           console.log("else执行");
+
+
+       }
+   })
    function checkUndergraduateInfo() {   //本科生基本信息
 
        var stuNum = $("#inputUgXh").val();
        var stuName = $("#inputUgName").val();
-
-       $('#ugstutab').bootstrapTable('destroy');
-       $('#ugstutab').bootstrapTable({
-           method :"post",
-           url : "/student/getstudentsByXhName",
-           contentType : "application/x-www-form-urlencoded",
-           dataType : "json",
-           striped : true, //是否显示行间隔色
-           sortable : true,
-           pageNumber : 1, //初始化加载第一页
-           pagination : true , //是否分页
-           sidePagination : "server", //server：服务前端分页 ； client：前端分页
-           pageSize : 5,//单页记录数
-           pageList : [6,10,20,30], //可选择的单页记录数
-           showColumns:true  ,
-           showRefresh : true,  // 刷新按钮
-           queryParamsType:'',
-           queryParams : function queryParams(params) {  //上传服务器的参数
-               var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
-                   pageNumber : params.pageNumber, //每页显示数量
-                   pageSize : params.pageSize,  //SQL语句起始索引
-                   //page : (params.offset / params.limit)+1 , 当前页码
-                   studentid : stuNum,
-                   name : stuName
-               };
-               return temp;
-           },
-           columns :[
-               { title : '序号',
-               formatter : function (value,row,index) {
-                   var  pageSize = $('#ugstutab').bootstrapTable('getOptions').pageSize;
-                   var  pageNumber = $('#ugstutab').bootstrapTable('getOptions').pageNumber;
-                   return pageSize*(pageNumber-1)+index+1;
+       if(stuNum===""&&stuName===""){
+            alert("学号和姓名不能全为空！");
+       }else {
+           $('#ugstutab').bootstrapTable('destroy');
+           $('#ugstutab').bootstrapTable({
+               method: "post",
+               url: "/student/getstudentsByXhName",
+               contentType: "application/x-www-form-urlencoded",
+               dataType: "json",
+               striped: true, //是否显示行间隔色
+               sortable: true,
+               pageNumber: 1, //初始化加载第一页
+               pagination: true, //是否分页
+               sidePagination: "server", //server：服务前端分页 ； client：前端分页
+               pageSize: 5,//单页记录数
+               pageList: [6, 10, 20, 30], //可选择的单页记录数
+               showColumns: true,
+               showRefresh: true,  // 刷新按钮
+               queryParamsType: '',
+               queryParams: function queryParams(params) {  //上传服务器的参数
+                   var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                       pageNumber: params.pageNumber, //每页显示数量
+                       pageSize: params.pageSize,  //SQL语句起始索引
+                       //page : (params.offset / params.limit)+1 , 当前页码
+                       studentid: stuNum,
+                       name: stuName
+                   };
+                   return temp;
                },
-           },{
-                   title : '学号',
-                   field : 'studentid',
-                   sortable : false
-               },{
-                   title : '姓名',
-                   field : 'name',
-                   sortable : false
-               },{
-                   title : '性别',
-                   field : 'gender',
-                   sortable : false,
-                   formatter : function (value,row,index) {
-                       return row.gender==1.0?"男":"女";
-                   }
-               },{
-                   title : '学院代码',
-                   field : 'schoolid',
-                   sortable : false
-               },{
-                   title : '学院名',
-                   field : 'xymc',
-                   sortable : false,
-                   formatter : function (value,row,index) {
-                       return row.school.xymc;
-                   }
-               },
-               {
-                   title : '专业代码',
-                   field : 'majorid',
-                   sortable : false
-               }, {
-                   title : '班级代码',
-                   field : 'classid',
-                   sortable : false
-               },{
-                    title : '操作',
-                    field : 'operation',
-                    align : 'center',
-                    sortable : false,
-                    formatter : function operation(value,row,index) {  //对资源进行操作
-                        var html = "<button type='button' style='color: blue' class='btn btn-default' onclick='checkUgInfo(\""+row.studentid+"\")'>查看详情</button>"
-                        return html;
-                    }
-           }]
+               columns: [
+                   {
+                       title: '序号',
+                       formatter: function (value, row, index) {
+                           var pageSize = $('#ugstutab').bootstrapTable('getOptions').pageSize;
+                           var pageNumber = $('#ugstutab').bootstrapTable('getOptions').pageNumber;
+                           return pageSize * (pageNumber - 1) + index + 1;
+                       },
+                   }, {
+                       title: '学号',
+                       field: 'studentid',
+                       sortable: false
+                   }, {
+                       title: '姓名',
+                       field: 'name',
+                       sortable: false
+                   }, {
+                       title: '性别',
+                       field: 'gender',
+                       sortable: false,
+                       formatter: function (value, row, index) {
+                           return row.gender == 1.0 ? "男" : "女";
+                       }
+                   }, {
+                       title: '学院代码',
+                       field: 'schoolid',
+                       sortable: false
+                   }, {
+                       title: '学院名',
+                       field: 'xymc',
+                       sortable: false,
+                       formatter: function (value, row, index) {
+                           return row.school.xymc;
+                       }
+                   },
+                   {
+                       title: '专业代码',
+                       field: 'majorid',
+                       sortable: false
+                   }, {
+                       title: '班级代码',
+                       field: 'classid',
+                       sortable: false
+                   }, {
+                       title: '操作',
+                       field: 'operation',
+                       align: 'center',
+                       sortable: false,
+                       formatter: function operation(value, row, index) {  //对资源进行操作
+                           var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkUgInfo(\"" + row.studentid + "\")'>查看详情</button>"
+                           return html;
+                       }
+                   }]
 
 
-       });
+           });
+       }
 
 
 
@@ -518,91 +542,97 @@
    function checkPostgraduateInfo() {   //研究生基本信息
        var stuNum = $("#inputPgXh").val();
        var stuName = $("#inputPgName").val();
-       $('#pgstutab').bootstrapTable('destroy');
-       $('#pgstutab').bootstrapTable({
-           method :"post",
-           url : "/student/getPgstudentsByXhName",
-           contentType : "application/x-www-form-urlencoded",
-           dataType : "json",
-           striped : true, //是否显示行间隔色
-           sortable : true,
-           pageNumber : 1, //初始化加载第一页
-           pagination : true , //是否分页
-           sidePagination : "server", //server：服务前端分页 ； client：前端分页
-           pageSize : 5,//单页记录数
-           pageList : [6,10,20,30], //可选择的单页记录数
-           showColumns:true  ,
-           showRefresh : true,  // 刷新按钮
-           queryParamsType:'',
-           queryParams : function queryParams(params) {  //上传服务器的参数
-               var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
-                   pageNumber : params.pageNumber, //每页显示数量
-                   pageSize : params.pageSize,  //SQL语句起始索引
-                   //page : (params.offset / params.limit)+1 , 当前页码
-                   studentid : stuNum,
-                   name : stuName
-               };
-               return temp;
-           },
-           columns :[
-               { title : '序号',
-                   formatter : function (value,row,index) {
-                       var  pageSize = $('#pgstutab').bootstrapTable('getOptions').pageSize;
-                       var  pageNumber = $('#pgstutab').bootstrapTable('getOptions').pageNumber;
-                       return pageSize*(pageNumber-1)+index+1;
-                   },
-               },{
-                   title : '学号',
-                   field : 'xh',
-                   sortable : false
-               },{
-                   title : '姓名',
-                   field : 'xm',
-                   sortable : false
-               },{
-                   title : '性别',
-                   field : 'xbdm',
-                   sortable : false,
-                   formatter : function (value,row,index) {
-                       return row.xbdm==1.0?"男":"女";
-                   }
-               },{
-                   title : '出生日期',
-                   field : 'csrq',
-                   sortable : false,
-                   formatter : function (value,row,index) {
-                       return parseInt(row.csrq);
-                   }
-               },{
-                   title : '毕业院校',
-                   field : 'byyx',
-                   sortable : false
-               },
-               {
-                   title : '毕业专业代码',
-                   field : 'byzydm',
-                   sortable : false
-               },
-               {
-                   title : '入学专业代码',
-                   field : 'rxzydm',
-                   sortable : false
-               },{
-                   title : '政治面貌代码',
-                   field : 'zzmmdm',
-                   sortable : false
-               },{
-                   title : '操作',
-                   field : 'operation',
-                   align : 'center',
-                   sortable : false,
-                   formatter : function operation(value,row,index) {  //对资源进行操作
-                       var html = "<button type='button' style='color: blue' class='btn btn-default' onclick='checkPgInfo(\""+row.xh+"\")'>查看详情</button>"
-                       return html;
-                   }
-               }]
+       if(stuNum===""&&stuName===""){
+           alert("学号和姓名不能全为空！");
+       }else {
 
-       });
+           $('#pgstutab').bootstrapTable('destroy');
+           $('#pgstutab').bootstrapTable({
+               method: "post",
+               url: "/student/getPgstudentsByXhName",
+               contentType: "application/x-www-form-urlencoded",
+               dataType: "json",
+               striped: true, //是否显示行间隔色
+               sortable: true,
+               pageNumber: 1, //初始化加载第一页
+               pagination: true, //是否分页
+               sidePagination: "server", //server：服务前端分页 ； client：前端分页
+               pageSize: 5,//单页记录数
+               pageList: [6, 10, 20, 30], //可选择的单页记录数
+               showColumns: true,
+               showRefresh: true,  // 刷新按钮
+               queryParamsType: '',
+               queryParams: function queryParams(params) {  //上传服务器的参数
+                   var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                       pageNumber: params.pageNumber, //每页显示数量
+                       pageSize: params.pageSize,  //SQL语句起始索引
+                       //page : (params.offset / params.limit)+1 , 当前页码
+                       studentid: stuNum,
+                       name: stuName
+                   };
+                   return temp;
+               },
+               columns: [
+                   {
+                       title: '序号',
+                       formatter: function (value, row, index) {
+                           var pageSize = $('#pgstutab').bootstrapTable('getOptions').pageSize;
+                           var pageNumber = $('#pgstutab').bootstrapTable('getOptions').pageNumber;
+                           return pageSize * (pageNumber - 1) + index + 1;
+                       },
+                   }, {
+                       title: '学号',
+                       field: 'xh',
+                       sortable: false
+                   }, {
+                       title: '姓名',
+                       field: 'xm',
+                       sortable: false
+                   }, {
+                       title: '性别',
+                       field: 'xbdm',
+                       sortable: false,
+                       formatter: function (value, row, index) {
+                           return row.xbdm == 1.0 ? "男" : "女";
+                       }
+                   }, {
+                       title: '出生日期',
+                       field: 'csrq',
+                       sortable: false,
+                       formatter: function (value, row, index) {
+                           return parseInt(row.csrq);
+                       }
+                   }, {
+                       title: '毕业院校',
+                       field: 'byyx',
+                       sortable: false
+                   },
+                   {
+                       title: '毕业专业代码',
+                       field: 'byzydm',
+                       sortable: false
+                   },
+                   {
+                       title: '入学专业代码',
+                       field: 'rxzydm',
+                       sortable: false
+                   }, {
+                       title: '政治面貌代码',
+                       field: 'zzmmdm',
+                       sortable: false
+                   }, {
+                       title: '操作',
+                       field: 'operation',
+                       align: 'center',
+                       sortable: false,
+                       formatter: function operation(value, row, index) {  //对资源进行操作
+                           var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkPgInfo(\"" + row.xh + "\")'>查看详情</button>"
+                           return html;
+                       }
+                   }]
+
+           });
+       }
 
 
        /*//初始化echart

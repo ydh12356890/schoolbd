@@ -7,7 +7,7 @@
 body {
 /*  color: #73879C;
   background: #2A3F54;*/
-  font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+  font-family: "Helvetica Neue",Arial,"Droid Sans",sans-serif;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.471;
@@ -69,8 +69,9 @@ body {
   display: block;
   cursor: pointer;
 }
-.nav-sidebar > li >a:hover{
-  background-color:#2A3F54 ;
+.nav-sidebar > li>a:hover,.nav-sidebar >li>a:focus{
+  background-color:#597fa5;
+  /*background-color: rgba(255,255,255,.05);*/
 }
 .nav-sidebar > li > a{
   color: white;
@@ -293,17 +294,16 @@ ul.navbar-right>li>a{
 
 }
 .schooldiv{
-  padding: 10px;
   height:auto
 }
 .group_panel{
   padding: 3px;
   height: auto ;
 }
-.notpass{
+/*.notpass{
   margin: 3px;
   padding: 3px;
-}
+}*/
 .notpass select{
   height: 32px;
 }
@@ -361,4 +361,12 @@ img{
 .tabborderc{
   background: #ffffff;
   border: 1px solid #E6E9ED;
+  padding: 10px;
+  margin: 3px;
+}
+.tabbordercgroup{
+  background: #ffffff;
+  padding: 10px;
+  margin: 3px;
+
 }

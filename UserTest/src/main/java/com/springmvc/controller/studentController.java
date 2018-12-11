@@ -2,6 +2,7 @@ package com.springmvc.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.springmvc.dao.StuScorePredictMapper;
 import com.springmvc.entity.*;
 import com.springmvc.service.impl.StudentServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -226,6 +227,43 @@ public class studentController {
         String jsonstr =  JSON.toJSONString(studentService.getPgCCOService(param));
         System.out.println("学号姓名筛选："+jsonstr);
         return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getFailCoursrByXymc")  //根据xymc查询出不及格课程及人数占比
+    @ResponseBody
+    public String getFailCourseController(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        String jsonstr =  JSON.toJSONString(studentService.getFailCourseService(param));
+        System.out.println("学号姓名筛选："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getSchoolAllCoursrByXymc")  //根据xymc查询出学院开设的课程
+    @ResponseBody
+    public String getSchoolAllCourseController(int pageNumber,int pageSize,String xymc){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xymc",xymc);
+        String jsonstr =  JSON.toJSONString(studentService.getSchoolAllCourseService(param));
+        System.out.println("学院开设课程："+jsonstr);
+        return jsonstr;
+
+    }
+
+    @RequestMapping("/student/getAllFailCoursrByXymc")  //根据xymc查询出不及格课程及人数占比
+    @ResponseBody
+    public List<FailCourse> getAllFailCourseController(@RequestBody School school){
+        return studentService.getAllFailCourseService(school.getXymc());
 
     }
 

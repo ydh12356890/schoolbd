@@ -45,6 +45,10 @@ public interface IStudentService {
 
     Map<String,Object> getPgCCOService(Map<String,Object> param);
 
+    Map<String,Object> getFailCourseService(Map<String,Object> param);
+
+    Map<String,Object> getSchoolAllCourseService(Map<String,Object> param);
+
 
     List<School> getSchoolNameService(String xymc);
 
@@ -57,4 +61,6 @@ public interface IStudentService {
     List<MFRatio> getMFRatioSingleSchoolService(String schoolid);
 
     List<FourFail> getFourFailByXymcService(String xymc);
+
+    List<FailCourse> getAllFailCourseService(String xymc);
 }

@@ -114,6 +114,19 @@
 
 <script type="text/javascript">
 
+    $(".show_pass1").click(function () {
+        var pass = document.getElementById("inputPassword1");
+
+        if (pass.type === "password"){
+            pass.type = "text";
+            $(".show_pass1").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
+        }
+        else {
+            pass.type = "password";
+            $(".show_pass1").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
+        }
+    })
+
 
     $(".show_pass2").click(function () {
         var pass = document.getElementById("inputPassword2");

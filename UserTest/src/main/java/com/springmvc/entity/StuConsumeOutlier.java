@@ -113,6 +113,12 @@ public class StuConsumeOutlier {
 
     private String year;
 
+    private Integer iswave;
+
+    private Integer consumetype;
+
+    private Integer isoutlier;
+
     public String getXh() {
         return xh;
     }
@@ -551,5 +557,29 @@ public class StuConsumeOutlier {
 
     public void setYear(String year) {
         this.year = year == null ? null : year.trim();
+    }
+
+    public Integer getIswave() {
+        return iswave;
+    }
+
+    public void setIswave(Integer iswave) {
+        this.iswave = iswave;
+    }
+
+    public Integer getConsumetype() {
+        return consumetype;
+    }
+
+    public void setConsumetype(Integer consumetype) {
+        this.consumetype = consumetype;
+    }
+
+    public Integer getIsoutlier() {
+        return isoutlier;
+    }
+
+    public void setIsoutlier(Integer isoutlier) {
+        this.isoutlier = isoutlier;
     }
 }

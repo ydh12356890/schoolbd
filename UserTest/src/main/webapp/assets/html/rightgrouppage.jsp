@@ -73,7 +73,10 @@
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
                         </button>
                     </div>--%>
-                    <form class="form-inline" style="float: right;margin-bottom: 0">
+                        <div style="float: left;width: 40%">
+                            <h4 id="notpassschool"></h4>
+                        </div>
+                    <form class="form-inline" style="float: right;width: 60%;margin-bottom: 0">
                         <div class="form-group">
                             <label for="inputUgXh">学号</label>
                             <input class="form-control" type="text" id="inputUgXh">
@@ -134,7 +137,10 @@
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
                         </button>
                     </div>--%>
-                    <form class="form-inline" style="float: right;margin-bottom: 0">
+                    <div style="float: left;width: 40%">
+                        <h4 id="goodschool"></h4>
+                    </div>
+                    <form class="form-inline" style="float: right;width: 60%;margin-bottom: 0">
                         <div class="form-group">
                             <label for="inputUgXhGood">学号</label>
                             <input class="form-control" type="text" id="inputUgXhGood">
@@ -155,7 +161,7 @@
         </div>
         <div role="tabpanel" class="tab-pane fade group_panel" id="messages">
             <div class="notpass tabbordercgroup">
-                <h4>特定年份学生的消费离群值分布图</h4>
+                <h4>特定年份学生的消费离群值</h4>
                 <div>
                     <form class="form-inline">
                         <div class="form-group">
@@ -183,7 +189,6 @@
             </div>
             <div class="tabbordercgroup" style="padding: 3px; margin: 3px">
                 <div id="yearConsumptiondiv" style="width: 100%;height: 500px;margin:15px auto">
-
                 </div>
             </div>
         </div>
@@ -200,92 +205,98 @@
 <script>
     function checkGood() {
         console.log("群体学院界面查询优秀按钮");
+        document.getElementById("inputUgXhGood").value="";
+        document.getElementById("inputUgNameGood").value="";
         var selectValue = $("#selectschool2 option:selected").text();
+        $('#goodschool').html(selectValue);
         console.log(selectValue);
+        if(selectValue==="请选择---"){
+            alert("请选择需要查询的学院！")
+        }else {
 
+            $('#mytabgood').bootstrapTable('destroy');
 
-        $('#mytabgood').bootstrapTable('destroy');
+            $('#mytabgood').bootstrapTable({
+                method: "post",
+                url: "/student/getGoodStudentScore",
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",
+                striped: true, //是否显示行间隔色
+                sortable: true,
+                pageNumber: 1, //初始化加载第一页
+                pagination: true, //是否分页
+                sidePagination: "server", //server：服务前端分页 ； client：前端分页
+                pageSize: 5,//单页记录数
+                pageList: [6, 10, 20, 30], //可选择的单页记录数
+                showColumns: true,
+                showRefresh: true,  // 刷新按钮
+                queryParamsType:'',
+                detailView: true,
+                //height : 400,
+                queryParams: function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber: params.pageNumber, //每页显示数量
+                        pageSize: params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        xymc: selectValue
 
-        $('#mytabgood').bootstrapTable({
-            method :"post",
-            url : "/student/getGoodStudentScore",
-            contentType : "application/x-www-form-urlencoded",
-            dataType : "json",
-            striped : true, //是否显示行间隔色
-            sortable : true,
-            pageNumber : 1, //初始化加载第一页
-            pagination : true , //是否分页
-            sidePagination : "server", //server：服务前端分页 ； client：前端分页
-            pageSize : 5,//单页记录数
-            pageList : [6,10,20,30], //可选择的单页记录数
-            showColumns:true  ,
-            showRefresh : true,  // 刷新按钮
-            queryParamsType:'',
-            detailView : true,
-            //height : 400,
-            queryParams : function queryParams(params) {  //上传服务器的参数
-                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
-                    pageNumber : params.pageNumber, //每页显示数量
-                    pageSize : params.pageSize,  //SQL语句起始索引
-                    //page : (params.offset / params.limit)+1 , 当前页码
-                    xymc : selectValue
+                        // Tel : $('#search_tel').val()
 
-                    // Tel : $('#search_tel').val()
-
-                };
-                return temp;
-            },
-            columns :[
-                /*{ title : '序号',
-                formatter : function (value,row,index) {
-                    var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
-                    var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
-                    return pageSize*(pageNumber-1)+index+1;
+                    };
+                    return temp;
                 },
-                sortable : true
-            },*/{
-                    title : '学号',
-                    field : 'studentid',
-                    sortable : false
-                },{
-                    title : '姓名',
-                    field : 'name',
-                    sortable : false
-                },{
-                    title : '性别',
-                    field : 'gender',
-                    sortable : false,
+                columns: [
+                    /*{ title : '序号',
                     formatter : function (value,row,index) {
-                        return row.gender==1.0?"男":"女";
-                    }
-                },{
-                    title : '学院代码',
-                    field : 'schoolid',
-                    sortable : false
-                },{
-                    title : '学院名',
-                    field : 'xymc',
-                    sortable : false,
-                    formatter : function (value,row,index) {
-                        return row.school.xymc;
-                    }
-                },
-                {
-                    title : '专业代码',
-                    field : 'majorid',
-                    sortable : false
-                },
-                {
-                    title : '班级代码',
-                    field : 'classid',
-                    sortable : false
-                }],
-            onExpandRow : function (index,row,$detail) {
-                InitGoodSubTable(index,row,$detail);
+                        var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                        var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                        return pageSize*(pageNumber-1)+index+1;
+                    },
+                    sortable : true
+                },*/{
+                        title: '学号',
+                        field: 'studentid',
+                        sortable: false
+                    }, {
+                        title: '姓名',
+                        field: 'name',
+                        sortable: false
+                    }, {
+                        title: '性别',
+                        field: 'gender',
+                        sortable: false,
+                        formatter: function (value, row, index) {
+                            return row.gender == 1.0 ? "男" : "女";
+                        }
+                    }, {
+                        title: '学院代码',
+                        field: 'schoolid',
+                        sortable: false
+                    }, {
+                        title: '学院名',
+                        field: 'xymc',
+                        sortable: false,
+                        formatter: function (value, row, index) {
+                            return row.school.xymc;
+                        }
+                    },
+                    {
+                        title: '专业代码',
+                        field: 'majorid',
+                        sortable: false
+                    },
+                    {
+                        title: '班级代码',
+                        field: 'classid',
+                        sortable: false
+                    }],
+                onExpandRow: function (index, row, $detail) {
+                    InitGoodSubTable(index, row, $detail);
 
-            }
-        });
-        console.log("goodtable 已执行");
+                }
+            });
+            console.log("goodtable 已执行");
+        }
     }
     function InitGoodSubTable(index,row,$detail) {
         console.log(row);
@@ -351,104 +362,113 @@
     }
     function checkNotPass() {
         console.log("群体学院界面查询不及格按钮");
+        document.getElementById("inputUgXh").value="";
+        document.getElementById("inputUgName").value="";
         var selectValue = $("#selectschool option:selected").text();
+        $('#notpassschool').html(selectValue);
         console.log(selectValue);
-        $('#mytab').bootstrapTable('destroy');
-        $('#mytab').bootstrapTable({
-            method :"post",
-            url : "/student/getStudentScore",
-            contentType : "application/x-www-form-urlencoded",
-            dataType : "json",
-            striped : true, //是否显示行间隔色
-            sortable : true,
-            pageNumber : 1, //初始化加载第一页
-            pagination : true , //是否分页
-            sidePagination : "server", //server：服务前端分页 ； client：前端分页
-            pageSize : 4,//单页记录数
-            pageList : [5,10,20,30], //可选择的单页记录数
-            showColumns:true  ,
-            showRefresh : true,  // 刷新按钮
-            /* searchAlign : 'right',  //搜索框水平方向
-             buttonsAlign : 'right' ,  //按钮栏水平方向
-             search :true,    //搜索
-             searchOnEnterKey: false, //true:回车键触发搜索，否则，自动触发搜索
-             strictSearch:false,   // true:全匹配搜索， false：模糊搜索
-             searchText : '搜索',  //初始化搜索文字
-             searchTimeOut : 500,   //设置搜索超时时间
-             trimOnSearch : true,     //自动去掉搜索字符的前后空格*/
-            queryParamsType:'',
-            detailView : true,
-            //height : 400,
-            queryParams : function queryParams(params) {  //上传服务器的参数
-                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
-                    pageNumber : params.pageNumber, //每页显示数量
-                    pageSize : params.pageSize,  //SQL语句起始索引
-                    //page : (params.offset / params.limit)+1 , 当前页码
-                    xymc : selectValue
+        if(selectValue==="请选择---"){
+            alert("请选择需要查询的学院！")
+        }else{
+            console.log(selectValue);
+            $('#mytab').bootstrapTable('destroy');
+            $('#mytab').bootstrapTable({
+                method :"post",
+                url : "/student/getStudentScore",
+                contentType : "application/x-www-form-urlencoded",
+                dataType : "json",
+                striped : true, //是否显示行间隔色
+                sortable : true,
+                pageNumber : 1, //初始化加载第一页
+                pagination : true , //是否分页
+                sidePagination : "server", //server：服务前端分页 ； client：前端分页
+                pageSize : 4,//单页记录数
+                pageList : [5,10,20,30], //可选择的单页记录数
+                showColumns:true  ,
+                showRefresh : true,  // 刷新按钮
+                /* searchAlign : 'right',  //搜索框水平方向
+                 buttonsAlign : 'right' ,  //按钮栏水平方向
+                 search :true,    //搜索
+                 searchOnEnterKey: false, //true:回车键触发搜索，否则，自动触发搜索
+                 strictSearch:false,   // true:全匹配搜索， false：模糊搜索
+                 searchText : '搜索',  //初始化搜索文字
+                 searchTimeOut : 500,   //设置搜索超时时间
+                 trimOnSearch : true,     //自动去掉搜索字符的前后空格*/
+                queryParamsType:'',
+                detailView : true,
+                //height : 400,
+                queryParams : function queryParams(params) {  //上传服务器的参数
+                    var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                        pageNumber : params.pageNumber, //每页显示数量
+                        pageSize : params.pageSize,  //SQL语句起始索引
+                        //page : (params.offset / params.limit)+1 , 当前页码
+                        xymc : selectValue
 
-                    // Tel : $('#search_tel').val()
+                        // Tel : $('#search_tel').val()
 
-                };
-                return temp;
-            },
-            columns :[
-                /*{ title : '序号',
-                formatter : function (value,row,index) {
-                    var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
-                    var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
-                    return pageSize*(pageNumber-1)+index+1;
+                    };
+                    return temp;
                 },
-                sortable : true
-            },*/{
-                    title : '学号',
-                    field : 'studentid',
-                    sortable : false
-                },{
-                    title : '姓名',
-                    field : 'name',
-                    sortable : false
-                },{
-                    title : '性别',
-                    field : 'gender',
-                    sortable : false,
+                columns :[
+                    /*{ title : '序号',
                     formatter : function (value,row,index) {
-                        return row.gender==1.0?"男":"女";
+                        var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
+                        var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
+                        return pageSize*(pageNumber-1)+index+1;
+                    },
+                    sortable : true
+                },*/{
+                        title : '学号',
+                        field : 'studentid',
+                        sortable : false
+                    },{
+                        title : '姓名',
+                        field : 'name',
+                        sortable : false
+                    },{
+                        title : '性别',
+                        field : 'gender',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.gender==1.0?"男":"女";
+                        }
+                    },{
+                        title : '学院代码',
+                        field : 'schoolid',
+                        sortable : false
+                    },{
+                        title : '学院名',
+                        field : 'xymc',
+                        sortable : false,
+                        formatter : function (value,row,index) {
+                            return row.school.xymc;
+                        }
+                    },
+                    {
+                        title : '专业代码',
+                        field : 'majorid',
+                        sortable : false
+                    },
+                    {
+                        title : '班级代码',
+                        field : 'classid',
+                        sortable : false
                     }
-                },{
-                    title : '学院代码',
-                    field : 'schoolid',
-                    sortable : false
-                },{
-                    title : '学院名',
-                    field : 'xymc',
-                    sortable : false,
-                    formatter : function (value,row,index) {
-                        return row.school.xymc;
-                    }
-                },
-                {
-                    title : '专业代码',
-                    field : 'majorid',
-                    sortable : false
-                },
-                {
-                    title : '班级代码',
-                    field : 'classid',
-                    sortable : false
+
+                    /*,{
+                title : '操作',
+                field : 'id',
+                sortable : false,
+                formatter : operation //对资源进行操作
+            }*/],
+                onExpandRow : function (index,row,$detail) {
+                    InitSubTable(index,row,$detail);
+
                 }
+            });
+            console.log("table 已执行");
+        }
 
-                /*,{
-            title : '操作',
-            field : 'id',
-            sortable : false,
-            formatter : operation //对资源进行操作
-        }*/],
-            onExpandRow : function (index,row,$detail) {
-                InitSubTable(index,row,$detail);
-
-            }
-        });
-        console.log("table 已执行");
         //value代表该列的值，row代表当前对象
         /* function formatSex(value,row,index) {
              return value==1?"男":"女";
@@ -525,7 +545,8 @@
     }
     
     function filterStudent() {
-        var selectValue = $("#selectschool option:selected").text();
+        var selectValue = $('#notpassschool').html();
+        console.log(selectValue);
         var stuNum = $("#inputUgXh").val();
         var stuName = $("#inputUgName").val();
         $('#mytab').bootstrapTable('destroy');
@@ -631,7 +652,8 @@
     }
     
     function filterGoodStudent() {
-        var selectValue = $("#selectschool2 option:selected").text();
+        var selectValue = $('#goodschool').html();
+        console.log(selectValue);
         var stuNum = $("#inputUgXhGood").val();
         var stuName = $("#inputUgNameGood").val();
         $('#mytabgood').bootstrapTable('destroy');
@@ -853,20 +875,48 @@
            dataType: "json", //返回数据形式为json
            success: function (data) {
                console.log(data);
-
+               var iswave = data["iswave"]===1?"波动型":"平稳型";
+               var consumetype = data["consumetype"]===2?"高消费":(data["consumetype"]===1?"中等消费":"低消费");
+               var isoutlier = data["isoutlier"]===1?"易离群":"不易离群";
+               console.log(iswave);
+               console.log(consumetype);
+               console.log(isoutlier);
                echartLine.setOption({
                    title: {
-                       text: '消费信息离群值(全年53周)',
-                       subtext:data["xh"]
+                       text: "消费信息离群值(学号："+data["xh"]+")",
+                       textStyle: {
+                           color: '#79e8D0',
+                           fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                           fontWeight: "lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                           fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                           fontSize: 18, //主题文字字体大小，默认为18px
+                       },
+                      // textAlign: 'left',//标题文本水平对齐方式，建议不要设置，就让他默认，想居中显示的话，建议往下看
+                       //textBaseline: "top",//默认就好,垂直对齐方式,不要设置
+                       subtext:iswave+" "+consumetype+" "+isoutlier,
+                       subtextStyle: {//副标题内容的样式
+                           color: '#ffb8b8',//
+                           fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                           fontWeight: "lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                           fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                           fontSize: 16,//主题文字字体大小，默认为12px
+                       },
+                       left:'right',
+                       padding:5,//各个方向的内边距，默认是5，可以自行设置
+                       //itemGap:10,//主标题和副标题之间的距离，可自行设置
                    },
                    tooltip: {
                        trigger: 'axis',
+                       //triggerOn:"mousemove",
+                       //confine:true ,
+                       //position:'inside',
                        formatter: "{a}<br/> {b}周：{c}",
                    },
                    legend: {
                        /*x: 220,
                        y: 40,
                        data: ['Intent', 'Pre-order', 'Deal']*/
+                       show:false
                    },
                    toolbox: {
                        show: true,
@@ -876,6 +926,7 @@
                    },
                    calculable: true,
                    xAxis: [{
+                       name:'周次',
                        type: 'category',
                        axisLine :{
                            onZero:false,
@@ -886,10 +937,14 @@
                            '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53']
                    }],
                    yAxis: [{
+                       name:'离群值',
                        type: 'value',
                        min:-1.0,
                        max :1.0,
                        interval:0.2,
+                      /* left:0,
+                       nameRotate:0.1,
+                       nameLocation:'middle'*/
                        /*splitArea:{
                            show:true,
                            areaStyle:{

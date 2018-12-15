@@ -313,8 +313,8 @@ public class studentController {
     public StuConsumeOutlier getStuConsumOutlierController(@RequestBody StuConsumeOutlier stuConsumeOutlier){
         String xh = stuConsumeOutlier.getXh();
         String year = stuConsumeOutlier.getYear();
-        StuConsumeOutlier stuConsumeOutlier1 = studentService.getStuConsumeOutlierService(xh,year);
-        return stuConsumeOutlier1;
+        return studentService.getStuConsumeOutlierService(xh,year);
+
 
     }
 

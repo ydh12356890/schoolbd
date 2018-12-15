@@ -75,8 +75,8 @@
 
     <div class="tabborderc" style="clear: both;margin:0 10px 20px 0;">
         <div style="float: left ;width: 40%">
-        <h4 id="schoolh4" style="float: left"></h4>
-        <h4 style="float: left">学生名单</h4>
+           <h4 id="schoolh4" style="float: left"></h4>
+           <h4 style="float: left">学生名单</h4>
         </div>
         <div style="padding: 5px;float: right;width: 60% ;text-align: center" >
             <form class="form-inline">

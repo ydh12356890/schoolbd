@@ -1,12 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2018/12/4
-  Time: 17:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,18 +8,15 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
     <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <!--<link rel="stylesheet" href="../css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="../css/custom.min.css">-->
     <link rel="stylesheet" href="../css/bootstrap-table.min.css">
     <link href="../css/dashboard.css" rel="stylesheet">
 </head>
 <body>
 <div class="schooldiv">
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">不及格成绩</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">优秀成绩</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">消费离群</a></li>
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">不及格成绩预警</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">优秀成绩预测</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">行为离群</a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active group_panel" id="home">
@@ -37,10 +26,8 @@
                         <option value="0" selected>请选择---</option>
                         <option value="1">电子工程学院</option>
                         <option value="2">公共管理学院</option>
-                        <%--<option value="3">光电信息学院</option>--%>
                         <option value="4">国际学院</option>
                         <option value="5">计算机学院</option>
-                        <%--<option value="6">继续教育学院</option>--%>
                         <option value="7">经济管理学院</option>
                         <option value="8">理学院</option>
                         <option value="9">马克思主义学院</option>
@@ -48,18 +35,14 @@
                         <option value="11">人文学院</option>
                         <option value="12">软件学院</option>
                         <option value="13">数字媒体与设计艺术学院</option>
-                        <%--<option value="14">体育部</option>--%>
-                        <%--<option value="15">网络技术研究院</option>--%>
-                        <%--<option value="16">网络教育学院</option>--%>
                         <option value="17">网络空间安全学院</option>
                         <option value="18">现代邮政学院</option>
                         <option value="19">信息光子学与光通信研究院</option>
                         <option value="20">信息与通信工程学院</option>
-                        <%--<option value="21">叶培大创新创业学院</option>--%>
                         <option value="22">自动化学院</option>
-                        <%--<option value="23">（无锡）感知技术与产业研究院</option>--%>
                     </select> 成绩可能不及格的学生</span>
-                    <button type="button"  class="btn btn-primary" onclick="checkNotPass()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                    <button type="button"  class="btn btn-primary" id="notpassid"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                    <%--<button type="button"  class="btn btn-primary" onclick="checkNotPass()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>--%>
                 </div>
                 <div style="padding: 5px">
                     <%--<div id="toolbar-btn" class="btn-group" style="padding-bottom:10px;float: left">
@@ -123,7 +106,8 @@
                         <option value="22">自动化学院</option>
                         <%--<option value="23">（无锡）感知技术与产业研究院</option>--%>
                     </select> 成绩可能优秀的学生</span>
-                    <button type="button"  class="btn btn-primary" onclick="checkGood()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                    <%--<button type="button"  class="btn btn-primary" onclick="checkGood()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>--%>
+                    <button type="button"  class="btn btn-primary" id ="goodid"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
                 </div>
                 <div style="padding: 5px">
                     <%--<div id="toolbar-btn" class="btn-group" style="padding-bottom:10px;float: left">
@@ -161,12 +145,12 @@
         </div>
         <div role="tabpanel" class="tab-pane fade group_panel" id="messages">
             <div class="notpass tabbordercgroup">
-                <h4>特定年份学生的消费离群值</h4>
+                <h4>特定年份学生的行为离群值</h4>
                 <div>
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="inputXh">学号</label>
-                            <input type="text" class="form-control" id="inputXh" placeholder="2011010016">
+                            <input type="text" class="form-control" id="inputXh" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="inputName">姓名</label>
@@ -182,8 +166,13 @@
                                 <option value="3">2018</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="checkConsumptionOutlier()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                        <%--<button type="button" class="btn btn-primary" onclick="checkConsumptionOutlier()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>--%>
+                        <button type="button" class="btn btn-primary" id = "consumpstuid"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
                     </form>
+                </div>
+                <div >
+                    <h4 id="selectyear" style="float: left"></h4>
+                    <h4 style="float: left">年度</h4>
                 </div>
                 <table id="pgstuccotab" class="table table-hover table-bordered"></table>
             </div>
@@ -197,13 +186,11 @@
 
 </div>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<%--<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-<script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src = "../js/echarts.common.min.js"></script>--%>
 <script src="../js/bootstrap-table.min.js"></script>
 <script src="../js/bootstrap-table-zh-CN.min.js"></script>
 <script>
-    function checkGood() {
+
+    $('#goodid').click(function() {
         console.log("群体学院界面查询优秀按钮");
         document.getElementById("inputUgXhGood").value="";
         document.getElementById("inputUgNameGood").value="";
@@ -297,7 +284,7 @@
             });
             console.log("goodtable 已执行");
         }
-    }
+    });
     function InitGoodSubTable(index,row,$detail) {
         console.log(row);
         console.log(index);
@@ -360,7 +347,7 @@
 
 
     }
-    function checkNotPass() {
+    $('#notpassid').click(function() {
         console.log("群体学院界面查询不及格按钮");
         document.getElementById("inputUgXh").value="";
         document.getElementById("inputUgName").value="";
@@ -480,7 +467,7 @@
              return htm;
          }*/
         //查询按钮事件
-    }
+    });
     function InitSubTable(index,row,$detail) {
         console.log(row);
         console.log(index);
@@ -758,7 +745,7 @@
 
     }
     
-    function checkConsumptionOutlier() {
+   $('#consumpstuid').click(function() {
         var pgxh = $("#inputXh").val();
         var pgname = $("#inputName").val();
         var year = $("#inputYear option:selected").text();
@@ -772,7 +759,7 @@
             console.log(pgxh);
             console.log(pgname);
             console.log(year);
-
+            $("#selectyear").html(year);
             $('#pgstuccotab').bootstrapTable('destroy');
             $('#pgstuccotab').bootstrapTable({
                 method :"post",
@@ -788,6 +775,7 @@
                 pageList : [6,10,20,30], //可选择的单页记录数
                 showColumns:true  ,
                 showRefresh : true,  // 刷新按钮
+                detailView : true,
                 queryParamsType:'',
                 queryParams : function queryParams(params) {  //上传服务器的参数
                     var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
@@ -847,7 +835,11 @@
                             var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkPgCCOInfo(\""+row.xh+"\")'>查看详情</button>"
                             return html;
                         }
-                    }]
+                    }],
+                onExpandRow : function (index,row,$detail) {
+                    InitOutlierWeek(index,row,$detail);
+
+                }
 
 
             });
@@ -857,14 +849,287 @@
         }
 
 
-    }
+    });
+
+   function InitOutlierWeek(index,row,$detail) {
+       console.log("进入离群周的子表函数");
+       console.log(row);
+       console.log(index);
+       console.log($detail);
+       var xh = row.xh;
+       var year = $("#selectyear").html();
+       console.log(xh);
+       console.log(year);
+       var cur_table = $detail.html('<table class="table table-hover table-bordered"></table>').find('table');
+       $(cur_table).bootstrapTable({
+           method :"post",
+           url : "/student/getOutlierWeek",
+           contentType : "application/x-www-form-urlencoded",
+           dataType : "json",
+           striped : true, //是否显示行间隔色
+           sortable : true,
+           pageNumber : 1, //初始化加载第一页
+           pagination : true , //是否分页
+           sidePagination : "server", //server：服务前端分页 ； client：前端分页
+           pageSize : 4,//单页记录数
+           pageList : [5,10,20,30], //可选择的单页记录数
+           queryParamsType:'',
+           //height : 400,
+           queryParams : function queryParams(params) {  //上传服务器的参数
+               var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
+                   pageNumber : params.pageNumber, //每页显示数量
+                   pageSize : params.pageSize,  //SQL语句起始索引
+                   //page : (params.offset / params.limit)+1 , 当前页码
+                   xh : xh,
+                   year:year
+
+                   // Tel : $('#search_tel').val()
+
+               };
+               return temp;
+           },
+           columns:[{
+               title : '年份',
+               field : 'year',
+               sortable : false
+
+           },
+               {
+                   title : '周次',
+                   field : 'week',
+                   sortable : false
+
+               },{
+                   title : '离群值',
+                   field : 'anormalValue',
+                   sortable : false
+
+               },{
+                   title : '操作',
+                   field : 'operation',
+                   align : 'center',
+                   sortable : false,
+                   formatter : function operation(value,row,index) {  //对资源进行操作
+                       var xh = row.xh;
+                       var year = row.year;
+                       var week = row.week;
+                      /* var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkCurrentWeek(\""+row.xh+"\")'>查看详情</button>";*/
+                       var html = "<button type='button' style='color: blue;padding: 0' class='btn btn-default' onclick='checkCurrentWeek("+xh+","+year+","+week+")'>查看详情</button>";
+                       return html;
+                   }
+               }]
+       })
+
+       
+   }
+   
+   function checkCurrentWeek(xh,year,week) {
+       var xh=xh;
+       var year = year;
+       var week = week;
+       console.log(xh);
+       console.log(year);
+       console.log(week);
+       var weekconsumpLine = echarts.init(document.getElementById('yearConsumptiondiv'), theme);
+       weekconsumpLine.clear();
+       $.ajax({
+           type: "post",
+           async: true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+           url: "/getWeekConsumpByXhYearWeek",
+           contentType: "application/json;charset=utf-8",
+           data: JSON.stringify({xh: xh,year:year,week:week}),
+           dataType: "json", //返回数据形式为json
+           success: function (data) {
+               if (data.length == 0) {
+                   weekconsumpLine.clear();
+                   alert("无此同学的记录！");
+               } else
+               {
+                   console.log(data);
+                   var weekday = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日'];
+                   var expday = [];
+                   var meanval = [];
+                   for (var i = 0; i < data.length; i++) {
+                       expday.push(data[i].expday);
+                       meanval.push(data[i].meanval);
+                   }
+                   /* var iswave = data["iswave"]===1?"波动型":"平稳型";
+                    var consumetype = data["consumetype"]===2?"高消费":(data["consumetype"]===1?"中等消费":"低消费");
+                    var isoutlier = data["isoutlier"]===1?"易离群":"不易离群";
+                    console.log(iswave);
+                    console.log(consumetype);
+                    console.log(isoutlier);*/
+                   weekconsumpLine.setOption({
+                       title: {
+                           text: "第"+data[1].week+"周消费(学号："+data[1].xh+ ")",
+                           textStyle: {
+                               //color: '#79e8D0',
+                               fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                               fontWeight: "normal",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                               fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                               fontSize: 18, //主题文字字体大小，默认为18px
+                           },
+                           // textAlign: 'left',//标题文本水平对齐方式，建议不要设置，就让他默认，想居中显示的话，建议往下看
+                           //textBaseline: "top",//默认就好,垂直对齐方式,不要设置
+                           //subtext:iswave+" "+consumetype+" "+isoutlier,
+                           subtextStyle: {//副标题内容的样式
+                               // color: '#ffb8b8',
+                               fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                               fontWeight: "normal",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                               fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                               fontSize: 16,//主题文字字体大小，默认为12px
+                           },
+                           left: 'right',
+                           padding: 5,//各个方向的内边距，默认是5，可以自行设置
+                           //itemGap:10,//主标题和副标题之间的距离，可自行设置
+                       },
+                       tooltip: {
+                           trigger: 'item',
+                           //triggerOn:"mousemove",
+                           //confine:true ,
+                           //position:'inside',
+                           formatter: "{a}<br/> {b}：{c}",
+                       },
+                       legend: {
+                           /*x: 220,
+                           y: 40,
+                           data: ['Intent', 'Pre-order', 'Deal']*/
+                          data:['个人消费','平均消费']
+                       },
+                       toolbox: {
+                           show: true,
+                           feature: {}
+                       },
+                       calculable: true,
+                       xAxis: [{
+                           name: '',
+                           type: 'category',
+                           axisLine: {
+                               onZero: false,
+                           },
+                           boundaryGap: false,
+                           data: weekday
+                       }],
+                       yAxis: [{
+                           name: '消费',
+                           type: 'value',
+                           /* left:0,
+                            nameRotate:0.1,
+                            nameLocation:'middle'*/
+                           /*splitArea:{
+                               show:true,
+                               areaStyle:{
+                                   color:['#ffc09f','#ffffff']
+                               }
+                           }*/
+                       }],
+                       series: [
+                           {
+                           name: '个人消费',
+                           type: 'line',
+                           //smooth: true,
+                           itemStyle: {
+                               normal: {
+                                   /*areaStyle: {
+                                       type: 'default'
+                                   }*/
+                               }
+                           },
+                           data: expday,
+                           markLine: {
+                               /*symbol: "arrow",
+                               data: [
+                                   {name: '正警戒线', yAxis: 0.8},
+                                   {name: '负警戒线', yAxis: -0.8}
+                               ],
+                               lineStyle: {
+                                   normal: {
+                                       color: '#ffb8b8'
+                                   }
+                               },
+                               itemStyle: {
+                                   normal: {
+                                       label: {
+                                           show: true,
+                                           formatter: function (param) {
+                                               return param.name + ":" + param.value;
+                                           }
+                                       }
+                                   }
+                               }*/
+                           },
+                           markPoint: {
+                               symbol: "pin",
+                               // symbolSize:30
+                               data: [
+                                   {type: 'min', name: '最小值'},
+                                   {type: 'max', name: '最大值'}
+                               ]
+                           }
+                       }
+                       , {
+                               name: '平均消费',
+                               type: 'line',
+                               //smooth: true,
+                               itemStyle: {
+                                   normal: {
+                                       /*areaStyle: {
+                                           type: 'default'
+                                       }*/
+                                   }
+                               },
+                               data: meanval,
+                               markLine: {
+                                   /*symbol: "arrow",
+                                   data: [
+                                       {name: '正警戒线', yAxis: 0.8},
+                                       {name: '负警戒线', yAxis: -0.8}
+                                   ],
+                                   lineStyle: {
+                                       normal: {
+                                           color: '#ffb8b8'
+                                       }
+                                   },
+                                   itemStyle: {
+                                       normal: {
+                                           label: {
+                                               show: true,
+                                               formatter: function (param) {
+                                                   return param.name + ":" + param.value;
+                                               }
+                                           }
+                                       }
+                                   }*/
+                               },
+                               markPoint: {
+                                   symbol: "pin",
+                                   // symbolSize:30
+                                   data: [
+                                       {type: 'min', name: '最小值'},
+                                       {type: 'max', name: '最大值'}
+                                   ]
+                               }
+                           }]
+                   });
+               }
+           }
+
+       });
+
+
+       
+   }
 
 
    function checkPgCCOInfo(value) {
-       var year = $("#inputYear option:selected").text();
+
+       var year = $("#selectyear").html();
         var pgxh = value;
+        console.log(year);
+        console.log(pgxh);
        //初始化echart
        var echartLine = echarts.init(document.getElementById('yearConsumptiondiv'), theme);
+       echartLine.clear();
        //页面加载数据
        $.ajax({
            type: "post",
@@ -874,128 +1139,136 @@
            data: JSON.stringify({xh: pgxh,year:year}),
            dataType: "json", //返回数据形式为json
            success: function (data) {
-               console.log(data);
-               var iswave = data["iswave"]===1?"波动型":"平稳型";
-               var consumetype = data["consumetype"]===2?"高消费":(data["consumetype"]===1?"中等消费":"低消费");
-               var isoutlier = data["isoutlier"]===1?"易离群":"不易离群";
-               console.log(iswave);
-               console.log(consumetype);
-               console.log(isoutlier);
-               echartLine.setOption({
-                   title: {
-                       text: "消费信息离群值(学号："+data["xh"]+")",
-                       textStyle: {
-                           color: '#79e8D0',
-                           fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
-                           fontWeight: "lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
-                           fontFamily: "san-serif",//主题文字字体，默认微软雅黑
-                           fontSize: 18, //主题文字字体大小，默认为18px
+               if (data.length == 0) {
+                   echartLine.clear();
+                   alert("无此同学的记录！");
+               } else
+                   {
+                   console.log(data);
+                   var week = [];
+                   var value = [];
+                   for (var i = 0; i < data.length; i++) {
+                       week.push(data[i].week);
+                       value.push(data[i].anormalValue);
+                   }
+                   /* var iswave = data["iswave"]===1?"波动型":"平稳型";
+                    var consumetype = data["consumetype"]===2?"高消费":(data["consumetype"]===1?"中等消费":"低消费");
+                    var isoutlier = data["isoutlier"]===1?"易离群":"不易离群";
+                    console.log(iswave);
+                    console.log(consumetype);
+                    console.log(isoutlier);*/
+                   echartLine.setOption({
+                       title: {
+                           text: "行为离群值(学号：" + data[1].xh + ")",
+                           textStyle: {
+                               //color: '#79e8D0',
+                               fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                               fontWeight: "normal",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                               fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                               fontSize: 18, //主题文字字体大小，默认为18px
+                           },
+                           // textAlign: 'left',//标题文本水平对齐方式，建议不要设置，就让他默认，想居中显示的话，建议往下看
+                           //textBaseline: "top",//默认就好,垂直对齐方式,不要设置
+                           //subtext:iswave+" "+consumetype+" "+isoutlier,
+                           subtextStyle: {//副标题内容的样式
+                               // color: '#ffb8b8',
+                               fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                               fontWeight: "normal",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
+                               fontFamily: "san-serif",//主题文字字体，默认微软雅黑
+                               fontSize: 16,//主题文字字体大小，默认为12px
+                           },
+                           left: 'right',
+                           padding: 5,//各个方向的内边距，默认是5，可以自行设置
+                           //itemGap:10,//主标题和副标题之间的距离，可自行设置
                        },
-                      // textAlign: 'left',//标题文本水平对齐方式，建议不要设置，就让他默认，想居中显示的话，建议往下看
-                       //textBaseline: "top",//默认就好,垂直对齐方式,不要设置
-                       subtext:iswave+" "+consumetype+" "+isoutlier,
-                       subtextStyle: {//副标题内容的样式
-                           color: '#ffb8b8',//
-                           fontStyle: 'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
-                           fontWeight: "lighter",//可选normal(正常)，bold(加粗)，bolder(加粗)，lighter(变细)，100|200|300|400|500...
-                           fontFamily: "san-serif",//主题文字字体，默认微软雅黑
-                           fontSize: 16,//主题文字字体大小，默认为12px
+                       tooltip: {
+                           trigger: 'axis',
+                           //triggerOn:"mousemove",
+                           //confine:true ,
+                           //position:'inside',
+                           formatter: "{a}<br/> {b}周：{c}",
                        },
-                       left:'right',
-                       padding:5,//各个方向的内边距，默认是5，可以自行设置
-                       //itemGap:10,//主标题和副标题之间的距离，可自行设置
-                   },
-                   tooltip: {
-                       trigger: 'axis',
-                       //triggerOn:"mousemove",
-                       //confine:true ,
-                       //position:'inside',
-                       formatter: "{a}<br/> {b}周：{c}",
-                   },
-                   legend: {
-                       /*x: 220,
-                       y: 40,
-                       data: ['Intent', 'Pre-order', 'Deal']*/
-                       show:false
-                   },
-                   toolbox: {
-                       show: true,
-                       feature: {
-
-                       }
-                   },
-                   calculable: true,
-                   xAxis: [{
-                       name:'周次',
-                       type: 'category',
-                       axisLine :{
-                           onZero:false,
+                       legend: {
+                           /*x: 220,
+                           y: 40,
+                           data: ['Intent', 'Pre-order', 'Deal']*/
+                           show: false
                        },
-                       boundaryGap: false,
-                       data: ['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13',
-                           '14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
-                           '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53']
-                   }],
-                   yAxis: [{
-                       name:'离群值',
-                       type: 'value',
-                       min:-1.0,
-                       max :1.0,
-                       interval:0.2,
-                      /* left:0,
-                       nameRotate:0.1,
-                       nameLocation:'middle'*/
-                       /*splitArea:{
-                           show:true,
-                           areaStyle:{
-                               color:['#ffc09f','#ffffff']
-                           }
-                       }*/
-                   }],
-                   series: [{
-                       name: '消费离群值',
-                       type: 'line',
-                       //smooth: true,
-                       itemStyle: {
-                           normal: {
-                               /*areaStyle: {
-                                   type: 'default'
-                               }*/
-                           }
+                       toolbox: {
+                           show: true,
+                           feature: {}
                        },
-                       data: [data["week1"], data["week2"], data["week3"], data["week4"], data["week5"], data["week6"],
-                           data["week7"], data["week8"], data["week9"], data["week10"], data["week11"], data["week12"],
-                           data["week13"], data["week14"], data["week15"], data["week16"], data["week17"], data["week18"],
-                           data["week19"], data["week20"], data["week21"], data["week22"], data["week23"], data["week24"],
-                           data["week25"], data["week26"], data["week27"], data["week28"], data["week29"], data["week30"],
-                           data["week31"], data["week32"], data["week33"], data["week34"], data["week35"], data["week36"],
-                           data["week37"], data["week38"], data["week39"], data["week40"], data["week41"], data["week42"],
-                           data["week43"], data["week44"], data["week45"], data["week46"], data["week47"], data["week48"],
-                           data["week49"], data["week50"], data["week51"], data["week52"],data["week53"]],
-                       markLine:{
-                           symbol:"arrow",
-                           data:[{type:'average',name:'平均值'}],
-                           itemStyle:{
-                               normal:{
-                                   label:{
-                                       show:true,
-                                       formatter:function (param) {
-                                           return param.name+":"+param.value;
+                       calculable: true,
+                       xAxis: [{
+                           name: '周次',
+                           type: 'category',
+                           axisLine: {
+                               onZero: false,
+                           },
+                           boundaryGap: false,
+                           data: week
+                           /*['1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13',
+                               '14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34',
+                               '35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53']*/
+                       }],
+                       yAxis: [{
+                           name: '离群值',
+                           type: 'value',
+                           min: -1.0,
+                           max: 1.0,
+                           interval: 0.2,
+                           /* left:0,
+                            nameRotate:0.1,
+                            nameLocation:'middle'*/
+                           /*splitArea:{
+                               show:true,
+                               areaStyle:{
+                                   color:['#ffc09f','#ffffff']
+                               }
+                           }*/
+                       }],
+                       series: [{
+                           name: '消费离群值',
+                           type: 'line',
+                           //smooth: true,
+                           itemStyle: {
+                               normal: {
+                               }
+                           },
+                           data: value,
+                           markLine: {
+                               symbol: "arrow",
+                               data: [
+                                   {name: '正警戒线', yAxis: 0.8},
+                                   {name: '负警戒线', yAxis: -0.8}
+                               ],
+                               lineStyle: {
+                                   normal: {
+                                       color: '#ff1a75'
+                                   }
+                               },
+                               itemStyle: {
+                                   normal: {
+                                       label: {
+                                           show: true,
+                                           formatter: function (param) {
+                                               return param.name + ":" + param.value;
+                                           }
                                        }
                                    }
                                }
+                           },
+                           markPoint: {
+                               symbol: "pin",
+                               // symbolSize:30
+                               data: [
+                                   {type: 'min', name: '最小值'},
+                                   {type: 'max', name: '最大值'}
+                               ]
                            }
-                       },
-                       markPoint:{
-                           symbol:"pin",
-                           // symbolSize:30
-                           data:[
-                               {type:'min',name:'最小值'},
-                               {type:'max',name:'最大值'}
-                           ]
-                       }
-                   }]
-               });
+                       }]
+                   });
+               }
            }
 
        });

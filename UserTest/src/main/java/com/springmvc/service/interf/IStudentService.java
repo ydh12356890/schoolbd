@@ -54,7 +54,10 @@ public interface IStudentService {
 
     List<StuScorePredict> getTwoScoreservice(String xh);
 
-    StuConsumeOutlier getStuConsumeOutlierService(String xh,String year);
+    List <StuConsumeOutlier> getStuConsumeOutlierService(String xh,String year);
+
+    Map<String,Object> getOutlierWeekService( Map<String,Object> param);
+
 
     List<School> getpersonNumAllSchoolService();
 
@@ -63,4 +66,6 @@ public interface IStudentService {
     List<FourFail> getFourFailByXymcService(String xymc);
 
     List<FailCourse> getAllFailCourseService(String xymc);
+
+    List<WeekdayExp> getWeekdayConsumpService(String xh,String year,String week);
 }

@@ -68,9 +68,19 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StuConsumeOutlier getStuConsumeOutlierService(String xh, String year) {
-        StuConsumeOutlier stuConsumeOutlier = stuConsumeOutlierMapper.selectByXhAndYear(xh,year);
-        return stuConsumeOutlier;
+    public List<StuConsumeOutlier> getStuConsumeOutlierService(String xh, String year) {
+       List< StuConsumeOutlier> stuConsumeOutlierList = stuConsumeOutlierMapper.selectByXhAndYear(xh,year);
+        return stuConsumeOutlierList;
+    }
+
+    @Override
+    public Map<String,Object> getOutlierWeekService( Map<String,Object> param) {
+        Map<String,Object> result = new HashMap<String,Object>();
+        int total=stuConsumeOutlierMapper.selectOutlierWeekByXhAndYearSize(param).size();
+        List<StuConsumeOutlier> rows=stuConsumeOutlierMapper.selectOutlierWeekByXhAndYear(param);
+        result.put("total",total);
+        result.put("rows",rows);
+        return result;
     }
 
     @Override
@@ -93,6 +103,11 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public List<FailCourse> getAllFailCourseService(String xymc) {
         return stuScorePredictMapper.selectAllFailCourseByXymc(xymc);
+    }
+
+    @Override
+    public List<WeekdayExp> getWeekdayConsumpService(String xh, String year, String week) {
+        return stuConsumeOutlierMapper.selectWeekdayConsumpByXhYearWeek(xh,year,week);
     }
 
     @Override

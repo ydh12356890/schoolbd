@@ -67,7 +67,11 @@
         <div id="fourfaildiv" style="width: 100%;height: 450px;margin-left:auto;margin-right: auto ">
         </div>
     </div>
-    <div class="tabborderc" style="float: right;width: 27%;margin: 0 10px 20px 0">
+    <div class="tabborderc" style="float: right;width: 27%;margin: 0 10px 20px 0;height: auto">
+        <div>
+            <h4 id="mfratio" style="float: left"></h4>
+            <h4 style="float: left">男女比例</h4>
+        </div>
         <div id="schoolMFRatiodiv" style="width: 100%;height: 450px;margin-left:auto;margin-right: auto;">
         </div>
     </div>
@@ -193,6 +197,7 @@
 
         });*/
 
+        document.getElementById("mfratio").innerHTML = school;
         var optionMF = null;
         var PieCollapseChartMF = echarts.init(document.getElementById("schoolMFRatiodiv"),theme);
         $.ajax({
@@ -222,18 +227,17 @@
                 console.log(rs)
                 optionMF = {
                     title: {
-                        text: '男女比例',
-                        subtext: '',
-                        x: 'left',
-                        y: 'top'
+                        text: '',
+                        subtext: ''
                     },
                     tooltip: {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
-                        x:'center',
-                        y :'bottom',
+                        x:'left',
+                        y :'70%',
+                        orient:'vertical',
                         data: gender
                         // data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6']
                     },
@@ -254,7 +258,7 @@
                         name: '性别比例',
                         type: 'pie',
                         radius: '50%',
-                        center: ['50%', '50%'],
+                        center: ['50%', '40%'],
                         data: rs
 
                     }]
@@ -488,72 +492,6 @@
 
         });
 
-        /*$('#failCourse').bootstrapTable('destroy');
-        $('#failCourse').bootstrapTable({
-            method :"post",
-            sync:true   ,
-            url : "/student/getFailCoursrByXymc",
-            contentType : "application/x-www-form-urlencoded",
-            dataType : "json",
-            striped : true, //是否显示行间隔色
-            //sortable : true,
-            pageNumber : 1, //初始化加载第一页
-            pagination : true , //是否分页
-            //sortOrder : "desc",
-            // cardView:true,
-            sidePagination : "server", //server：服务前端分页 ； client：前端分页
-            pageSize : 4,//单页记录数
-            pageList : [5,10,20,30], //可选择的单页记录数
-            showColumns:true  ,
-            showRefresh : true,  // 刷新按钮
-            queryParamsType:'',
-            // detailView : true,
-            //height : 400,
-            queryParams : function queryParams(params) {  //上传服务器的参数
-                var temp = {   //如果是在服务器端实现的分页，limit、offset这两个参数是必须的
-                    pageNumber : params.pageNumber, //每页显示数量
-                    pageSize : params.pageSize,  //SQL语句起始索引
-                    //page : (params.offset / params.limit)+1 , 当前页码
-                    xymc : school
-                    // Tel : $('#search_tel').val()
-                };
-                return temp;
-            },
-            columns :[
-                /!*{ title : '序号',
-                formatter : function (value,row,index) {
-                    var  pageSize = $('#mytab').bootstrapTable('getOptions').pageSize;
-                    var  pageNumber = $('#mytab').bootstrapTable('getOptions').pageNumber;
-                    return pageSize*(pageNumber-1)+index+1;
-                },
-                sortable : true
-            },*!/{
-                    title : '课程代码',
-                    field : 'kcdm',
-                    sortable : false
-                },{
-                    title : '课程名称',
-                    field : 'kcmc',
-                    sortable : false
-                },{
-                    title : '选课人数',
-                    field : 'allnum',
-                    sortable : false,
-
-                },
-                {
-                    title : '不及格人数',
-                    field : 'failnum',
-                    sortable : false
-                },
-                {
-                    title : '不及格率',
-                    field : 'failrate',
-                    sortable : false
-                }
-            ],
-
-        });*/
         document.getElementById("failCourserate").innerHTML = school;
         var optionBar = null;
         var BarChart = echarts.init(document.getElementById("fourfaildiv"),theme);
@@ -761,6 +699,7 @@
 
         });*/
 
+        document.getElementById("mfratio").innerHTML = selectSchoolalue;
         var optionMF = null;
         var PieCollapseChartMF = echarts.init(document.getElementById("schoolMFRatiodiv"),theme);
         $.ajax({
@@ -790,10 +729,8 @@
                 console.log(rs)
                 optionMF = {
                     title: {
-                        text: '男女比例',
-                        subtext: '',
-                        x: 'left',
-                        y: 'top'
+                        text: '',
+                        subtext: ''
                     },
                     tooltip: {
                         trigger: 'item',
@@ -801,7 +738,7 @@
                     },
                     legend: {
                         x:'left',
-                        y :'bottom',
+                        y :'70%',
                         orient:'vertical',
                         data: gender
                         // data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6']
@@ -823,7 +760,7 @@
                         name: '性别比例',
                         type: 'pie',
                         radius: '50%',
-                        center: ['50%', '50%'],
+                        center: ['50%', '40%'],
                         data: rs
 
                     }]

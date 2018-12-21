@@ -88,7 +88,7 @@
         <div class="col-md-2 sidebar">
             <div class="leftheader">
                 <div class="project_title">
-                    <a href="#" class = "project_a"><span class="glyphicon glyphicon-asterisk"></span> 智慧校园</a>
+                    <a href="#" class = "project_a"><img src="../icon/buptlogo.png" width="32" height="32" style="background: white;border-radius: 50%"/> 智慧校园</a>
                 </div>
                 <div class="profile_pic">
                         <%--<img src="../icon/bupt.png" rel="icon" class="image-circle profile-img">--%>

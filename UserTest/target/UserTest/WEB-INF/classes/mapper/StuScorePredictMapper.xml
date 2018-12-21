@@ -38,7 +38,7 @@
 
   <select id="selectTwoScoreByXh" parameterType="java.lang.String" resultMap="CourseResultMap">
     SELECT
-    a.idscore_predict,a.kcdm, a.zscj,a.yccj,b.kcmc
+    a.idscore_predict,a.xh,a.kcdm, a.zscj,a.yccj,b.kcmc
     FROM
     score_predict a,
     bzks_kc b

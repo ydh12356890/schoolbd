@@ -304,18 +304,51 @@ public class studentController {
     public NStudent getStuConsumController(@RequestBody NStudent nStudent){
         String stunum = nStudent.getXh();
         NStudent nStudent1 = studentService.getStuConsumpInfo(stunum);
-        return nStudent1;
+        if(nStudent1!=null){
+            return nStudent1;
+        }
+        else {
+            return null;
+        }
+
 
     }
 
     @RequestMapping("/getYearConsumptionOutlier")  //获取一卡通全年53周消费离群值（研究生）
     @ResponseBody
-    public StuConsumeOutlier getStuConsumOutlierController(@RequestBody StuConsumeOutlier stuConsumeOutlier){
+    public List <StuConsumeOutlier> getStuConsumOutlierController(@RequestBody StuConsumeOutlier stuConsumeOutlier){
         String xh = stuConsumeOutlier.getXh();
         String year = stuConsumeOutlier.getYear();
         return studentService.getStuConsumeOutlierService(xh,year);
 
 
+    }
+
+    @RequestMapping("/getWeekConsumpByXhYearWeek")
+    @ResponseBody
+    public List <WeekdayExp> getWeekdayConsumpController(@RequestBody StuConsumeOutlier stuConsumeOutlier){
+        String xh = stuConsumeOutlier.getXh();
+        String year = stuConsumeOutlier.getYear();
+        String week = stuConsumeOutlier.getWeek();
+        return studentService.getWeekdayConsumpService(xh,year,week);
+    }
+
+
+
+
+    @RequestMapping("/student/getOutlierWeek")  //获取某位学生的53周中的离群周（>0.8或者<-0.8）
+    @ResponseBody
+    public String getOutlierWeekController(int pageNumber,int pageSize,String xh,String year){
+        Map<String,Object> param = new HashMap<String, Object>();
+        int a = (pageNumber-1)*pageSize;
+        int b = pageSize;
+        param.put("startIndex",a);
+        param.put("pageSize",b);
+        param.put("xh",xh);
+        param.put("year",year);
+        String jsonstr =  JSON.toJSONString(studentService.getOutlierWeekService(param));
+        System.out.println("学号姓名筛选："+jsonstr);
+        return jsonstr;
     }
 
     @RequestMapping("/getTwoScore")  //获取成绩分布

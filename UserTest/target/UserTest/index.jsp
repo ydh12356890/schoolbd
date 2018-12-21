@@ -14,7 +14,7 @@
   <title>校园信息化</title>
 
 </head>
-<body background="assets/icon/carousel6.jpg">
+<body background="assets/icon/carousel5.jpg">
 <div class="mainsignindiv">
   <%--<form class="form-signin" id="form1" >
     <h2 class="form-signin-heading">Please sign in</h2>

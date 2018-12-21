@@ -445,97 +445,101 @@
            data:JSON.stringify({xh:studentid}),
            dataType: "json", //返回数据形式为json
            success: function (data) {
-               console.log(data);
-               var kcmc=[];
-               var zscj=[];
-               var yccj=[];
-               for(var i =0; i<data.length;i++){
-                   kcmc.push(data[i].course['kcmc']);
-               }
-               for(var i=0;i<data.length;i++){
-                   zscj.push(data[i].zscj);
-               }
-               for(var i=0;i<data.length;i++){
-                   yccj.push(data[i].yccj);
-               }
+               if(data.length==0){
+                   barChart.clear();
+                   alert("无此同学的记录！");
+               }else {
+                   console.log(data)
+                   var kcmc = [];
+                   var zscj = [];
+                   var yccj = [];
+                   for (var i = 0; i < data.length; i++) {
+                       kcmc.push(data[i].course['kcmc']);
+                   }
+                   for (var i = 0; i < data.length; i++) {
+                       zscj.push(data[i].zscj);
+                   }
+                   for (var i = 0; i < data.length; i++) {
+                       yccj.push(data[i].yccj);
+                   }
 
-               option = {
-                   title: {
-                       text: '课程成绩分布',
-                       subtext: '',
-                       x: 'left',
-                       y: 'top'
+                   option = {
+                       title: {
+                           text: '课程成绩分布(学号：' + data[0].xh + ')',
+                           subtext: '',
+                           x: 'left',
+                           y: 'top'
 
-                   },
-                   tooltip: {
-                       trigger: 'axis'
-                   },
-                   legend: {
-                       data: ['真实成绩', '预测成绩']
-                   },
-                   toolbox: {
-                   },
-                   calculable: true,
-                   xAxis: {
-                       name: '课程',
-                       show: true,
-                       data: kcmc,
-                       //x轴项目名数值排列
-                       type: 'category',
-                       axisLabel: {
-                           interval: 0,
-                           rotate: 25
-                       }
-
-                   },
-                   yAxis: {
-                       name: '成绩',
-                       type: 'value',
-                       min: 0,
-                       max: 100,
-                       interval: 20
-
-                   },
-                   grid: {
-                       show: true,
-                       bottom: '30%'
-
-                   },
-                   series: [
-                       {
-                           name: '真实成绩',
-                           type: 'line',
-                           data: zscj,
-                           markLine: {
-                               symbol: "arrow",
-                               data: [{type: 'average', name: '平均值'}]
-                           },
-                           markPoint: {
-                               symbol: "pin",
-                               data: [{type: 'min', name: '最小值'},
-                                   {type: 'max', name: '最大值'}]
-                           }
                        },
-                       {
-                           name: '预测成绩',
-                           type: 'line',
-                           data: yccj,
-                           markLine: {
-                               symbol: "arrow",
-                               data: [
-                                   {type: 'average', name: '平均值'}]
-                           },
-                           markPoint: {
-                               symbol: "pin",
-                               data: [
-                                   {type: 'min', name: '最小值'},
-                                   {type: 'max', name: '最大值'}
-                               ]
+                       tooltip: {
+                           trigger: 'axis'
+                       },
+                       legend: {
+                           data: ['真实成绩', '预测成绩']
+                       },
+                       toolbox: {},
+                       calculable: true,
+                       xAxis: {
+                           name: '课程',
+                           show: true,
+                           data: kcmc,
+                           //x轴项目名数值排列
+                           type: 'category',
+                           axisLabel: {
+                               interval: 0,
+                               rotate: 25
                            }
-                       }]
-               };
 
-       barChart.setOption(option);
+                       },
+                       yAxis: {
+                           name: '成绩',
+                           type: 'value',
+                           min: 0,
+                           max: 100,
+                           interval: 20
+
+                       },
+                       grid: {
+                           show: true,
+                           bottom: '30%'
+
+                       },
+                       series: [
+                           {
+                               name: '真实成绩',
+                               type: 'line',
+                               data: zscj,
+                               markLine: {
+                                   symbol: "arrow",
+                                   data: [{type: 'average', name: '平均值'}]
+                               },
+                               markPoint: {
+                                   symbol: "pin",
+                                   data: [{type: 'min', name: '最小值'},
+                                       {type: 'max', name: '最大值'}]
+                               }
+                           },
+                           {
+                               name: '预测成绩',
+                               type: 'line',
+                               data: yccj,
+                               markLine: {
+                                   symbol: "arrow",
+                                   data: [
+                                       {type: 'average', name: '平均值'}]
+                               },
+                               markPoint: {
+                                   symbol: "pin",
+                                   data: [
+                                       {type: 'min', name: '最小值'},
+                                       {type: 'max', name: '最大值'}
+                                   ]
+                               }
+                           }]
+                   };
+
+                   barChart.setOption(option);
+               }
    }})
    }
 
@@ -811,60 +815,71 @@
            dataType: "json", //返回数据形式为json
            success: function (data) {
                console.log(data);
-               option = {
-                   title: {
-                       text: '一卡通消费信息(单位：元)',
-                       subtext: '全年52周'
-                   },
-                   tooltip: {
-                       trigger: 'axis'
-                   },
-                   legend: {},
-                 toolbox: {},
-                   calculable: true,
-                   xAxis: [{
-                       type: 'category',
-                       boundaryGap: false,
-                       data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13',
-                   '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
-                   '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52']
-                   }],
-                   yAxis: [{
-                       type: 'value'
-                   }],
-                   series: [{
-                       name: '周消费',
-                       type: 'line',
-                       data: [data["week1"] / 100, data["week2"] / 100, data["week3"] / 100, data["week4"] / 100, data["week5"] / 100, data["week6"] / 100,
-           data["week7"] / 100, data["week8"] / 100, data["week9"] / 100, data["week10"] / 100, data["week11"] / 100, data["week12"] / 100,
-           data["week13"] / 100, data["week14"] / 100, data["week15"] / 100, data["week16"] / 100, data["week17"] / 100, data["week18"] / 100,
-           data["week19"] / 100, data["week20"] / 100, data["week21"] / 100, data["week22"] / 100, data["week23"] / 100, data["week24"] / 100,
-           data["week25"] / 100, data["week26"] / 100, data["week27"] / 100, data["week28"] / 100, data["week29"] / 100, data["week30"] / 100,
-           data["week31"] / 100, data["week32"] / 100, data["week33"] / 100, data["week34"] / 100, data["week35"] / 100, data["week36"] / 100,
-           data["week37"] / 100, data["week38"] / 100, data["week39"] / 100, data["week40"] / 100, data["week41"] / 100, data["week42"] / 100,
-           data["week43"] / 100, data["week44"] / 100, data["week45"] / 100, data["week46"] / 100, data["week47"] / 100, data["week48"] / 100,
-           data["week49"] / 100, data["week50"] / 100, data["week51"] / 100, data["week52"] / 100],
-                       markLine:{
-                           symbol:"arrow",
-                           data:[{type:'average',name:'平均值'}],
-                           itemStyle:{
-                               normal:{
-                                   label:{
-                                       show:true,
-                                       formatter:function (param) {
-                                           return param.name+":"+param.value;
+               if(null!=data&&""!=data){
+                   option = {
+                       title: {
+                           text: '一卡通消费信息(学号：' + data["xh"] + ')',
+                           subtext: '全年52周(单位：元)'
+                       },
+                       tooltip: {
+                           trigger: 'axis'
+                       },
+                       legend: {},
+                       toolbox: {},
+                       calculable: true,
+                       xAxis: [{
+                           type: 'category',
+                           boundaryGap: false,
+                           data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13',
+                               '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34',
+                               '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52']
+                       }],
+                       yAxis: [{
+                           type: 'value'
+                       }],
+                       series: [{
+                           name: '周消费',
+                           type: 'line',
+                           data: [data["week1"] / 100, data["week2"] / 100, data["week3"] / 100, data["week4"] / 100, data["week5"] / 100, data["week6"] / 100,
+                               data["week7"] / 100, data["week8"] / 100, data["week9"] / 100, data["week10"] / 100, data["week11"] / 100, data["week12"] / 100,
+                               data["week13"] / 100, data["week14"] / 100, data["week15"] / 100, data["week16"] / 100, data["week17"] / 100, data["week18"] / 100,
+                               data["week19"] / 100, data["week20"] / 100, data["week21"] / 100, data["week22"] / 100, data["week23"] / 100, data["week24"] / 100,
+                               data["week25"] / 100, data["week26"] / 100, data["week27"] / 100, data["week28"] / 100, data["week29"] / 100, data["week30"] / 100,
+                               data["week31"] / 100, data["week32"] / 100, data["week33"] / 100, data["week34"] / 100, data["week35"] / 100, data["week36"] / 100,
+                               data["week37"] / 100, data["week38"] / 100, data["week39"] / 100, data["week40"] / 100, data["week41"] / 100, data["week42"] / 100,
+                               data["week43"] / 100, data["week44"] / 100, data["week45"] / 100, data["week46"] / 100, data["week47"] / 100, data["week48"] / 100,
+                               data["week49"] / 100, data["week50"] / 100, data["week51"] / 100, data["week52"] / 100],
+                           markLine: {
+                               symbol: "arrow",
+                               data: [{type: 'average', name: '平均值'}],
+                               itemStyle: {
+                                   normal: {
+                                       label: {
+                                           show: true,
+                                           formatter: function (param) {
+                                               return param.name + ":" + param.value;
+                                           }
                                        }
                                    }
                                }
-                           }
                            },
-                       markPoint:{
-                           symbol:"pin",
-                           data:[{type:'min',name:'最小值'}, {type:'max',name:'最大值'}],
-                       }
-                   }]
-               };
-               echartLine.setOption(option);
+                           markPoint: {
+                               symbol: "pin",
+                               data: [{type: 'min', name: '最小值'}, {type: 'max', name: '最大值'}],
+                           }
+                       }]
+                   };
+                   echartLine.setOption(option);
+
+
+
+               }else {
+                   echartLine.clear();
+                   alert("无此同学的记录!");
+
+
+
+               }
            }
        });
    }

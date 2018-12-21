@@ -62,7 +62,7 @@
 
         </table>-->
         <table  schema="campus_bigdata"
-                tableName="student_anomaly" domainObjectName="StuConsumeOutlier"
+                tableName="student_anormal_formatted" domainObjectName="StuConsumeOutlier"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="SmartCampus">
+    <output-path>$PROJECT_DIR$/out/artifacts/SmartCampus</output-path>
+    <root id="archive" name="SmartCampus.war">
+      <element id="artifact" artifact-name="SmartCampus:war exploded" />
+    </root>
+  </artifact>
+</component>

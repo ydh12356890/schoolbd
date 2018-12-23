@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
-<%--<body onload="showAtRight('rightmainpage.jsp')"></body>--%>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,10 +10,8 @@
     <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" >
     <link rel="stylesheet" href="../css/jquery-ui.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link href="../css/bootstrap-select.min.css" rel="stylesheet">
     <link rel="icon" href="../icon/buptlogo.png">
     <title>校园信息化</title>
-    <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
 </head>
 <body>
@@ -91,27 +88,19 @@
                     <a href="#" class = "project_a"><img src="../icon/buptlogo.png" width="32" height="32" style="background: white;border-radius: 50%"/> 智慧校园</a>
                 </div>
                 <div class="profile_pic">
-                        <%--<img src="../icon/bupt.png" rel="icon" class="image-circle profile-img">--%>
                             <span class="glyphicon glyphicon-user"></span>
                             <span>welcome,${sessionScope.get("user").userName}</span>
                 </div>
             </div>
             <ul class="nav nav-sidebar" >
-                <%--<li class="active"><a href="#" onclick="showAtRight('rightmainpage.jsp')">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
-                <li class=""><a href="#"  onclick="showAtRight('rightpersonpage.jsp')">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
-                <li class=""><a href="#" onclick="showAtRight('rightgrouppage.html')">
-                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>--%>
-
                     <li class="active" id="mainpageli"><a href="#" onclick="showMainPage('rightmainpage.jsp');return false;">
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页 </a></li>
                     <li class="" id="personpageli"><a href="#"  onclick="showPersonPage('rightpersonpage.jsp');return false;">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 学生个人信息</a></li>
                     <li class="" id="grouppageli"><a href="#" onclick="showGroupPage('rightgrouppage.jsp');return false;">
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>学生群体信息</a></li>
-                <%--<li class=""><a href="#" onclick="showAtRight('rightaddpage.html')">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 扩展功能</a></li>--%>
+                    <li class="" id="apili"><a href="#" onclick="showApiPage('api.jsp');return false;">
+                    <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>调用接口</a></li>
             </ul>
         </div>
         <div class="col-md-10 col-md-offset-2 main" id="rightpage">
@@ -121,12 +110,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <%--<img src="../icon/bupt.png" rel="icon" alt="">${sessionScope.get("user").userName}--%>
                                     <span class="glyphicon glyphicon-user"></span>${sessionScope.get("user").userName}
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <%--<li><a href="javascript:;">修改密码</a></li>--%>
                                     <li><a class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal" role="button">修改密码</a></li>
                                     <li><a class="btn btn-default" href="#" role="button" id="logout">退出登录</a></li>
                                 </ul>
@@ -134,18 +121,13 @@
                         </ul>
                     </nav>
                 </div>
-
             </div>
             <div id="rightdiv" class="rightdiv">
-                <%--<label class="sr-only" for="inputAutoxh">输入学号</label>
-                <input class="form-control" type="text" id="inputAutoxh"  autocomplete="off">--%>
                 <jsp:include page="rightmainpage.jsp" flush="true"/>
-                <%-- <jsp:include page="${}" flush="true"/>--%>
             </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script  src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -157,13 +139,11 @@
         $('ul.nav-sidebar >li').click(function (e) {
             $('ul.nav-sidebar>li').removeClass('active');
             $(this).addClass('active');
-
         });
     });
     function loadView(name) {
         $("#rightdiv").empty();
         $("#rightdiv").load(name);
-        
     }
     function showMainPage(name) {
         loadView(name);
@@ -171,26 +151,23 @@
     function showGroupPage(name) {
         loadView(name);
     }
-
     function showPersonPage(name) {
         loadView(name);
     }
-
+    function showApiPage(name) {
+        loadView(name);
+    }
     function GotoPersonPage(name,param) {
         console.log("进入mainpage.jsp的showPersonPage函数");
         loadView2(name,param);
     }
-
     function loadView2(name,param) {
         console.log("执行loadView2函数");
         $("#mainpageli").removeClass('active');
         $("#personpageli").addClass('active');
         $("#rightdiv").empty();
         $("#rightdiv").load(name,{"studentid":param});
-
     }
-
-
     function clearForm() {
         document.getElementById("modalOldUserpassword").value=null;
         document.getElementById("modalNewUserpassword1").value=null;
@@ -219,7 +196,7 @@
         } else{
             $.ajax({
                 type:"post",
-                url:"/user/modifyPassword",
+                url:"/SmartCampus/user/modifyPassword",
                 data:{"username":userName,"oldpassword":userOldpass,"newpassword":userNewPass1} ,
                 dataType:"text",
                 success:function (data) {
@@ -229,7 +206,6 @@
                         document.getElementById("modalNewUserpassword1").value="";
                         document.getElementById("modalNewUserpassword2").value="";
                         alert("密码修改成功");
-                        //window.location.href = "./assets/html/mainpage.jsp";
                     } else if(data==="update fail") {
                         alert("密码修改失败");
                     }
@@ -241,45 +217,6 @@
         }
         
     }
-    /*function showAtRight(url) {
-        var xmlHttp;
-        if(window.XMLHttpRequest){
-            //code for IE7+,firefox,chrome,opera,safari
-            xmlHttp = new XMLHttpRequest();   //创建XMLHttpRequest对象
-        }
-        else {
-            //code for IE5 IE6
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        xmlHttp.onreadystatechange = function () {
-            //onreadystatechange  当readystate变化时调用后面的方法
-
-            if(xmlHttp.readyState == 4){
-                //xmlHttp.readyState == 4  finished downloading response
-                if(xmlHttp.status == 200){
-                    //服务器反馈正常
-                    document.getElementById("rightdiv").innerHTML = xmlHttp.responseText;//重置div中的内容
-                }
-                else if(xmlHttp.status ==404){
-                    alert("出错了，404 Not Found");
-                    return;
-                }
-                else if(xmlHttp.status==403){
-                    alert("出错了，403 Forbidden");
-                    return;
-                }
-                else {
-                    alert("出错了");
-                    return;
-                }
-            }
-
-        }
-        //把请求发送到服务器上的指定文件（URL指定的文件）进行处理
-        xmlHttp.open("GET",url,true);
-        xmlHttp.send();
-    }*/
     var theme = {
         color: [
             '#79e8D0','#ffb8b8','#3498DB','#ff4d4d','#26B99A', '#751aff',
@@ -499,78 +436,6 @@
             fontFamily: 'Arial, Verdana, sans-serif'
         }
     };
-    function checkBarGraph() {
-        console.log("click触发");
-        var echartBar = echarts.init(document.getElementById('bargraphdiv'),theme);
-        echartBar.setOption({
-            title: {
-                text: 'Graph title',
-                subtext: 'Graph Sub-text'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['sales', 'purchases']
-            },
-            toolbox: {
-                show: false
-            },
-            calculable: false,
-            xAxis: [{
-                type: 'category',
-                data: ['1?', '2?', '3?', '4?', '5?', '6?', '7?', '8?', '9?', '10?', '11?', '12?']
-            }],
-            yAxis: [{
-                type: 'value'
-            }],
-            series: [{
-                name: 'sales',
-                type: 'bar',
-                data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                markPoint: {
-                    data: [{
-                        type: 'max',
-                        name: '???'
-                    }, {
-                        type: 'min',
-                        name: '???'
-                    }]
-                },
-                markLine: {
-                    data: [{
-                        type: 'average',
-                        name: '???'
-                    }]
-                }
-            }, {
-                name: 'purchases',
-                type: 'bar',
-                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                markPoint: {
-                    data: [{
-                        name: 'sales',
-                        value: 182.2,
-                        xAxis: 7,
-                        yAxis: 183,
-                    }, {
-                        name: 'purchases',
-                        value: 2.3,
-                        xAxis: 11,
-                        yAxis: 3
-                    }]
-                },
-                markLine: {
-                    data: [{
-                        type: 'average',
-                        name: '???'
-                    }]
-                }
-            }]
-        });
-
-
-    }
     var dataStyle = {
         normal: {
             label: {
@@ -595,134 +460,25 @@
             color: 'rgba(0,0,0,0)'
         }
     };
-    function checkMiniPie() {
-        console.log("mini pie click");
-
-        var echartMiniPie = echarts.init(document.getElementById('minipiediv'), theme);
-        echartMiniPie.setOption({
-            title: {
-                text: 'Chart #2',
-                subtext: 'From ExcelHome',
-                sublink: 'http://e.weibo.com/1341556070/AhQXtjbqh',
-                x: 'center',
-                y: 'center',
-                itemGap: 20,
-                textStyle: {
-                    color: 'rgba(30,144,255,0.8)',
-                    fontFamily: '微软雅黑',
-                    fontSize: 35,
-                    fontWeight: 'bolder'
-                }
-            },
-            tooltip: {
-                show: true,
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 170,
-                y: 45,
-                itemGap: 12,
-                data: ['68%Something #1', '29%Something #2', '3%Something #3'],
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: {
-                        show: true
-                    },
-                    dataView: {
-                        show: true,
-                        title: "Text View",
-                        lang: [
-                            "Text View",
-                            "Close",
-                            "Refresh",
-                        ],
-                        readOnly: false
-                    },
-                    restore: {
-                        show: true,
-                        title: "Restore"
-                    },
-                    saveAsImage: {
-                        show: true,
-                        title: "Save Image"
-                    }
-                }
-            },
-            series: [{
-                name: '1',
-                type: 'pie',
-                clockWise: false,
-                radius: [105, 130],
-                itemStyle: dataStyle,
-                data: [{
-                    value: 68,
-                    name: '68%Something #1'
-                }, {
-                    value: 32,
-                    name: 'invisible',
-                    itemStyle: placeHolderStyle
-                }]
-            }, {
-                name: '2',
-                type: 'pie',
-                clockWise: false,
-                radius: [80, 105],
-                itemStyle: dataStyle,
-                data: [{
-                    value: 29,
-                    name: '29%Something #2'
-                }, {
-                    value: 71,
-                    name: 'invisible',
-                    itemStyle: placeHolderStyle
-                }]
-            }, {
-                name: '3',
-                type: 'pie',
-                clockWise: false,
-                radius: [25, 80],
-                itemStyle: dataStyle,
-                data: [{
-                    value: 3,
-                    name: '3%Something #3'
-                }, {
-                    value: 97,
-                    name: 'invisible',
-                    itemStyle: placeHolderStyle
-                }]
-            }]
-        });
-
-
-
-    }
     $("#logout").click( function() {
         console.log("注销");
         $.ajax({
-            url:"/user/logout",
+            url:"/SmartCampus/user/logout",
             type:"post",
             dataType:"text",
             success:function (data) {
                 if(data=="success") {
-                    window.location.href = "mainpage.jsp";
+                    window.location.href = "/SmartCampus/index.jsp";
                 }
                 else {
-                    //alert("用户名或密码错误！");
                 }
             }
         })
-        
     });
 </script>
 <script type="text/javascript">
-
-
     $(".show_old_pass").click(function () {
         var pass = document.getElementById("modalOldUserpassword");
-
         if (pass.type === "password"){
             pass.type = "text";
             $(".show_old_pass").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
@@ -732,7 +488,6 @@
             $(".show_old_pass").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
         }
     })
-
 </script>
 <script language="javascript">
     //防止页面后退
@@ -742,11 +497,8 @@
     });
 </script>
 <script type="text/javascript">
-
-
     $(".show_new_pass").click(function () {
         var pass = document.getElementById("modalNewUserpassword1");
-
         if (pass.type === "password"){
             pass.type = "text";
             $(".show_new_pass").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
@@ -756,14 +508,10 @@
             $(".show_new_pass").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
         }
     })
-
 </script>
 <script type="text/javascript">
-
-
     $(".show_new_pass2").click(function () {
         var pass = document.getElementById("modalNewUserpassword2");
-
         if (pass.type === "password"){
             pass.type = "text";
             $(".show_new_pass2").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
@@ -773,7 +521,6 @@
             $(".show_new_pass2").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
         }
     })
-
 </script>
 </body>
 </html>

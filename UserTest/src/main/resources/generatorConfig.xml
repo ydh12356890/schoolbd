@@ -47,44 +47,13 @@
         </javaClientGenerator>
 
         <!--数据库表生成操作，schema：数据库名，tablename:表名，domainobjectname : 对应DO-->
-       <!-- <table  schema="schoolbd"
-                            tableName="user" domainObjectName="User"
-                            enableCountByExample="false" enableUpdateByExample="false"
-                            enableDeleteByExample="false" enableSelectByExample="false"
-                            selectByExampleQueryId="false">
 
-    </table>-->
-      <!--  <table  schema="schoolbd"
-                tableName="stuinfo" domainObjectName="Student"
-                enableCountByExample="false" enableUpdateByExample="false"
-                enableDeleteByExample="false" enableSelectByExample="false"
-                selectByExampleQueryId="false">
-
-        </table>-->
         <table  schema="campus_bigdata"
                 tableName="student_anormal_formatted" domainObjectName="StuConsumeOutlier"
                 enableCountByExample="false" enableUpdateByExample="false"
                 enableDeleteByExample="false" enableSelectByExample="false"
                 selectByExampleQueryId="false">
         </table>
-
-       <!-- <table  schema="schoolbd"
-                tableName="coursescoredis" domainObjectName="StudentScore"
-                enableCountByExample="false" enableUpdateByExample="false"
-                enableDeleteByExample="false" enableSelectByExample="false"
-                selectByExampleQueryId="false">
-
-        </table>-->
-        <!--<table  schema="schoolbd"
-                tableName="scorepredict" domainObjectName="ScorePredict"
-                enableCountByExample="false" enableUpdateByExample="false"
-                enableDeleteByExample="false" enableSelectByExample="false"
-                selectByExampleQueryId="false">
-
-        </table>-->
-
-
-
 
     </context>
 </generatorConfiguration>

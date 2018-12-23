@@ -45,7 +45,5 @@ public interface UndergraduateMapper {
     List<Undergraduate> selectStuFilterByXHNameGood(Map<String,Object> param);
     List<Undergraduate> selectStuFilterByXHNameSizeGood(Map<String,Object> param);
 
-    List<FourFail> selectFourFailByXymc(String xymc);
-
     List<MFRatio> selectMFRatioUgSingleSchool(String xymc);
 }

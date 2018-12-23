@@ -57,8 +57,8 @@
         </div>
         <div class="form-group">
           <div class="col-md-offset-3 col-md-9 signinbtn">
-            <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
-            <a href="./views/register.jsp">Sign Up for System</a>
+            <button id="loginid" class="btn btn-lg btn-primary btn-block" type="button">登录</button>
+            <a href="./views/register.jsp">注册</a>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
        }else{
 
      $.ajax({
-         url:"/user/login",
+         url:"/SmartCampus/user/login",
          data:{"username":username,"password":password},
          type:"post",
          dataType:"text",
@@ -116,6 +116,13 @@
         }
     })
 
+</script>
+<script language="javascript">
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
 </script>
 
 

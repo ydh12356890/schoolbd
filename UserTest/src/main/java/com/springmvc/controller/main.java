@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.springmvc.entity.Msg;
 import com.springmvc.entity.User;
 import com.springmvc.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,7 @@ import java.util.List;
  * @todo
  */
 @Controller
-
+//@RequestMapping("/SmartCampus")
 public class main {
     @Resource
     UserServiceImpl userService;
@@ -39,23 +38,14 @@ public class main {
     public String Login(HttpServletRequest request,HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-       // String rememberme = request.getParameter("rememberme");
         User user = userService.CheckUserExist(username, password);
-
         if (null ==user) {
             return "false";
-        }
-        else {
+        } else {
             request.getSession().setAttribute("user", user);
             request.getSession().setAttribute("lastschool", user);
-//            request.getSession().setAttribute("password",user);
-
             return "success";
         }
-
-
-
-
     }
     @RequestMapping("/user/modifyPassword")
     @ResponseBody
@@ -73,15 +63,12 @@ public class main {
           }
           else
               return "update fail";
-
         }
         else {
             System.out.println("原密码输入错误");
             return "oldpass error";
         }
-
     }
-
     @RequestMapping("/user/lastschool")
     @ResponseBody
     public String updateLastSchoolByUsername(@RequestBody User user){
@@ -94,14 +81,7 @@ public class main {
         else{
             return "fail";
         }
-
-
-
     }
-
-
-
-
     @RequestMapping("/user/register")
     @ResponseBody
     public String Register(String username,String password) {
@@ -112,7 +92,6 @@ public class main {
         } else
             System.out.println("注册失败，用户名已存在！！！");
             return null;
-
     }
     @RequestMapping(value = "/user/logout")
     @ResponseBody
@@ -121,16 +100,5 @@ public class main {
         session.invalidate();
         return "success";
     }
-  /*  @RequestMapping(value = "/user/getalluser" , method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> getUserList () {
-        List<User> userList = userService.getAllUser();
-        return  userList;
-
-
-    }
-*/
-
-
 }
 

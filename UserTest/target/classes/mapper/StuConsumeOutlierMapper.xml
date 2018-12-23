@@ -8,9 +8,30 @@
     <result column="year" property="year" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="selectByXhAndYear" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT * FROM student_anormal_formatted WHERE xh=#{xh,jdbcType=VARCHAR} AND year = #{year,jdbcType=VARCHAR} ORDER BY (week+0)
+  <select id="selectByXhAndYear" parameterType="java.lang.String" resultType="com.springmvc.entity.ConsumpOutlierThreeTag">
+    SELECT
+    a.xh,a.anormal_value as anormalvalue,a.week,a.year,b.ano_index as anoindex,b.sum_index as sumindex,b.static_index as staticindex
+FROM
+    student_anormal_formatted a,
+    exp_tag b
+WHERE
+    a.xh = #{xh,jdbcType=VARCHAR} AND a.year = #{year,jdbcType=VARCHAR}
+    and a.xh=b.xh and a.year = b.year
+ORDER BY (week + 0);
+
   </select>
+
+
+  <select id="selectWeekConsumpByXh" parameterType="java.lang.String" resultType="com.springmvc.entity.WeekConsump">
+    SELECT
+    xh,week,year,exp_val/100 as expval
+    FROM
+    exp_week
+    WHERE
+    xh = #{xh,jdbcType=VARCHAR} AND year = '2016'
+    ORDER BY (week+0)
+  </select>
+
 
   <resultMap id="WeekdayConsumpMap" type="com.springmvc.entity.StuConsumeOutlier">
     <result column="xh" property="xh" jdbcType="VARCHAR" />

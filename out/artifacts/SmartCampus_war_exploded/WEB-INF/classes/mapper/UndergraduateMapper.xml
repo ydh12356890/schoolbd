@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.UndergraduateMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.entity.Undergraduate" >
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    studentid, name, schoolid, majorid, gender, classid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from undergraduate_basic
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAllXhByxh" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT studentid,name FROM undergraduate_basic where name LIKE concat(#{name},"%")
+  </select>
+  
+
+  <resultMap id="Map" type="com.springmvc.entity.MFRatio">
+    <result property="gender" column="gender" jdbcType="VARCHAR"/>
+    <result property="mfnumber" column="mfnumber" jdbcType="INTEGER"/>
+    <result property="schoolid" column="schoolid" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <select id="selectMFRatioUgSingleSchool" resultMap="Map" parameterType="java.lang.String">
+    SELECT count(studentid) as mfnumber,schoolid,gender
+    FROM undergraduate_basic a,
+    xydm_dzb b
+    WHERE b.xymc = #{xymc,jdbcType=VARCHAR} AND a.schoolid = b.xydm
+    GROUP BY gender
+  </select>
+
+  <resultMap id="UndergraduateInfoMap" type="com.springmvc.entity.Undergraduate">
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+    <association property="school" column="xymc" javaType="com.springmvc.entity.School">
+      <id column="xydm" property="xydm" jdbcType="VARCHAR" />
+      <result column="xymc" property="xymc" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  
+  <select id="selectstusByXhName" resultMap="UndergraduateInfoMap" parameterType="Map">
+    SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid,a.schoolid,c.xymc
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  a.studentid LIKE concat(#{studentid},"%") AND
+  a.name LIKE concat(#{name},"%") AND
+  c.xydm=a.schoolid
+  LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectstusByXhNameSize" resultMap="UndergraduateInfoMap" parameterType="Map">
+    SELECT
+    a.studentid,a.name
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    c.xydm=a.schoolid
+  </select>
+
+  <select id="selectSchoolAllStudent" resultMap="UndergraduateInfoMap"  parameterType="Map">
+  SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  c.xymc=#{xymc,jdbcType=VARCHAR} AND
+  c.xydm=a.schoolid
+  LIMIT #{startIndex},#{pageSize}
+</select>
+
+  <select id="selectSchoolStudentSize" resultMap="UndergraduateInfoMap"  parameterType="Map">
+    SELECT
+    a.studentid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid
+  </select>
+
+  <select id="selectFilterSchoolStu" resultMap="UndergraduateInfoMap" parameterType="Map">
+  SELECT
+  a.studentid,a.name,a.majorid,a.gender,a.classid
+  FROM
+  undergraduate_basic a,
+  xydm_dzb c
+  WHERE
+  c.xymc=#{xymc,jdbcType=VARCHAR} AND
+  c.xydm=a.schoolid AND
+  a.studentid LIKE concat(#{studentid},"%") AND
+  a.name LIKE concat(#{name},"%")
+  LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectFilterSchoolStuSize" resultMap="UndergraduateInfoMap" parameterType="Map">
+  SELECT
+    a.studentid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%")
+  </select>
+
+  <select id="selectUndergraduateBaseInfo" resultMap="UndergraduateInfoMap" parameterType="java.lang.String" >
+    SELECT a.*,c.xymc
+    FROM undergraduate_basic a,
+    xydm_dzb c
+    WHERE studentid = #{studentid,jdbcType=VARCHAR} AND a.schoolid=c.xydm
+  </select>
+
+
+
+  <!--<resultMap id="CourseResultMap" type="com.springmvc.entity.StuScorePredict" >
+    <id column="idscore_predict" property="idscorePredict" jdbcType="INTEGER" />
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+    <result column="zscj" property="zscj" jdbcType="VARCHAR" />
+    <result column="yccj" property="yccj" jdbcType="VARCHAR" />
+    <association property="course" column="kcdm"  javaType="com.springmvc.entity.Course">
+      <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+      <result column="kcmc" property="kcmc" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  <select id="selectKcmcBykcdm" parameterType="java.lang.String"  resultMap="CourseResultMap">
+    SELECT a.xh,a.kcdm, b.kcmc,a.zscj,a.yccj
+    FROM score_predict a,
+    bzks_kc b
+    WHERE a.kcdm=b.kcdm AND <![CDATA[a.yccj <60]]>
+  </select>-->
+
+
+  <resultMap id="UndergraduateMap" type="com.springmvc.entity.Undergraduate">
+    <id column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="majorid" property="majorid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+    <association property="school" column="xymc" javaType="com.springmvc.entity.School">
+      <id column="xydm" property="xydm" jdbcType="VARCHAR" />
+      <result column="xymc" property="xymc" jdbcType="VARCHAR" />
+    </association>
+   <association property="stuScorePredict" javaType="com.springmvc.entity.StuScorePredict">
+     <id column="idscore_predict" property="idscorePredict" jdbcType="INTEGER" />
+     <result column="xh" property="xh" jdbcType="VARCHAR" />
+     <result column="kcdm" property="kcdm" jdbcType="VARCHAR" />
+     <result column="zscj" property="zscj" jdbcType="VARCHAR" />
+     <result column="yccj" property="yccj" jdbcType="VARCHAR" />
+   </association>
+  </resultMap>
+
+  <select id="selectStuFilterByXHName"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          a.studentid LIKE concat(#{studentid},"%") AND
+          a.name LIKE concat(#{name},"%") AND
+          <![CDATA[ b.yccj<70 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectStuFilterByXHNameSize"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    a.studentid,a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj<70 ]]>
+  </select>
+
+  <select id="selectStuFilterByXHNameGood"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj>=90 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectStuFilterByXHNameSizeGood"  parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    a.studentid,a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    a.studentid LIKE concat(#{studentid},"%") AND
+    a.name LIKE concat(#{name},"%") AND
+    <![CDATA[ b.yccj>=90 ]]>
+  </select>
+
+
+  <select id="selectScoreBystuNumberLimit" parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+     DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          <![CDATA[ b.yccj<70 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectGoodScoreStuLimit" parameterType="Map" resultMap="UndergraduateMap">
+    SELECT
+    DISTINCT(a.studentid),a.name, a.schoolid,c.xymc,a.majorid,a.gender,a.classid
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    <![CDATA[ b.yccj>=90 ]]>
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">
+    SELECT
+    a.studentid, a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+          c.xymc=#{xymc,jdbcType=VARCHAR} AND
+          c.xydm=a.schoolid AND
+          a.studentid= b.xh AND
+          <![CDATA[ b.yccj<70 ]]>
+  </select>
+
+  <select id="selectGoodScoreLimitSize" resultMap="UndergraduateMap" parameterType="Map">
+    SELECT
+    a.studentid, a.name, a.schoolid,c.xymc
+    FROM
+    undergraduate_basic a,
+    xydm_dzb c,
+    score_predict b
+    WHERE
+    c.xymc=#{xymc,jdbcType=VARCHAR} AND
+    c.xydm=a.schoolid AND
+    a.studentid= b.xh AND
+    <![CDATA[ b.yccj>=90 ]]>
+  </select>
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from undergraduate_basic
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.entity.Undergraduate" >
+    insert into undergraduate_basic (studentid, name, schoolid, 
+      majorid, gender, classid
+      )
+    values (#{studentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{schoolid,jdbcType=VARCHAR}, 
+      #{majorid,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.entity.Undergraduate" >
+    insert into undergraduate_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        studentid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="schoolid != null" >
+        schoolid,
+      </if>
+      <if test="majorid != null" >
+        majorid,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="classid != null" >
+        classid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="majorid != null" >
+        #{majorid,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.entity.Undergraduate" >
+    update undergraduate_basic
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        schoolid = #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="majorid != null" >
+        majorid = #{majorid,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classid = #{classid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.entity.Undergraduate" >
+    update undergraduate_basic
+    set name = #{name,jdbcType=VARCHAR},
+      schoolid = #{schoolid,jdbcType=VARCHAR},
+      majorid = #{majorid,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      classid = #{classid,jdbcType=VARCHAR}
+    where studentid = #{studentid,jdbcType=VARCHAR}
+  </update>
+</mapper>

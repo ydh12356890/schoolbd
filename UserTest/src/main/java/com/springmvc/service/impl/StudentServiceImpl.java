@@ -19,10 +19,6 @@ import java.util.Map;
 @Service("stuService")
 public class StudentServiceImpl implements IStudentService {
     @Resource
-    StudentMapper studentMapper;
-    @Resource
-    StudentScoreMapper studentScoreMapper;
-    @Resource
     NStudentMapper nStudentMapper;
     @Resource
     PostgraduateMapper postgraduateMapper;
@@ -63,13 +59,13 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public NStudent getStuConsumpInfo(String xh) {
-        return  nStudentMapper.selectByPrimaryKey(xh);
+    public List<WeekConsump> getStuConsumpInfo(String xh) {
+        return  stuConsumeOutlierMapper.selectWeekConsumpByXh(xh);
     }
 
     @Override
-    public List<StuConsumeOutlier> getStuConsumeOutlierService(String xh, String year) {
-       List< StuConsumeOutlier> stuConsumeOutlierList = stuConsumeOutlierMapper.selectByXhAndYear(xh,year);
+    public List<ConsumpOutlierThreeTag> getStuConsumeOutlierService(String xh, String year) {
+       List< ConsumpOutlierThreeTag> stuConsumeOutlierList = stuConsumeOutlierMapper.selectByXhAndYear(xh,year);
         return stuConsumeOutlierList;
     }
 
@@ -95,12 +91,6 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public List<FourFail> getFourFailByXymcService(String xymc) {
-        List<FourFail> fourFails = undergraduateMapper.selectFourFailByXymc(xymc);
-        return fourFails;
-    }
-
-    @Override
     public List<FailCourse> getAllFailCourseService(String xymc) {
         return stuScorePredictMapper.selectAllFailCourseByXymc(xymc);
     }
@@ -109,19 +99,6 @@ public class StudentServiceImpl implements IStudentService {
     public List<WeekdayExp> getWeekdayConsumpService(String xh, String year, String week) {
         return stuConsumeOutlierMapper.selectWeekdayConsumpByXhYearWeek(xh,year,week);
     }
-
-    @Override
-    public Student getStudentInfo(String stuNumber) {
-        return studentMapper.selectByPrimaryKey(stuNumber);
-    }
-
-    @Override
-    public StudentScore getStuScoreDisService(String stuNumber) {
-        StudentScore studentScore =  studentScoreMapper.selectScoreDisByStuNum(stuNumber);
-        return  studentScore;
-
-    }
-
     @Override
     public Map<String, Object> getScoreLimitTable(Map<String, Object> param) {
         //bootstrap-table要求服务器返回的json须包含：total，rows

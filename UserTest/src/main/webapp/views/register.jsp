@@ -61,8 +61,9 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9 signinbtn">
-                <button class="btn btn-lg btn-primary btn-block" type="button" id="reg">Sign up</button>
-                <button class="btn btn-lg btn-primary btn-block"><a href="../index.jsp">Back to Sign in</a></button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="reg">注册</button>
+                <a href="../index.jsp">返回登录</a>
+                <%--<button class="btn btn-lg btn-primary btn-block"><a href="../index.jsp">返回登录</a></button>--%>
             </div>
         </div>
         </div>
@@ -89,7 +90,7 @@
         }
         else{
             $.ajax({
-                url:"/user/register",
+                url:"/SmartCampus/user/register",
                 type:"post",
                 data:{"username":username,"password":password},
                 dataType:"text",
@@ -98,7 +99,7 @@
 
                     if(data =="register successful"){
                         alert("注册成功！");
-                        window.location.href = "../index.jsp";
+                        window.location.href = "/SmartCampus/index.jsp";
                     }
                     else
                         alert("用户已存在");

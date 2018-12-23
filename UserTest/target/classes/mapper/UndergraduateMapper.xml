@@ -38,30 +38,6 @@
     GROUP BY gender
   </select>
 
-  <resultMap id="UgFourFailGetMap" type="com.springmvc.entity.FourFail">
-    <result property="failstu" column="failstu" jdbcType="INTEGER"/>
-    <result property="kcmc" column="kcmc" jdbcType="VARCHAR"/>
-  </resultMap>
-
-  <select id="selectFourFailByXymc" resultMap="UgFourFailGetMap" parameterType="java.lang.String">
-    SELECT
-    count(a.studentid) as failstu,d.kcmc
-    FROM
-    score_predict b,
-    undergraduate_basic a,
-    xydm_dzb c,
-    bzks_kc d
-    WHERE
-    c.xymc=#{xymc,jdbcType=VARCHAR} AND
-    c.xydm=a.schoolid AND
-    a.studentid=b.xh AND
-    d.kcdm= b.kcdm AND
-    <![CDATA[ b.zscj<60 ]]>
-    group by d.kcmc
-    order by count(a.studentid);
-  </select>
-
-
   <resultMap id="UndergraduateInfoMap" type="com.springmvc.entity.Undergraduate">
     <id column="studentid" property="studentid" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />

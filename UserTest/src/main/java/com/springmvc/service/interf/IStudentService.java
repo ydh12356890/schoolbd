@@ -18,11 +18,7 @@ public interface IStudentService {
     List <Undergraduate>  getAllXhByxhService(String name);
 
     Postgraduate getPostgraduateInfo(String xh);
-    NStudent getStuConsumpInfo(String xh);
-    Student getStudentInfo(String stunumber);
-    //List<Student> getStudentList();
-    StudentScore getStuScoreDisService(String stuNumber);
-
+    List<WeekConsump> getStuConsumpInfo(String xh);
     Map<String,Object> getScoreLimitTable (Map<String,Object> param);
 
     Map<String,Object> getCourseScoreLimit(Map<String,Object> param);
@@ -54,7 +50,7 @@ public interface IStudentService {
 
     List<StuScorePredict> getTwoScoreservice(String xh);
 
-    List <StuConsumeOutlier> getStuConsumeOutlierService(String xh,String year);
+    List <ConsumpOutlierThreeTag> getStuConsumeOutlierService(String xh,String year);
 
     Map<String,Object> getOutlierWeekService( Map<String,Object> param);
 
@@ -63,7 +59,6 @@ public interface IStudentService {
 
     List<MFRatio> getMFRatioSingleSchoolService(String schoolid);
 
-    List<FourFail> getFourFailByXymcService(String xymc);
 
     List<FailCourse> getAllFailCourseService(String xymc);
 

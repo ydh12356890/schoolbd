@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.StuConsumeOutlierMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.entity.StuConsumeOutlier" >
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="anormal_value" property="anormalValue" jdbcType="VARCHAR" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByXhAndYear" parameterType="java.lang.String" resultType="com.springmvc.entity.ConsumpOutlierThreeTag">
+    SELECT
+    a.xh,a.anormal_value as anormalvalue,a.week,a.year,b.ano_index as anoindex,b.sum_index as sumindex,b.static_index as staticindex
+FROM
+    student_anormal_formatted a,
+    exp_tag b
+WHERE
+    a.xh = #{xh,jdbcType=VARCHAR} AND a.year = #{year,jdbcType=VARCHAR}
+    and a.xh=b.xh and a.year = b.year
+ORDER BY (week + 0);
+
+  </select>
+
+
+  <select id="selectWeekConsumpByXh" parameterType="java.lang.String" resultType="com.springmvc.entity.WeekConsump">
+    SELECT
+    xh,week,year,exp_val/100 as expval
+    FROM
+    exp_week
+    WHERE
+    xh = #{xh,jdbcType=VARCHAR} AND year = '2016'
+    ORDER BY (week+0)
+  </select>
+
+
+  <resultMap id="WeekdayConsumpMap" type="com.springmvc.entity.StuConsumeOutlier">
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="anormal_value" property="anormalValue" jdbcType="VARCHAR" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectWeekdayConsumpByXhYearWeek" parameterType="java.lang.String" resultType="com.springmvc.entity.WeekdayExp">
+       SELECT
+        b.xh, a.exp_num / 1000 as expday, a.date, b.week, b.year,c.mean_val/1000 as meanval,c.grade
+    FROM
+        exp_day_16 a, student_anormal_formatted b ,exp_mean c
+    WHERE
+        a.studentid = b.xh
+            AND a.week = b.week - 1
+            AND b.year = #{year,jdbcType=VARCHAR}
+            AND a.studentid = #{xh,jdbcType=VARCHAR}
+            AND b.week = #{week,jdbcType=VARCHAR}
+            and b.year= c.year
+            and left(b.xh,4)=c.grade
+            and a.date = c.date
+	group by a.date;
+  </select>
+  
+  <select id="selectOutlierWeekByXhAndYear" parameterType="Map"  resultMap="BaseResultMap">
+    SELECT
+    *
+    FROM
+    student_anormal_formatted
+    WHERE
+    xh=#{xh,jdbcType=VARCHAR} AND year = #{year,jdbcType=VARCHAR}
+    AND (<![CDATA[anormal_value > 0.8 ]]>
+    OR <![CDATA[anormal_value < - 0.8 ]]>)
+    LIMIT #{startIndex},#{pageSize}
+  </select>
+
+  <select id="selectOutlierWeekByXhAndYearSize" parameterType="Map"  resultMap="BaseResultMap">
+    SELECT
+    *
+    FROM
+    student_anormal_formatted
+    WHERE
+    xh=#{xh,jdbcType=VARCHAR} AND year = #{year,jdbcType=VARCHAR}
+    AND (<![CDATA[anormal_value > 0.8 ]]>
+    OR <![CDATA[anormal_value < - 0.8 ]]>)
+  </select>
+
+  <insert id="insert" parameterType="com.springmvc.entity.StuConsumeOutlier" >
+    insert into student_anormal_formatted (xh, anormal_value, week, 
+      year)
+    values (#{xh,jdbcType=VARCHAR}, #{anormalValue,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, 
+      #{year,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.entity.StuConsumeOutlier" >
+    insert into student_anormal_formatted
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xh != null" >
+        xh,
+      </if>
+      <if test="anormalValue != null" >
+        anormal_value,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xh != null" >
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="anormalValue != null" >
+        #{anormalValue,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
